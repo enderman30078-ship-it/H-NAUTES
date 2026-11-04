@@ -179,6 +179,36 @@ body{padding-top:env(safe-area-inset-top,0px)}
 .conta-dados{display:grid;gap:6px;font-size:16px}
 .conta-dados input{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;min-width:0;flex:1 1 200px}
 nav.abas[hidden]{display:none}
+/* ---------- Ἀριθμός ---------- */
+.num-ar{font-family:var(--f-texto);font-size:13px;color:var(--ouro);text-decoration:none;border:1px solid var(--ouro);padding:0 6px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.ar-grade{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:680px){.ar-grade{grid-template-columns:minmax(0,1fr)}}
+.ar-sig{display:grid;gap:8px;justify-items:center}
+.ar-sig .sigilo{width:100%;max-width:300px;height:auto;background:var(--folha);border:1.5px solid var(--tinta)}
+.ar-leitura{display:grid;gap:12px;min-width:0}
+.ar-h{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--suave);font-weight:400;margin:10px 0 4px}
+.ar-pal{font-size:26px;margin:0}
+.ar-letras{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ar-letra{display:grid;justify-items:center;border:1px solid var(--linha);padding:1px 6px;min-width:30px;background:var(--folha)}
+.ar-letra small{font-size:11px;color:var(--suave)}
+.ar-grande{font-size:38px;line-height:1.1;color:var(--acento)}
+.ar-grande small{font-size:14px;color:var(--suave);margin-left:10px}
+.ar-vetor{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px}
+@media (max-width:520px){.ar-vetor{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.ar-cel{border:1px solid var(--linha);text-align:center;font-size:17px;padding:2px 0;background:var(--folha)}
+.ar-cel small{display:block;font-size:10.5px;color:var(--suave)}
+.ar-palavra{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline;padding:3px 0;border-bottom:1px dotted var(--linha)}
+.ar-palavra a,.ar-tab a{color:var(--tinta);text-decoration-color:var(--linha);text-underline-offset:3px}
+.ar-palavra a{font-size:18px}
+.ar-palavra a:hover,.ar-tab a:hover{color:var(--acento)}
+.ar-num{font-size:13.5px;color:var(--ouro)}
+.ar-sent{font-size:14.5px;color:var(--suave);flex:1 1 200px;min-width:0}
+.ar-card{display:flex;gap:10px;align-items:flex-start}
+.ar-card .sigilo-mini{flex:none;background:var(--folha);border:1px solid var(--linha)}
+.ar-acervo summary{cursor:pointer;color:var(--suave)}
+.ar-tab{border-collapse:collapse;font-size:15px;width:100%}
+.ar-tab td,.ar-tab th{border-bottom:1px solid var(--linha);padding:3px 8px;text-align:left;vertical-align:top}
+.ar-tab th{font-weight:400;color:var(--suave);font-size:13px}
 
 </style>
 </head>
@@ -194,6 +224,7 @@ nav.abas[hidden]{display:none}
       <a href="#votos" data-v="votos">Votos</a>
       <a href="#constelacao" data-v="constelacao">Constelação</a>
       <a href="#acervo" data-v="acervo">Acervo e busca</a>
+      <a href="#arithmos" data-v="arithmos" class="gr">Ἀριθμός</a>
       <a href="#caderno" data-v="caderno">Cópia de segurança</a>
       <a href="#conta" data-v="conta">Conta</a>
     </nav>
@@ -206,6 +237,7 @@ nav.abas[hidden]{display:none}
 
 <script src="supabase.js"></script>
 <script src="config.js"></script>
+<script src="arithmos.js"></script>
 <script>
 const GRAUS = [
   {id:"natural",      nome:"Naturais",       gr:"φυσικαί",        desc:"Disposições do corpo e do temperamento; partilhadas até pelos animais. Podem conflitar entre si, pois não derivam ainda da razão una."},
@@ -377,12 +409,13 @@ const KINDS={
   desejo:{nome:'Desejo',plural:'Desejos',vis:'priv',campos:[{k:'texto',t:'area',rot:'O desejo'}]},
   mito:{nome:'História ou mito',plural:'Histórias e mitos',vis:'comum',campos:[CAMPO_TITULO,CAMPO_TEXTO,CAMPO_FONTE]},
   hino:{nome:'Hino',plural:'Hinos',vis:'comum',campos:[CAMPO_TITULO,{k:'texto',t:'area',rot:'Texto do hino',gr:true},CAMPO_FONTE]},
+  arithmos:{nome:'Análise numérica',plural:'Análises numéricas · Ἀριθμός',vis:'priv',campos:[{k:'palavra',rot:'Palavra grega',gr:true},{k:'alvo',t:'alvo',rot:'Ligada a'},{k:'nota',t:'area',rot:'O que a análise mostrou'}]},
   oracao:{nome:'Oração',plural:'Orações',vis:'priv'},
   voto:{nome:'Voto',plural:'Votos',vis:'priv'},
   constelacao:{nome:'Constelação',plural:'Constelações',vis:'priv'}
 };
-const SECOES_SPAIRA=['epiteto','virtude','ato','palavra','insight','relacao'];
-const SECOES_LETRA=['imagem','palavra','planta','ato','desejo','mito','hino','epiteto','insight'];
+const SECOES_SPAIRA=['epiteto','virtude','ato','palavra','insight','relacao','arithmos'];
+const SECOES_LETRA=['imagem','palavra','planta','ato','desejo','mito','hino','epiteto','insight','arithmos'];
 
 
 /* ===================== ESTADO ===================== */
@@ -630,10 +663,11 @@ function lerHash(){
   const h=(location.hash||'').slice(1);
   if(h.startsWith('spaira-')&&SPAIRAS[h.slice(7)]){S.view='hierograma';S.det={t:'sp',id:h.slice(7)};}
   else if(h.startsWith('caminho-')&&CAMINHOS[+h.slice(8)]){S.view='hierograma';S.det={t:'cam',id:+h.slice(8)};}
+  else if(h==='arithmos'||h.startsWith('arithmos=')){S.view='arithmos';let w='';try{w=decodeURIComponent(h.slice(9));}catch(e){w=h.slice(9);}S.arPalavra=w;}
   else if(['hierograma','diario','votos','constelacao','acervo','caderno','conta'].includes(h)){S.view=h;if(h==='hierograma')S.det=null;}
   else{S.view='hierograma';}
 }
-window.addEventListener('hashchange',()=>{lerHash();render();if(S.det&&window.innerWidth<=820){const d=$('#det');if(d)d.scrollIntoView({behavior:'smooth',block:'start'});}});
+window.addEventListener('hashchange',()=>{lerHash();render();if(S.view==='arithmos')window.scrollTo(0,0);if(S.det&&window.innerWidth<=820){const d=$('#det');if(d)d.scrollIntoView({behavior:'smooth',block:'start'});}});
 
 /* ===================== RENDER ===================== */
 function renderEstado(){
@@ -652,7 +686,7 @@ function render(){
   renderEstado();
   const fora=S.modo==='entrar'||S.view==='nova-senha';$('#abas').hidden=fora||S.modo==='carregando';
   const m=$('#principal');
-  m.innerHTML=S.modo==='carregando'?'':fora?vEntrar():S.view==='conta'?vConta():S.view==='diario'?vDiario():S.view==='votos'?vVotos():S.view==='constelacao'?vConstelacao():S.view==='acervo'?vAcervo():S.view==='caderno'?vCaderno():vHierograma();
+  m.innerHTML=S.modo==='carregando'?'':fora?vEntrar():S.view==='conta'?vConta():S.view==='arithmos'?vArithmos():S.view==='diario'?vDiario():S.view==='votos'?vVotos():S.view==='constelacao'?vConstelacao():S.view==='acervo'?vAcervo():S.view==='caderno'?vCaderno():vHierograma();
   if(aid){const n=document.getElementById(aid);if(n&&n!==document.activeElement){n.focus();if(sel&&n.setSelectionRange)try{n.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
   nomearAutores();
 }
@@ -739,7 +773,7 @@ function card(r){
   const it=r.item,K=KINDS[it.kind]||{};
   let t='',corpo='';
   if(it.kind==='epiteto'){
-    t=`${it.grego?`<span class="gr">${esc(it.grego)}</span>`:''}${it.translit?` (${esc(it.translit)})`:''}${it.construcao?' °':''}`;
+    t=`${it.grego?`<span class="gr">${esc(it.grego)}</span>`:''}${it.translit?` (${esc(it.translit)})`:''}${it.construcao?' °':''}${it.grego?arNumeroLink(it.grego):''}`;
     corpo=`${it.traducao?`<p>${esc(it.traducao)}</p>`:''}${it.nota?`<p>${esc(it.nota)}</p>`:''}`;
     return wrap(`${esc(it.deus||'')}${it.deus?' · ':''}${t}`,corpo,r,it.fonte);
   }
@@ -748,9 +782,10 @@ function card(r){
     const tab=eixos.length?`<div class="rolagem"><table class="eixos-tab"><tr><th>Eixo</th><th>Falta</th><th>Medida</th><th>Excesso</th></tr>${eixos.map(e=>`<tr><td>${esc(e.eixo)}</td><td>${esc(e.falta)}</td><td>${esc(it.nome)}</td><td>${esc(e.excesso)}</td></tr>`).join('')}</table></div>`:'';
     corpo=`${it.definicao?`<p>${esc(it.definicao)}</p>`:''}${tab}${it.opera?`<p><i>Como opera:</i> ${esc(it.opera)}</p>`:''}${it.ligacoes?`<p><i>Liga-se a:</i> ${esc(it.ligacoes)}</p>`:''}`;
     const g=GRAUS.find(x=>x.id===it.grau);
-    return wrap(`${linhaGrega(it.grego,it.nome)}${it.construcao?' °':''}`,corpo,r,it.fonte,g?g.nome:'');
+    return wrap(`${linhaGrega(it.grego,it.nome)}${it.construcao?' °':''}${it.grego?arNumeroLink(it.grego):''}`,corpo,r,it.fonte,g?g.nome:'');
   }
-  if(it.kind==='palavra')return wrap(`<span class="gr">${esc(it.termo)}</span>`,it.nota?`<p>${esc(it.nota)}</p>`:'',r);
+  if(it.kind==='palavra')return wrap(`<span class="gr">${esc(it.termo)}</span>${arNumeroLink(it.termo)}`,it.nota?`<p>${esc(it.nota)}</p>`:'',r);
+  if(it.kind==='arithmos'){const a=arAnalise(it.palavra);return wrap(`<span class="gr">${esc(it.palavra||'')}</span>${a?` · ${a.soma} · raiz ${a.raiz}`:''}`,`<div class="ar-card">${a?`<a href="${arHref(it.palavra)}" aria-label="Abrir no Ἀριθμός">${arSigilo(a.assin,{tam:64,mini:true})}</a>`:''}<div>${it.nota?`<p>${esc(it.nota)}</p>`:''}${it.alvo&&S.view!=='hierograma'?`<p><a href="${hrefAlvo(it.alvo)}">${esc(nomeAlvo(it.alvo))}</a></p>`:''}</div></div>`,r);}
   if(it.kind==='insight')return wrap(fmtData(it.data)||'Insight',`<p>${esc(it.texto)}</p>`,r);
   if(it.kind==='relacao'||it.kind==='desejo')return wrap(K.nome,`<p>${esc(it.texto)}</p>`,r);
   if(it.kind==='hino')return wrap(esc(it.titulo||'Hino'),`<p class="gr">${esc(it.texto)}</p>`,r,it.fonte);
@@ -951,6 +986,7 @@ function campoHtml(c,v){
   if(c.t==='check')return `<label class="checks" for="${id}" style="display:flex"><input type="checkbox" id="${id}" name="${c.k}"${v?' checked':''}> ${esc(c.rot)}</label>`;
   if(c.t==='date')return `<label for="${id}">${esc(c.rot)}<input type="date" id="${id}" name="${c.k}" value="${esc(v||hoje())}"></label>`;
   if(c.t==='grau')return `<label for="${id}">${esc(c.rot)}<select id="${id}" name="${c.k}">${GRAUS.map(g=>`<option value="${g.id}"${v===g.id?' selected':''}>${esc(g.nome)} · ${esc(g.gr)}</option>`).join('')}</select></label>`;
+  if(c.t==='alvo'){const op=[`<option value="">Nenhuma spaira ou letra</option>`].concat(PLANETARIAS.concat(CENTRAIS,['theoi']).map(id=>`<option value="sp:${id}"${v==='sp:'+id?' selected':''}>Spaira ${esc(nomeSp(id))}</option>`),CAMINHOS.map((x,i)=>`<option value="cam:${i}"${v==='cam:'+i?' selected':''}>Letra ${esc(nomeCam(i))}</option>`));return `<label for="${id}">${esc(c.rot)}<select id="${id}" name="${c.k}">${op.join('')}</select></label>`;}
   if(c.t==='eixos'){const rows=(v&&v.length?v:[{}]).map(eixoLinha).join('');return `<fieldset><legend>${esc(c.rot)}</legend><p class="nota-campo">Uma virtude pode ser medida em mais de um eixo, cada um com a sua falta e o seu excesso.</p><div id="eixos">${rows}</div><button type="button" class="btn mini" data-act="mais-eixo">Acrescentar eixo</button></fieldset>`;}
   return `<label for="${id}">${esc(c.rot)}<input type="text" id="${id}" name="${c.k}" value="${esc(v||'')}"${c.gr?' class="gr"':''}></label>`;
 }
@@ -959,8 +995,8 @@ function eixoLinha(e){eixoN++;e=e||{};return `<div class="eixo-linha"><label>Eix
 function visHtml(v){const pode=S.modo==='db'&&S.perfil.aprovado;if(!pode)v='priv';
   const nota=S.modo!=='db'?'O acervo comum só funciona com uma conta.':!S.perfil.aprovado?'Você poderá escrever no acervo comum quando a sua conta for aprovada.':'';
   return `<fieldset><legend>Onde guardar</legend><div class="vis"><label><input type="radio" name="vis" value="priv"${v==='priv'?' checked':''}> Meu caderno privado</label><label><input type="radio" name="vis" value="comum"${v==='comum'?' checked':''}${pode?'':' disabled'}> Acervo comum</label></div>${nota?`<p class="nota-campo">${nota}</p>`:''}</fieldset>`;}
-function formItem(kind,alvo,extra,rec,deus){
-  const K=KINDS[kind],it=rec?rec.item:{grau:extra,deus:deus||''};
+function formItem(kind,alvo,extra,rec,deus,pre){
+  const K=KINDS[kind],it=rec?rec.item:Object.assign({grau:extra,deus:deus||'',alvo},pre||{});
   const vis=rec?(rec.origem==='priv'?'priv':'comum'):(S.modo==='db'&&S.perfil.aprovado?K.vis:'priv');
   const campos=K.campos.map(c=>campoHtml(c,it[c.k])).join('');
   abrirForm(`<form class="form" aria-label="${esc(K.nome)}"><h2>${rec?'Editar':'Novo'}: ${esc(K.nome.toLowerCase())}</h2><p class="nota-campo">${esc(nomeAlvo(alvo))}</p>${campos}${visHtml(vis)}<div class="acoes"><button type="button" class="btn" data-act="fechar">Cancelar</button><button type="submit" class="btn forte">Salvar</button></div></form>`,f=>{
@@ -1161,6 +1197,8 @@ document.addEventListener('click',async e=>{
   if(act==='salvar-nome'){const i=$('#meu-nome');if(i)await salvarNome(i.value);return;}
   if(act==='aprovar'&&S.dono){await definirAprovacao(a.dataset.uid,a.dataset.v==='1');return;}
   if(act==='trazer'){await trazerDoAparelho();return;}
+  if(act==='ar-baixar'){arBaixarSigilo();return;}
+  if(act==='ar-guardar'){formItem('arithmos','',null,null,'',{palavra:S.arPalavra||''});return;}
   if(act==='estado-voto'){const v=getPriv(a.dataset.id);if(!v)return;const n=clone(v);n.estado=a.dataset.e;await salvarItem(n,'priv');return;}
   if(act==='exportar'){exportar();return;}
   if(act==='copiar-export'){const t=$('#txt-export');try{await navigator.clipboard.writeText(t.value);toast('Copiado.');}catch(err){t.select();}return;}
@@ -1184,7 +1222,7 @@ document.addEventListener('change',async e=>{
 let buscaT=null;
 document.addEventListener('input',e=>{if(e.target.id==='busca'){S.busca=e.target.value;clearTimeout(buscaT);buscaT=setTimeout(render,180);}});
 $('#sobre').addEventListener('click',e=>{if(e.target.id==='sobre')fecharForm();});
-document.addEventListener('submit',e=>{const f=e.target;if(f.classList&&f.classList.contains('form-conta')){e.preventDefault();enviarConta(f);}});
+document.addEventListener('submit',e=>{const f=e.target;if(f.id==='form-ar'){e.preventDefault();const v=$('#ar-palavra').value.trim();location.hash=v?'arithmos='+encodeURIComponent(v):'arithmos';return;}if(f.classList&&f.classList.contains('form-conta')){e.preventDefault();enviarConta(f);}});
 
 function aplicarTema(v){
   if(v==='auto')document.documentElement.removeAttribute('data-tema');else document.documentElement.setAttribute('data-tema',v);

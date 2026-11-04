@@ -1,7 +1,7 @@
 /* Guarda a casca do aplicativo para abrir mesmo sem internet.
    Os dados do caderno não passam por aqui: vêm sempre do banco. */
-const VERSAO = 'okhema-v1';
-const CASCA = ['./', 'index.html', 'supabase.js', 'config.js', 'manifest.webmanifest',
+const VERSAO = 'okhema-v2';
+const CASCA = ['./', 'index.html', 'supabase.js', 'config.js', 'arithmos.js', 'manifest.webmanifest',
   'icones/icone-192.png', 'icones/icone-512.png', 'icones/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
