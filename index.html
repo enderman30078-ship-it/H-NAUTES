@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F2E9D7">
+<meta name="description" content="Caderno das spairas e das letras do Okhema: anotações, virtudes, epítetos, constelações, orações e votos.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icones/icone-192.png">
+<link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Okhema">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Caderno do Okhema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=GFS+Didot&display=swap">
+<style>
+/* Layout: o hierograma é a porta; cada spaira e cada letra abre o seu caderno ao lado (abaixo no celular). */
+:root{
+  --fundo:#F2E9D7; --folha:#F8F2E4; --creme:#F4EBD8; --tinta:#2A1B10; --suave:#6E3A22;
+  --acento:#A8442A; --acento-2:#C8652F; --ouro:#B8862E; --linha:#D9C7A6; --sobre-acento:#F8F2E4;
+  --priv:#3E5C8A; --comum:#5C7A3A; --base:#8A6A2C;
+  --f-grego:"GFS Didot","EB Garamond",Georgia,serif;
+  --f-texto:"EB Garamond",Georgia,"Times New Roman",serif;
+  --f-rotulo:"EB Garamond",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --fundo:#1E1724; --folha:#271E2E; --creme:#30263A; --tinta:#ECE2F1; --suave:#B9A2C6;
+  --acento:#C88AD8; --acento-2:#D9A6E4; --ouro:#C9A45C; --linha:#4A3C55; --sobre-acento:#1E1724;
+  --priv:#8FA9D6; --comum:#9BBF73; --base:#D2B26A; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --fundo:#1E1724; --folha:#271E2E; --creme:#30263A; --tinta:#ECE2F1; --suave:#B9A2C6;
+  --acento:#C88AD8; --acento-2:#D9A6E4; --ouro:#C9A45C; --linha:#4A3C55; --sobre-acento:#1E1724;
+  --priv:#8FA9D6; --comum:#9BBF73; --base:#D2B26A; color-scheme:dark;}
+/* os três caracteres ontológicos, escolhidos pelo devoto; sem escolha, segue o tema do aparelho */
+:root[data-tema="telurico"]{
+  --fundo:#F2E9D7; --folha:#F8F2E4; --creme:#F4EBD8; --tinta:#2A1B10; --suave:#6E3A22;
+  --acento:#A8442A; --acento-2:#C8652F; --ouro:#B8862E; --linha:#D9C7A6; --sobre-acento:#F8F2E4;
+  --priv:#3E5C8A; --comum:#5C7A3A; --base:#8A6A2C; color-scheme:light;}
+:root[data-tema="celeste"]{
+  --fundo:#EAF0F8; --folha:#F2F6FC; --creme:#F4F8FD; --tinta:#1C2A42; --suave:#43597E;
+  --acento:#3E5C8A; --acento-2:#5E7CAA; --ouro:#9C7A2E; --linha:#C3CFE0; --sobre-acento:#F2F6FC;
+  --priv:#3E5C8A; --comum:#4F7A3A; --base:#7A6428; color-scheme:light;}
+:root[data-tema="ctonico"]{
+  --fundo:#1E1724; --folha:#271E2E; --creme:#30263A; --tinta:#ECE2F1; --suave:#B9A2C6;
+  --acento:#C88AD8; --acento-2:#D9A6E4; --ouro:#C9A45C; --linha:#4A3C55; --sobre-acento:#1E1724;
+  --priv:#8FA9D6; --comum:#9BBF73; --base:#D2B26A; color-scheme:dark;}
+.tema{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:14.5px;color:var(--suave)}
+.tema select{border:1px solid var(--tinta);background:var(--folha);color:var(--tinta);padding:2px 6px}
+*{box-sizing:border-box}
+html,body{background:var(--fundo);color:var(--tinta)}
+body{font-family:var(--f-texto);font-size:17px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--fundo)}
+.gr{font-family:var(--f-grego)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.casca{max-width:1180px;margin:0 auto}
+header.topo{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--fundo);padding-block:14px 8px;border-bottom:1.5px solid var(--tinta)}
+.marca{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.marca h1{font-family:var(--f-grego);font-weight:400;font-size:26px;letter-spacing:.38em;margin:0}
+.marca span{font-style:italic;color:var(--suave);font-size:15px}
+nav.abas{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
+nav.abas a{text-decoration:none;color:var(--tinta);border:1px solid var(--tinta);padding:3px 12px;font-size:15px;background:var(--folha)}
+nav.abas a[aria-current="page"]{background:var(--acento);color:var(--sobre-acento);border-color:var(--acento)}
+@media (max-width:820px){header.topo{position:static}}
+.estado{font-size:13.5px;color:var(--suave);font-style:italic;margin-top:6px;min-height:1.2em}
+main{padding-top:18px}
+h2{font-family:var(--f-grego);font-weight:400;font-size:24px;margin:0;text-wrap:balance}
+h3{font-family:var(--f-rotulo);font-weight:500;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--suave);margin:0}
+.btn{border:1px solid var(--tinta);background:var(--folha);padding:4px 12px;font-size:15px}
+.btn.forte{background:var(--acento);color:var(--sobre-acento);border-color:var(--acento)}
+.btn.mini{padding:1px 9px;font-size:13.5px}
+.btn.texto{border:none;background:none;color:var(--acento);padding:2px 4px;text-decoration:underline;text-underline-offset:3px}
+.btn:disabled{opacity:.5;cursor:default}
+/* hierograma */
+.hg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:22px;align-items:start}
+@media (max-width:820px){.hg{grid-template-columns:minmax(0,1fr)}}
+.hg-col{position:sticky;top:120px;display:grid;gap:10px}
+@media (max-width:820px){.hg-col{position:static}}
+.diagrama{background:var(--folha);border:2px solid var(--tinta);outline:1px solid var(--tinta);outline-offset:-6px;padding:6px}
+.diagrama svg{display:block;width:100%;height:auto;max-width:100%}
+.nodo{cursor:pointer}
+.nodo:focus{outline:none}
+.nodo:focus-visible .aro{stroke:var(--acento);stroke-width:4}
+.nodo.sel .aro{stroke:var(--acento);stroke-width:4}
+.cam{cursor:pointer}
+.cam:hover .clara,.cam.sel .clara{stroke:var(--acento-2)}
+.painel-dia{border:1.5px solid var(--tinta);background:var(--folha);padding:10px 12px;display:grid;gap:8px;font-size:15.5px}
+.painel-dia .linha{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.painel-dia select{border:1px solid var(--tinta);background:var(--fundo);padding:2px 6px;max-width:100%}
+.det{min-width:0;background:var(--folha);border:2px solid var(--tinta)}
+.det-faixa{height:12px;border-bottom:1.5px solid var(--tinta);background-image:repeating-linear-gradient(90deg,transparent 0 4px,var(--tinta) 4px 6px,transparent 6px 10px,var(--tinta) 10px 12px,transparent 12px 22px);background-size:22px 7px;background-repeat:repeat-x;background-position:0 3px}
+.det-corpo{padding:16px 18px 22px;display:grid;gap:18px}
+.cab{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.cab .letra{font-family:var(--f-grego);font-size:52px;line-height:1;color:var(--acento)}
+.cab .sub{color:var(--suave);font-style:italic;font-size:15px}
+.base-txt{font-size:16px;max-width:68ch}
+.base-txt b{font-weight:500}
+.marca-base{font-size:12.5px;letter-spacing:.08em;color:var(--base);text-transform:uppercase}
+.secao{display:grid;gap:8px;border-top:1px solid var(--linha);padding-top:12px}
+.secao-cab{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.vazio{font-style:italic;color:var(--suave);font-size:15px;margin:0}
+.lista{display:grid;gap:8px}
+.card{border:1px solid var(--linha);background:var(--fundo);padding:9px 11px;display:grid;gap:4px;min-width:0}
+.card .t{font-weight:500}
+.card .t .gr{font-size:18px;font-weight:400}
+.card p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--suave)}
+.pill{font-size:12px;padding:0 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.priv{color:var(--priv)} .pill.comum{color:var(--comum)} .pill.base{color:var(--base)}
+.grau-tabs{display:flex;gap:3px;flex-wrap:wrap}
+.grau-tabs button{border:1px solid var(--tinta);background:var(--fundo);padding:2px 9px;font-size:14px}
+.grau-tabs button[aria-pressed="true"]{background:var(--acento);color:var(--sobre-acento);border-color:var(--acento)}
+.triade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+@media (max-width:560px){.triade{grid-template-columns:minmax(0,1fr)}}
+.triade div{border:1px solid var(--linha);padding:7px 9px;background:var(--fundo);font-size:15px;min-width:0;overflow-wrap:anywhere}
+.triade small{display:block;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--suave)}
+.triade .medida{border-color:var(--acento)}
+.eixos-tab{width:100%;border-collapse:collapse;font-size:14.5px}
+.eixos-tab th,.eixos-tab td{border:1px solid var(--linha);padding:4px 6px;text-align:left;vertical-align:top}
+.eixos-tab th{font-weight:500;color:var(--suave);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+.rolagem{overflow-x:auto}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{border:1px solid var(--acento);color:var(--acento);background:var(--fundo);border-radius:999px;padding:0 10px;font-size:14px;text-decoration:none}
+.chip[aria-pressed="true"]{background:var(--acento);color:var(--sobre-acento)}
+.outro-deus{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.outro-deus input{border:1px solid var(--tinta);background:var(--fundo);padding:2px 8px;min-width:0;flex:0 1 200px}
+details.outros summary{cursor:pointer;color:var(--suave);font-size:14.5px}
+details.outros .chips{margin-top:6px}
+.intro{display:grid;gap:12px}
+.planetas{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.planetas button{text-align:left;border:1px solid var(--linha);background:var(--fundo);padding:6px 9px;display:grid}
+.planetas button b{font-family:var(--f-grego);font-weight:400;font-size:20px;color:var(--acento)}
+.planetas button span{font-size:13.5px;color:var(--suave)}
+.const-card .deuses{display:grid;gap:3px;font-size:15px}
+/* páginas */
+.pagina{display:grid;gap:16px;max-width:880px}
+.barra{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.barra input,.barra select{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;min-width:0}
+.barra input{flex:1 1 220px}
+/* sobreposição de formulário */
+.sobre{position:fixed;inset:0;z-index:20;background:color-mix(in srgb,var(--tinta) 45%,transparent);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:calc(20px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 40px max(12px,env(safe-area-inset-left,0px))}
+.sobre[hidden]{display:none!important}
+.form{background:var(--folha);border:2px solid var(--tinta);width:min(640px,100%);padding:16px 18px;display:grid;gap:12px}
+.form label{display:grid;gap:3px;font-size:14.5px;color:var(--suave)}
+.form input[type=text],.form input[type=date],.form select,.form textarea{border:1px solid var(--tinta);background:var(--fundo);padding:6px 8px;color:var(--tinta);width:100%}
+.form textarea{min-height:90px;resize:vertical}
+.form .lado{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.form fieldset{border:1px solid var(--linha);padding:8px 10px;display:grid;gap:6px;min-width:0}
+.form legend{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--suave);padding:0 4px}
+.checks{display:flex;flex-wrap:wrap;gap:4px 12px}
+.checks label{display:flex;gap:5px;align-items:center;color:var(--tinta);font-size:15px}
+.checks.letras label{font-family:var(--f-grego);font-size:17px}
+.eixo-linha{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:5px;align-items:end}
+@media (max-width:520px){.eixo-linha{grid-template-columns:minmax(0,1fr) auto}}
+.vis{display:flex;gap:6px;flex-wrap:wrap}
+.vis label{display:flex;gap:6px;align-items:center;border:1px solid var(--linha);padding:4px 10px;color:var(--tinta)}
+.acoes{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.nota-campo{font-size:13px;font-style:italic;color:var(--suave)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--tinta);color:var(--fundo);padding:8px 14px;z-index:30;max-width:min(560px,calc(100% - 32px));font-size:15px}
+.toast[hidden]{display:none!important}
+.confirmar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:14px}
+@media (prefers-reduced-motion:no-preference){.det-corpo>*{animation:surgir .25s ease both}@keyframes surgir{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}}
+/* ---------- aplicativo instalado: conta e membros ---------- */
+body{padding-top:env(safe-area-inset-top,0px)}
+.entrar{display:grid;gap:14px;max-width:460px;margin:28px auto 0}
+.entrar .form{width:100%}
+.entrar input[type=email],.entrar input[type=password]{border:1px solid var(--tinta);background:var(--fundo);padding:6px 8px;color:var(--tinta);width:100%}
+.entrar .trocas{display:flex;gap:4px 14px;flex-wrap:wrap;font-size:15px}
+.msg-conta{min-height:1.2em;color:var(--acento);font-size:15px;margin:0}
+.aviso-conta{border-left:3px solid var(--ouro);padding:6px 10px;background:var(--folha);font-size:15.5px;margin:0}
+.membros{display:grid;gap:6px}
+.membro{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border:1px solid var(--linha);background:var(--fundo);padding:7px 10px}
+.membro .nome{flex:1 1 180px;min-width:0}
+.membro .quando{font-size:13px;color:var(--suave)}
+.conta-dados{display:grid;gap:6px;font-size:16px}
+.conta-dados input{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;min-width:0;flex:1 1 200px}
+nav.abas[hidden]{display:none}
+
+</style>
+</head>
+<body>
+
+<div class="casca">
+  <header class="topo">
+    <div class="marca"><h1>ΟΧΗΜΑ</h1><span>caderno das spairas e das letras</span>
+      <label class="tema" for="sel-tema">Caráter<select id="sel-tema"><option value="telurico">⊕ Telúrico</option><option value="celeste">☉ Celeste</option><option value="ctonico">☾ Ctônico</option><option value="auto">Automático (do aparelho)</option></select></label></div>
+    <nav class="abas" id="abas" aria-label="Seções">
+      <a href="#hierograma" data-v="hierograma">Hierograma</a>
+      <a href="#diario" data-v="diario">Diário de orações</a>
+      <a href="#votos" data-v="votos">Votos</a>
+      <a href="#constelacao" data-v="constelacao">Constelação</a>
+      <a href="#acervo" data-v="acervo">Acervo e busca</a>
+      <a href="#caderno" data-v="caderno">Cópia de segurança</a>
+      <a href="#conta" data-v="conta">Conta</a>
+    </nav>
+    <div class="estado" id="estado" aria-live="polite">Abrindo o caderno…</div>
+  </header>
+  <main id="principal"></main>
+</div>
+<div class="sobre" id="sobre" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="supabase.js"></script>
+<script src="config.js"></script>
+<script>
+const GRAUS = [
+  {id:"natural",      nome:"Naturais",       gr:"φυσικαί",        desc:"Disposições do corpo e do temperamento; partilhadas até pelos animais. Podem conflitar entre si, pois não derivam ainda da razão una."},
+  {id:"etica",        nome:"Éticas",         gr:"ἠθικαί",         desc:"Nascidas do hábito e da opinião reta, sem conhecimento da causa. As virtudes da boa educação, anteriores ao despertar do logos."},
+  {id:"politica",     nome:"Políticas",      gr:"πολιτικαί",      desc:"A razão ordenando as partes da alma na vida ativa. Sua marca é a μετριοπάθεια — a medida das paixões, não sua extinção."},
+  {id:"catartica",    nome:"Catárticas",     gr:"καθαρτικαί",     desc:"Separação e desapego. Sua marca é a ἀπάθεια — o desligamento da simpatia com o corpo. Aqui começa a verdadeira semelhança com o divino."},
+  {id:"teoretica",    nome:"Teoréticas",     gr:"θεωρητικαί",     desc:"As ciências do conhecer: a parte γνωστική da ἐπιστήμη, que não executa com as mãos mas conhece — julgando (κριτική) ou ordenando (ἐπιτακτική) (Político 258e–260c). Cada faculdade alcança aqui o seu saber próprio; a βασιλική, no Sol, tece as demais numa só trama (Político 305e)."}
+];
+const SPAIRAS = {
+  theoi:   {rotulo:"Θεοί",   tipo:"centro", pos:[340,145],
+            faculdade:"O Deus da Seirá — o Ἀγαθὸς Δαίμων ou Ἴδιος Δαίμων da pessoa; o deus da cadeia de emanação que guia o retorno da alma à sua origem.",
+            descricao:"O primeiro silêncio, antes das palavras. Para onde o ápice da pirâmide aponta — os primeiros princípios, que estão além do bem e do mal porque são a fonte de onde o bem flui."},
+  omega:   {rotulo:"Ω", tipo:"vogal", letra:"Ω", pos:[268,255],
+            planeta:"Saturno", veste:"Veste da Razão Discursiva", nome_proprio:"Σοφία",
+            faculdade:"Σοφία — a Faculdade Racional em seu ápice: o uso esplêndido das potências noéticas. Não um território, mas o ato de pensar o eterno. Começa como διάνοια (raciocínio sequencial) e culmina em νόησις (intuição que apreende de uma vez).",
+            influencia:"Pensamento temporal e sequencial que ascende ao intemporal",
+            vicios:"Melancolia, isolamento, avareza, inércia",
+            virtudes:"Sabedoria, contemplação, disciplina",
+            caracteres:{celeste:"νόησις — a intuição do eterno, o pensar que toca o alto", telurico:"διάνοια — o raciocínio que ordena o mundo e a vida ativa", ctonico:"a razão que desce à própria raiz, ao impensado, ao que se recusa a pensar"},
+            graus:{natural:{v:"ἀγχίνοια — a sagacidade, o acerto rápido do nexo (Aristóteles, An. Post. I 34)",p:"obtusidade — a lentidão que não vê o nexo°",e:"esperteza dispersa — a agudeza que salta sem pousar°"}, etica:{v:"φιλομάθεια — o amor de aprender, o cão filósofo (Rep. 376b)",p:"misologia — o ódio ao argumento (Fédon 89d)",e:"πολυμαθία — o muito-saber que não ensina o νόος (Heráclito B40)"}, politica:{v:"φρόνησις — a razão prudente que governa a pólis da alma (Rep. IV 428)",p:"ἀφροσύνη — a insensatez, o governo sem razão°",e:"δεινότης — a habilidade formidável sem o bem (Ét. Nic. VI 12)"}, catartica:{v:"desapego discursivo — soltar o próprio λόγος ἐνδιάθετος, o encadear incessante do pensamento; parar de raciocinar para que a νόησις apareça (Enéada VI 9.4: ἄφελε πάντα, retira tudo; VI 9.11: φυγὴ μόνου πρὸς μόνον). O estado que resulta: μόνωσις, a razão só",p:"συνδοξάζειν — opinar-junto com o corpo; e o ruminar discursivo que não cessa (Enéada I 2.3)",e:"isolamento melancólico — a solidão saturnina que apodrece; ou o quietismo prematuro que abandona o pensar antes de tê-lo consumado°"}, teoretica:{v:"διαλεκτική — a coroa das ciências, o percurso pelas essências até o princípio não-hipotético (Rep. VII 532a–534e)",p:"ficar na διάνοια — raciocinar só a partir de hipóteses, sem subir ao princípio (Rep. VI 510b–511d)",e:"ἀντιλογική — a erística que imita a dialética e faz tudo vacilar (Rep. VII 537e–539c; Fédon 90b–c)"}}},
+  alpha:   {rotulo:"Α", tipo:"vogal", letra:"Α", pos:[412,255],
+            planeta:"Lua", veste:"Veste do Crescimento", nome_proprio:"Ζωή",
+            faculdade:"Ζωή — a Parte Emotiva como vida pura: não o βίος (a vida qualificada, o curso narrável de uma existência), mas a ζωή (o puro estar-vivo, a corrente vital impessoal que nutre e faz crescer). A Lua que recebe a luz do alto e a verte como vida encarnada. Vida no sentido da tríade Ὕπαρξις–Ζωή–Νοῦς: a potência vivificante.",
+            influencia:"Nutrição, vivificação e crescimento",
+            vicios:"Inconstância, ilusão, emotividade excessiva",
+            virtudes:"Intuição, receptividade, cura, στοργή (o amor nutriz)",
+            caracteres:{celeste:"o sentimento do sublime, a devoção que se eleva", telurico:"o afeto pelos próximos, a στοργή — o vínculo que nutre", ctonico:"o luto, a melancolia fértil, o sentir o fundo das coisas"},
+            graus:{natural:{v:"εὐκρασία — a boa têmpera vital, a mistura equilibrada dos humores (Timeu 86b–87b; Galeno)",p:"discrasia — a mistura desequilibrada, a debilidade vital°",e:"pletora — a vitalidade desregrada que transborda e adoece°"}, etica:{v:"συμφωνία — prazer e dor afinados antes da razão, a consonância da boa criação (Leis 653b)",p:"dissonância afetiva — sentir prazer e dor pelas coisas erradas°",e:"sentimentalismo habituado — a emoção cultivada como fim em si°"}, politica:{v:"φιλοστοργία — o afeto que nutre a vida comum, o amor-cuidado ordenado (Plutarco, De amore prolis)",p:"ἀστοργία — a frieza, a ausência do afeto devido°",e:"superproteção — o cuidado que sufoca o que deveria fazer crescer°"}, catartica:{v:"desapego da fome e da sede, do frio e do calor — soltar as afecções da vida nutritiva (θρεπτική); o jejum e a exposição suportada (καρτερία ascética; Fédon 64d: comidas e bebidas). O estado que resulta: ἁγνεία, a pureza do receptáculo (Fédon 67c; De Myst. V 23)",p:"porosidade — ser governado pela fome, sede, frio e calor; o corpo ditando a alma",e:"mortificação — o jejum que arruína o veículo em vez de purificá-lo; a ascese que adoece°"}, teoretica:{v:"φυσική — a ciência da natureza viva: φυσιολογία que é também θεολογία, a natureza vista em sua processão desde os deuses (Arist. Met. E 1, 1026a18–19; Proclo, In Tim. I 217.18–27)",p:"natureza muda — ver só matéria e mecanismo, perder a vida no vivo°",e:"naturalismo — tomar as condições pelas causas, fazer da φύσις o todo (Fédon 98b–99c, a decepção com Anaxágoras)"}}},
+  ennoia:  {rotulo:"Ἔννοια", tipo:"centro", pos:[340,300],
+            faculdade:"Engajamento da alma com o Nous — simultaneamente διάνοια e νόησις; o pensar que percorre e o ver que apreende de uma vez.",
+            descricao:"O silêncio entre as palavras — o que articula, distingue e dá ritmo, tornando possível a sequência e o sentido."},
+  agalma:  {rotulo:"Ἄγαλμα", tipo:"centro", pos:[340,381],
+            faculdade:"O foco consagrado — a função de concentração da intenção. O Ἄγαλμα se preenche de imagens, sentidos, emoções e memórias, que são direcionados ao Deus ou atribuídos ao Deus — mas ele ainda é algo diferente do Deus. De ἀγάλλω, alegrar: aquilo em que o deus se compraz. Distinto do εἰκών: quem não sabe com que chaves ler as representações vê apenas uma estátua de mármore de um desconhecido; quem sabe vislumbrar o Ἄγαλμα por detrás do Εἰκών tem presente a interioridade — preciosa para a irradiação mais reta da Luz sobre a alma (cf. os Silenos do Banquete 216e, que se abrem revelando ἀγάλματα θεῶν; Plotino I.6.9: esculpe teu próprio ἄγαλμα; a τελεστική de Proclo).",
+            descricao:"Tem agência independente — é determinado por várias coisas para além de mim (o deus que irradia, a tradição que depositou os συνθήματα, a matéria) — e ao mesmo tempo aparece para mim: a contemplação e a tecitura de sentidos, a ποίησις da alma, é fundamental para o acontecimento do rito. Não aconteceria naquele momento e lugar sem a mediação da minha alma; mas o poder de fazê-lo não vem de mim. É um ἄγαλμα multiaspectado — também literário —, concentração das várias faculdades da alma: a estátua é viva assim. Banhá-la, vesti-la, limpá-la e orar com ela é envolver ali a própria alma; e o mito é o de muitos fazendo isso — há algo de totêmico no Ἄγαλμα. Nele se cultiva o entrelaçar da permanência com a mudança: pontos fixos para lidar com o oceano do dia a dia. O altar se cultiva, como uma varinha. Também o ego é um ἄγαλμα, dos mais preciosos — e por isso mesmo fonte de problemas e orgulhos. Entre a Ἔννοια que o forma e a Ἔλλαμψις que o atravessa: a lente da devoção."},
+  epsilon: {rotulo:"Ε", tipo:"vogal", letra:"Ε", pos:[185,381],
+            planeta:"Mercúrio", veste:"Veste da Linguagem", nome_proprio:"Λόγος",
+            faculdade:"Λόγος — a Faculdade Linguística como o âmbito do conhecimento articulado e comunicável: a ἐγκύκλιος παιδεία, o círculo completo dos saberes (raiz da palavra 'enciclopédia'). O grande mapa das informações, ligado e transmissível. Sua arte é a ἑρμηνεία, a interpretação de Hermes.",
+            influencia:"Comunicação, interpretação e articulação do saber",
+            vicios:"Engano, instabilidade, superficialidade intelectual",
+            virtudes:"Sabedoria prática, eloquência, mediação, hermenêutica",
+            caracteres:{celeste:"o hino, a fala que invoca o alto", telurico:"o diálogo, o ensino, a mediação entre pessoas", ctonico:"o encantamento, a palavra que evoca o oculto, que nomeia o reprimido"},
+            graus:{natural:{v:"εὐγλωττία — a facilidade nativa da fala, a língua bem-nascida°",p:"inarticulação — o travamento, a palavra que não nasce°",e:"loquacidade vazia — a facilidade que fala sem ter o quê°"}, etica:{v:"εὐφημία — a fala reta e auspiciosa formada pelo hábito (termo cultual: o bem-dizer ritual)",p:"maledicência habitual — a língua treinada no mau dizer°",e:"beatice verbal — a fórmula pia esvaziada de sentido°"}, politica:{v:"ἀλήθεια — a veracidade, meio entre jactância e dissimulação (Ét. Nic. IV 7, 1127a)",p:"εἰρωνεία — a dissimulação que se diminui (Ét. Nic. IV 7)",e:"ἀλαζονεία — a jactância que se infla (Ét. Nic. IV 7)"}, catartica:{v:"desapego do falar e dos outros — soltar a palavra proferida (λόγος προφορικός) e a dependência do olhar alheio, a δόξα e a aprovação. O estado que resulta: ἐχεμυθία, o silêncio pitagórico (Iâmblico, Vita Pyth. 68, 94; Plutarco, De garrulitate)",p:"φλυαρία — a tagarelice e a fome de audiência; falar para existir nos outros",e:"mutismo misantrópico — o silêncio que sonega a palavra devida e corta o vínculo°"}, teoretica:{v:"ῥητορική — a retórica filosófica, ψυχαγωγία διὰ λόγων: conduzir almas pela palavra sabendo a natureza de cada alma (Fedro 261a, 270b–272b)",p:"palavra sem condução — a verdade dita sem saber a quem se fala, que não move alma alguma°",e:"κολακεία — a retórica como lisonja, ἐμπειρία e não τέχνη (Górgias 463a–465c)"}}},
+  ypsilon: {rotulo:"Υ", tipo:"vogal", letra:"Υ", pos:[495,381],
+            planeta:"Júpiter", veste:"Veste da Força Vital", nome_proprio:"Εὐβουλία",
+            faculdade:"Εὐβουλία — o Impulso Prático como bom conselho: a excelência em deliberar e decidir bem (de βουλή, o conselho, a assembleia que delibera e administra). Não a previsão contemplativa, mas a deliberação prática que pesa os meios e escolhe a melhor ação para o fim. A virtude do que faz, em sua raiz: saber decidir bem o que fazer.",
+            influencia:"Poder de ação no mundo, deliberado e decidido",
+            vicios:"Dogmatismo, arrogância, excesso de confiança",
+            virtudes:"Justiça, magnanimidade, liderança ética, bom conselho",
+            caracteres:{celeste:"a deliberação conforme o ideal, decidir segundo o justo eterno", telurico:"o conselho no mundo, a administração, a obra concreta bem decidida", ctonico:"a decisão ritual, o gesto eficaz, o que age e resolve no invisível"},
+            graus:{natural:{v:"δεξιότης — a destreza prática nativa, a mão que acerta°",p:"inépcia — a mão que erra o gesto°",e:"πανουργία — a esperteza sem escrúpulo°"}, etica:{v:"φιλοπονία — o amor ao esforço, a disposição laboriosa (Xenofonte, Mem. II 1)",p:"ἀργία — a preguiça, a fuga do esforço devido°",e:"labor compulsivo — o esforço como fuga, trabalhar para não ser°"}, politica:{v:"δικαιοσύνη — a justiça como οἰκειοπραγία, cada parte fazendo o seu (Rep. IV 433a)",p:"πολυπραγμοσύνη — intrometer-se no de todos, a injustiça (Rep. 434b)",e:"formalismo — a justiça da letra sem equidade°"}, catartica:{v:"desapego do planejamento — soltar o controle antecipatório do futuro, o cálculo compulsivo dos desfechos; confiar o resultado (a passagem da εὐβουλία que calcula à πρόνοια que provê). O estado que resulta: ἀπραγμοσύνη, o ócio filosófico (Teeteto 173c–e)",p:"πολυπραγμοσύνη — o planejar compulsivo, a agitação que quer controlar tudo (Rep. 434b)",e:"acídia — o cessar que virou inércia; abandonar o que se devia prover°"}, teoretica:{v:"οἰκονομική e πολιτική — a ciência que ordena a casa e a cidade, o governo do comum (Político 259b–c, que as identifica; Arist. Pol. I 1, 1252a7–16, que as distingue; Ét. Nic. VI 8, 1141b23–33)",p:"desgoverno — a casa e a cidade sem ordem, o comum entregue ao acaso°",e:"χρηματιστική — a arte da aquisição tomada por fim, a riqueza sem limite (Arist. Pol. I 9, 1257b–1258a)"}}},
+  iota:    {rotulo:"Ι", tipo:"vogal", letra:"Ι", pos:[340,460],
+            planeta:"Sol", veste:"Veste da Imaginação", nome_proprio:"Ἔλλαμψις",
+            faculdade:"Ἔλλαμψις — a Faculdade Imaginativa no centro, nomeada por seu próprio modo de operar: a irradiação. Uma substância completa e separada (o inteligível) só se faz presente no inferior (o sensível) através do seu estado irradiado, imanente no participante — como a alma racional, separada, se faz presente no corpo por sua ἔλλαμψις. O Sol que une e ilumina num só ato: iluminar é unir, pois a luz que está em mim é a mesma da fonte. Distinta da πρόοδος (que produz hipóstase); a ἔλλαμψις dá presença sem o superior descer ou se rebaixar. Centro geométrico do okhema.",
+            influencia:"Irradiação mediadora entre o inteligível e o sensível",
+            vicios:"Vaidade, egocentrismo, autoritarismo",
+            virtudes:"Iluminação, integridade, criatividade, justa medida",
+            caracteres:{celeste:"a irradiação plena: a visão do arquétipo, o ícone, a luz que revela unindo à fonte", telurico:"a imaginação criadora de formas no mundo — o centro que medeia e harmoniza", ctonico:"o sonho, o onírico, a imagem que sobe do fundo"},
+            graus:{natural:{v:"τὸ εὐφαντασίωτον — a vividez imaginativa nativa, ver com a alma (Longino, Do Sublime 15.1)",p:"pobreza imaginal — a alma sem imagens°",e:"fantasia desgovernada — a imaginação que arrasta°"}, etica:{v:"εὐμουσία — a formação pelas belas imagens e ritmos (Rep. 401d–402a)",p:"ἀμουσία — a rudeza sem musas, o gosto informe°",e:"esteticismo — a bela forma como fim último°"}, politica:{v:"εὐσχημοσύνη — o decoro, a boa forma visível do gesto e da vida (Rep. 400c–401a)",p:"ἀσχημοσύνη — a deformidade do gesto, a vida sem forma°",e:"teatralidade — a aparência cultivada sem interior°"}, catartica:{v:"desapego das imagens e fantasias — soltar o fluxo imaginal, aquietar a φαντασία para que o espelho reflita o alto e não a tormenta (Enéada I 4.10). O estado que resulta: ἡσυχία, o espelho aquietado",p:"φαντασιοπληξία — o espelho estilhaçado pela tormenta de imagens; ser arrastado pelo imaginário",e:"espelho vazio — a quietude que nada mais reflete; iconoclastia interior°"}, teoretica:{v:"βασιλική — a ciência régia que não executa, mas tece todas as outras numa só trama, sabendo o καιρός de cada uma (Político 305c–e, 311b–c; Juliano, Ao Rei Hélio)",p:"trono vacante — os saberes sem centro, a trama desfeita, cada arte governando a si mesma°",e:"τυραννική — o mando pela força, sem ciência nem consentimento (Político 276d–e)"}}},
+  omicron: {rotulo:"Ο", tipo:"vogal", letra:"Ο", pos:[266,505],
+            planeta:"Marte", veste:"Veste da Coragem", nome_proprio:"Ζῆλος",
+            faculdade:"Ζῆλος — a Força Irascível em seu sentido próprio: a potência de emular o que se admira, de arder por assemelhar-se ao superior. Motor da imitatio dei (ζῆλος, não φθόνος: emulação que quer alcançar, não inveja que quer destruir).",
+            influencia:"Capacidade de resistência, luta e emulação ascendente",
+            vicios:"Ira, impulsividade, violência, crueldade, inveja (φθόνος — o zelo azedado)",
+            virtudes:"Coragem, assertividade, proteção, emulação do divino",
+            caracteres:{celeste:"o zelo sagrado, o ardor anagógico — arder por imitar os deuses", telurico:"a emulação no mundo: a ambição nobre, a competição justa, o brio de estar à altura dos bons", ctonico:"o fervor que desce: o zelo que guarda e protege com unhas e dentes, e que azeda em inveja se não for purificado"},
+            graus:{natural:{v:"θυμὸς εὐγενής — o ânimo nobre do cão de guarda, feroz com o estranho e manso com o seu (Rep. 375a–e)",p:"moleza — a falta de ímpeto, o ânimo que não guarda nada°",e:"ferocidade indiscriminada — morder o próprio rebanho (Rep. 375)"}, etica:{v:"πραότης — a mansidão, o θυμός treinado à justa medida (Ét. Nic. IV 5)",p:"ἀοργησία — a incapacidade de indignar-se com o que merece (Ét. Nic. IV 5)",e:"ὀργιλότης — a irascibilidade pronta (Ét. Nic. IV 5)"}, politica:{v:"ἀνδρεία — a coragem cívica sob a razão (Rep. IV 429; Ét. Nic. III 6–9)",p:"δειλία — a covardia (Ét. Nic. III 7)",e:"θρασύτης — a temeridade (Ét. Nic. III 7)"}, catartica:{v:"desapego da ira e da angústia — soltar os dois movimentos do θυμός: o que ataca (ὀργή) e o que se contrai (λύπη, o medo e a aflição). O estado que resulta: ἀφοβία, não temer nem a separação (Fédon 67e–68a; Enéada I 2.5)",p:"servidão tímica — ser governado pela ira que explode e pela angústia que contrai",e:"temeridade dissolutiva — buscar a dissolução antes da hora; a impassibilidade que virou desprezo pela vida°"}, teoretica:{v:"στρατηγική — a ciência de dispor as forças e saber quando lutar, servindo à régia que decide se se deve lutar (Político 304e–305a; Rep. VII 522c–e, 526d)",p:"imprevidência — o enfrentamento sem plano, ver só o embate imediato°",e:"polemomania — a estratégia como fim, tudo convertido em campo de batalha°"}}},
+  eta:     {rotulo:"Η", tipo:"vogal", letra:"Η", pos:[414,505],
+            planeta:"Vênus", veste:"Veste do Desejo", nome_proprio:"Ἔρως",
+            faculdade:"Ἔρως — a Força Concupiscível em seu sentido próprio: o desejo que ascende. Em seu ápice, não o ἔρως πάνδημος (vulgar, que quer possuir) mas o ἔρως οὐράνιος (celeste, do Banquete): o amor do Belo em si, que une à Beleza divina e gera virtude verdadeira. Uma das três correntes anagógicas (πίστις–ἀλήθεια–ἔρως).",
+            influencia:"Atração, amor e ascensão pela beleza",
+            vicios:"Luxúria, possessividade, vício, superficialidade",
+            virtudes:"Amor divino, beleza interior, harmonia",
+            caracteres:{celeste:"ἔρως pelo Belo em si, o amor anagógico que ascende", telurico:"o amor pelo concreto, o cuidado, o vínculo encarnado", ctonico:"o desejo das profundezas, a atração pelo mistério e pelo oculto"},
+            graus:{natural:{v:"εὐορεξία — o apetite bem-nascido, o desejo saudável (uso médico antigo)°",p:"apatia do desejo — a anorexia do apetite vital°",e:"voracidade — o apetite que devora sem medida°"}, etica:{v:"αἰδώς — o pudor, a vergonha nobre do cavalo branco (Fedro 253d)",p:"ἀναίδεια — o despudor, a perda da vergonha°",e:"vergonha paralisante — o pudor que impede o vínculo°"}, politica:{v:"σωφροσύνη — a temperança, a medida do desejo sob a razão (Rep. IV 430e; Ét. Nic. III 10–12)",p:"ἀκολασία — a intemperança, o desejo sem freio (Ét. Nic. III 12)",e:"ἀναισθησία — a insensibilidade ao prazer devido (Ét. Nic. III 11)"}, catartica:{v:"desapego do erótico e dos prazeres gustativos, táteis, visuais, sonoros e embriagantes — soltar a ἐπιθυμία dos cinco sentidos (Fédon 64d: os prazeres do amor; 83d: cada prazer é um prego que crava a alma no corpo). O estado que resulta: λύσις, o desatar",p:"προσπάθεια — o apego sensorial, a alma pregada ao corpo pelo prazer (Fédon 83d)",e:"anestesia — o coração desligado; a κάθαρσις que matou o eros em vez de soltá-lo°"}, teoretica:{v:"ἐρωτική — a ciência das coisas do amor, a única que Sócrates diz saber: reconhecer quem ama e quem é amado e conduzir o eros ao belo (Banquete 177d; Lísis 204b–c; Fedro 257a)",p:"ἀνέραστος — a alma sem eros, que não reconhece o belo nem é por ele movida°",e:"o eros sem ciência — o desejo que domina a razão e se arrasta ao prazer, a ὕβρις (Fedro 238b–c)"}}},
+  bathron: {rotulo:"Ἱ.Στήριον", tipo:"centro", pos:[340,617],
+            faculdade:"Ἱεροστήριον — de ἱερόν + -στήριον (o sufixo dos lugares-para: θυσιαστήριον, μυστήριον, δικαστήριον): o lugar do trabalho sagrado, o espaço básico de invocações e banimentos. Se tem um Barco, tem uma Doca — o Ὄχημα ancora aqui. Ressoa στερεός: o sólido, o tridimensional — onde o diagrama vira espaço habitável. Conserva a Ἵδρυσις (a instalação consagrada) e o Βάθρον (o plano-pedestal) como camadas suas.",
+            descricao:"O silêncio do ponto final — a forma consumada. De onde a ἐπιστροφή parte. Parente do βόθρος, a fossa ctônica do culto: o fundo onde o divino se assenta. No Ἀργώ 1.5, é a doca do veículo: o plano (Βάθρον) sobre o qual o rito se ergue em três dimensões."}
+};
+const CAMINHOS = [
+  {de:"theoi",   para:"omega",   letra:"Α", disco:[304,200], descricao:""},
+  {de:"theoi",   para:"alpha",   letra:"Γ", disco:[376,200], descricao:""},
+  {de:"theoi",   para:"ennoia",  letra:"Ά", disco:[340,195], descricao:"Ἄλφα com tónos — o caminho do ápice ao silêncio: dos Θεοί à Ἔννοια."},
+  {de:"omega",   para:"alpha",   letra:"Δ", disco:[378,255], pill:[[340,255,54,"Ἀλήθεια"]], descricao:""},
+  {de:"omega",   para:"ennoia",  letra:"Μ", disco:[304,277], descricao:""},
+  {de:"alpha",   para:"ennoia",  letra:"Θ", disco:[376,277], descricao:""},
+  {de:"omega",   para:"epsilon", letra:"Η", disco:[226,318], descricao:""},
+  {de:"alpha",   para:"ypsilon", letra:"Ε", disco:[454,318], descricao:""},
+  {de:"omega",   para:"agalma",  letra:"Β", disco:[304,320], descricao:""},
+  {de:"alpha",   para:"agalma",  letra:"Τ", disco:[376,320], descricao:""},
+  {de:"epsilon", para:"ennoia",  letra:"Ν", disco:[262,340], descricao:""},
+  {de:"ennoia",  para:"ypsilon", letra:"Ο", disco:[417,340], descricao:""},
+  {de:"ennoia",  para:"agalma",  letra:"Ψ", disco:[340,341], descricao:""},
+  {de:"epsilon", para:"agalma",  letra:"Π", disco:[290,381], descricao:""},
+  {de:"agalma",  para:"ypsilon", letra:"Ϝ", disco:[398,381], descricao:"O dígamma — antes presente só no arithmos, agora manifesto como caminho: a força de ligação que porta o ἀγαθόν."},
+  {de:"agalma",  para:"iota",    letra:"Ϙ", disco:[340,420], descricao:"Ϙόππα — o pilar central entre o Ἄγαλμα e a Ἔλλαμψις: a luz que atravessa a lente do culto."},
+  {de:"epsilon", para:"iota",    letra:"Λ", disco:[262,420], descricao:""},
+  {de:"omicron", para:"agalma",  letra:"ϡ", disco:[300,443], descricao:"Σαμπῖ — a diagonal ascendente do Ζῆλος ao Ἄγαλμα: o ardor que se oferta ao foco consagrado."},
+  {de:"ypsilon", para:"iota",    letra:"Ι", disco:[417,420], descricao:""},
+  {de:"epsilon", para:"omicron", letra:"Σ", disco:[226,443], descricao:""},
+  {de:"ypsilon", para:"eta",     letra:"Ρ", disco:[454,443], descricao:""},
+  {de:"iota",    para:"omicron", letra:"Υ", disco:[303,482], descricao:""},
+  {de:"iota",    para:"eta",     letra:"Ξ", disco:[377,482], descricao:"Ξῖ movido: agora liga a Ἔλλαμψις ao Ἔρως."},
+  {de:"eta",     para:"agalma",  letra:"Φ", disco:[377,443], descricao:"Φῖ movido: agora liga o Ἔρως ao Ἄγαλμα — o amor que se dirige à imagem consagrada."},
+  {de:"omicron", para:"bathron", letra:"Κ", disco:[306,566], descricao:""},
+  {de:"eta",     para:"bathron", letra:"Ω", disco:[374,566], descricao:""},
+  {de:"iota",    para:"bathron", letra:"Ζ", disco:[340,578], descricao:""},
+  {de:"omicron", para:"eta",     letra:"Χ", disco:[340,505], descricao:""}
+];
+const LETRAS = {
+  "Ά":{min:"ά",nome:"Alfa tônico",valor:1,significados:"Transcendência, deificação, contemplação das essências, misticismo, amor incondicional, devoção aos Deuses."},
+  "Α":{min:"α",nome:"Alfa",valor:1,significados:"Origem, refúgio, nascimento, renascimento, pureza, potencial, criação, integração, encarnação."},
+  "Β":{min:"β",nome:"Beta",valor:2,significados:"Movimento, jornada, progresso, emissão, desprendimento, dualidade, alternância, sabedoria, mistério, introspecção, autodescoberta, instrução, proporcionalidade, resiliência, vitória."},
+  "Γ":{min:"γ",nome:"Gama",valor:3,significados:"Crescimento, circulação, renovação, fertilidade, constância, beleza, amor, esperança, conexão, criatividade, manifestação, liderança transformadora, pioneirismo, generosidade, distribuição, densidade."},
+  "Δ":{min:"δ",nome:"Delta",valor:4,significados:"Mudança, transformação, destino, renovação, emoções, ciclos naturais, adaptação, ponto de virada, diferença, discernimento."},
+  "Ε":{min:"ε",nome:"Épsilon",valor:5,significados:"Equilíbrio, harmonia, comunicação, aproximação, espiritualidade, sonhos, sutileza, mediação, mundo onírico, equilíbrio entre o visível e o invisível, elasticidade, perspicácia."},
+  "Ϝ":{min:"ϝ",nome:"Dígamma (Vau)",valor:6,significados:"Ligação, junção, o gancho que une (waw), a hexade, o vínculo entre o belo e o bom, presença oculta que se manifesta — a preencher na prática.°"},
+  "Ζ":{min:"ζ",nome:"Zeta",valor:7,significados:"Força vital, energia criativa, movimento, natureza, aventura, coragem, cooperação, união dos opostos, progressão, alianças."},
+  "Η":{min:"η",nome:"Eta",valor:8,significados:"Paixão, desejo, fogo interior, luz, difusão, consciência, beleza, relações amorosas, intensidade, amor fati."},
+  "Θ":{min:"θ",nome:"Teta",valor:9,significados:"Sabedoria, justiça divina, renascimento, abrangência, conquista, compreensão, periodicidade, fertilidade de ideias."},
+  "Ι":{min:"ι",nome:"Iota",valor:10,significados:"Individualidade, soberania, poder, liberdade, busca interior, luz, ousadia filosófica, expansão de horizontes."},
+  "Κ":{min:"κ",nome:"Capa",valor:20,significados:"Ação, ordem, disciplina espiritual, compaixão ao ensinar, sabedoria prática, abnegação, destruição das ilusões, luz orientadora."},
+  "Λ":{min:"λ",nome:"Lambda",valor:30,significados:"Vontade, movimento, ritmo, liderança carismática, transformação, inovação, generosidade, conquista, intensidade."},
+  "Μ":{min:"μ",nome:"Mi",valor:40,significados:"Harmonia, diplomacia, serenidade, equilíbrio, emoções, alquimia, crescimento conjunto, artesanato, organização formativa."},
+  "Ν":{min:"ν",nome:"Ni",valor:50,significados:"Amor, compaixão, cura emocional, coragem, força anímica, fidelidade, entrega, vitória, desejo de integração, jornada."},
+  "Ξ":{min:"ξ",nome:"Csi",valor:60,significados:"Transformação, fluidez, memória viva, renovação, morte e renascimento, dissolução de barreiras, beleza celestial, iniciação."},
+  "Ο":{min:"ο",nome:"Ômicron",valor:70,significados:"Visão, clareza, percepção, determinação, estratégia, guerra, coragem, força, sagacidade, olhar perspicaz e implacável."},
+  "Ϙ":{min:"ϙ",nome:"Koppa (Ϙόππα)",valor:90,significados:"O pilar, o eixo, a coluna que atravessa; a letra arcaica do número 90; presença estrutural que sustenta o meio — a preencher na prática.°"},
+  "Π":{min:"π",nome:"Pi",valor:80,significados:"Perfeição, totalidade, multiplicação, integridade, propósito, círculos virtuosos, paciência, estratégia, natureza."},
+  "Ρ":{min:"ρ",nome:"Rô",valor:100,significados:"Revelação do destino, movimento, ciclos da vida, mudança inevitável, proporcionalidade, passo decisivo, boas-novas."},
+  "Σ":{min:"σ",nome:"Sigma",valor:200,significados:"Transformação, renovação, cura, resiliência, superação das provações, soma de experiências, destino, sincronia, esperança."},
+  "Τ":{min:"τ",nome:"Tau",valor:300,significados:"Profundidade, mistérios, emoções intensas, profecias, profundezas do oceano, destino, tempo, ira divina purificadora."},
+  "Υ":{min:"υ",nome:"Ípsilon",valor:400,significados:"Determinação, coragem, pureza, elevação, ideal, justiça, crescimento, força de vontade, magnanimidade."},
+  "Φ":{min:"φ",nome:"Fi",valor:500,significados:"Amor divino, beleza, fluxo, potencial, harmonia, realização, conexão com o divino, compreensão profunda."},
+  "Χ":{min:"χ",nome:"Qui",valor:600,significados:"Fogo transformador, revolução, sacrifício, não-conformismo, rebeldia, desapego das convenções, transgressão, caos construtivo, magia."},
+  "Ψ":{min:"ψ",nome:"Psi",valor:700,significados:"Mistério, profundidade da alma, conexão com o divino, previsão, coerência, juízo, transe."},
+  "ϡ":{min:"ϡ",nome:"Sampi (Σαμπῖ)",valor:900,significados:"A última das letras-número, o 900; o extremo, o que fecha a série; a diagonal do ardor ao foco — a preencher na prática.°"},
+  "Ω":{min:"ω",nome:"Ômega",valor:800,significados:"Conclusão, realização, coroação, ciclo eterno, tempo, totalidade, lições extraídas das dificuldades, a conquista final."}
+};
+
+/* ===================== CONSTANTES DO CADERNO ===================== */
+const PLANETARIAS=['omega','ypsilon','omicron','iota','eta','epsilon','alpha']; // ordem caldaica
+const CENTRAIS=['ennoia','agalma','bathron'];
+const DIA_SPAIRA=['iota','alpha','omicron','epsilon','ypsilon','eta','omega']; // domingo..sábado
+const NOME_DIA=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const HORAS={aurora:'Aurora',meio:'Meio-dia',poente:'Poente',noite:'Noite',outra:'Outro momento'};
+const CATEGORIAS=['Pedido','Agradecimento','Sacrifício','Elogio','Argumento','Voto','Ato devocional','Declaração da natureza do deus'];
+const MODOS=[['noeros','νοερῶς','intelectivamente'],['logikos','λογικῶς','racionalmente'],['physikos','φυσικῶς','naturalmente'],['aisthetos','αἰσθητῶς','sensivelmente']];
+const ESTADOS_VOTO={prometido:'Prometido',cumprido:'Cumprido',liberado:'Liberado (condição não se deu)'};
+const TOPO_TIPOS={deus:'Um deus nomeado',agathos:'Ἀγαθὸς Δαίμων',agnostos:'O Deus desconhecido'};
+
+const CAMPO_TITULO={k:'titulo',rot:'Título'};
+const CAMPO_TEXTO={k:'texto',t:'area',rot:'Texto'};
+const CAMPO_FONTE={k:'fonte',rot:'Fonte (obra, verso, tradição)'};
+const KINDS={
+  epiteto:{nome:'Epíteto',plural:'Epítetos',vis:'comum',campos:[
+    {k:'deus',rot:'Deus'},{k:'grego',rot:'Forma grega',gr:true},{k:'translit',rot:'Transliteração'},
+    {k:'traducao',rot:'Tradução'},CAMPO_FONTE,{k:'construcao',t:'check',rot:'Construção nossa (°), sem fonte antiga'},{k:'nota',t:'area',rot:'Nota sobre o sentido'}]},
+  virtude:{nome:'Virtude',plural:'Virtudes',vis:'comum',campos:[
+    {k:'nome',rot:'Virtude'},{k:'grego',rot:'Nome grego',gr:true},{k:'grau',t:'grau',rot:'Grau'},
+    {k:'definicao',t:'area',rot:'Definição'},{k:'eixos',t:'eixos',rot:'Eixos da medida'},
+    {k:'opera',t:'area',rot:'Como opera'},{k:'ligacoes',rot:'Liga-se a (outras virtudes, spairas, letras)'},
+    CAMPO_FONTE,{k:'construcao',t:'check',rot:'Construção nossa (°), sem fonte antiga'}]},
+  palavra:{nome:'Palavra-chave',plural:'Palavras-chave',vis:'comum',campos:[{k:'termo',rot:'Palavra',gr:true},{k:'nota',t:'area',rot:'Sentido'}]},
+  insight:{nome:'Insight',plural:'Insights',vis:'priv',campos:[{k:'data',t:'date',rot:'Dia'},{k:'texto',t:'area',rot:'O que se mostrou'}]},
+  relacao:{nome:'Minha relação',plural:'Minha relação',vis:'priv',campos:[{k:'texto',t:'area',rot:'Como me relaciono com esta spaira'}]},
+  imagem:{nome:'Imagem',plural:'Imagens',vis:'comum',campos:[CAMPO_TITULO,{k:'texto',t:'area',rot:'Descrição da imagem'},CAMPO_FONTE]},
+  planta:{nome:'Planta',plural:'Plantas',vis:'comum',campos:[{k:'titulo',rot:'Planta'},{k:'deus',rot:'Deus (ou deuses, separados por vírgula)'},{k:'texto',t:'area',rot:'Uso e sentido'},CAMPO_FONTE]},
+  ato:{nome:'Ato devocional',plural:'Atos devocionais',vis:'comum',campos:[CAMPO_TITULO,{k:'deus',rot:'Deus (ou deuses, separados por vírgula)'},{k:'texto',t:'area',rot:'Como se faz'},CAMPO_FONTE]},
+  desejo:{nome:'Desejo',plural:'Desejos',vis:'priv',campos:[{k:'texto',t:'area',rot:'O desejo'}]},
+  mito:{nome:'História ou mito',plural:'Histórias e mitos',vis:'comum',campos:[CAMPO_TITULO,CAMPO_TEXTO,CAMPO_FONTE]},
+  hino:{nome:'Hino',plural:'Hinos',vis:'comum',campos:[CAMPO_TITULO,{k:'texto',t:'area',rot:'Texto do hino',gr:true},CAMPO_FONTE]},
+  oracao:{nome:'Oração',plural:'Orações',vis:'priv'},
+  voto:{nome:'Voto',plural:'Votos',vis:'priv'},
+  constelacao:{nome:'Constelação',plural:'Constelações',vis:'priv'}
+};
+const SECOES_SPAIRA=['epiteto','virtude','ato','palavra','insight','relacao'];
+const SECOES_LETRA=['imagem','palavra','planta','ato','desejo','mito','hino','epiteto','insight'];
+
+
+/* ===================== ESTADO ===================== */
+const S={
+  modo:'carregando', uid:null, email:'', dono:false, conectado:false, aviso:'',
+  perfil:{nome:'',aprovado:false,moderador:false}, perfis:new Map(), partilhadas:new Set(), gravando:0, versao:0,
+  priv:new Map(), shared:new Map(), base:new Map(), meu:{itens:{},constelacoes:{}},
+  view:'hierograma', det:null, grau:'politica', diarioFiltro:'', busca:'', buscaTipo:'', buscaOrig:'',
+  confirmar:null, contaModo:'entrar', contaMsg:'', recuperando:false
+};
+const LS_KEY='okhema-caderno-local';
+
+
+/* ===================== UTILIDADES ===================== */
+const $=s=>document.querySelector(s);
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const novoId=()=>Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+const clone=o=>JSON.parse(JSON.stringify(o||{}));
+const hoje=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const fmtData=s=>{if(!s)return '';const p=String(s).split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:s;};
+function nomeSp(id){const s=SPAIRAS[id];if(!s)return id;return s.nome_proprio?`${s.rotulo} ${s.nome_proprio}`:s.rotulo;}
+function nomeCam(i){const c=CAMINHOS[i];if(!c)return '';return `${c.letra} · ${SPAIRAS[c.de].rotulo}–${SPAIRAS[c.para].rotulo}`;}
+function nomeAlvo(a){if(!a)return '';const[t,id]=a.split(':');return t==='sp'?nomeSp(id):nomeCam(+id);}
+let toastT=null;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,4200);}
+function msgErro(e){
+  const c=e&&e.code,m=String((e&&e.message)||'');
+  if(c==='42501'||/row-level security|permission denied/i.test(m))return 'O banco recusou esta gravação: sua conta talvez ainda não tenha permissão para isso.';
+  if(/JWT|token/i.test(m))return 'Sua sessão expirou. Entre de novo.';
+  if(/Failed to fetch|NetworkError|Load failed/i.test(m))return 'Sem conexão: não foi possível salvar agora. Tente de novo quando a internet voltar.';
+  return 'Não foi possível salvar agora. Tente de novo em instantes.';
+}
+
+/* ===================== ARMAZENAMENTO (Supabase) ===================== */
+/* Cada entrada é uma linha da tabela "itens". O caderno privado só é lido pelo seu autor
+   (regra no próprio banco); o acervo comum é lido por todos os membros. */
+const filas={};
+function fila(chave,fn){
+  S.gravando++;S.versao++;
+  const ant=filas[chave]||Promise.resolve();
+  const p=ant.then(fn).catch(e=>{toast(msgErro(e));}).finally(()=>{S.gravando--;});
+  filas[chave]=p;return p;
+}
+function carregarLocal(){
+  try{const raw=localStorage.getItem(LS_KEY);if(raw){const arr=JSON.parse(raw);S.priv=new Map(arr.map(i=>[i.id,i]));}}catch(e){}
+}
+function lerCadernoDoAparelho(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]')||[];}catch(e){return [];}}
+function gravarLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify([...S.priv.values()]));}catch(e){toast('Este navegador não deixou guardar o caderno. Use a cópia de segurança.');}}
+function getPriv(id){return S.priv.get(id);}
+const sbOk=res=>{if(res&&res.error)throw res.error;return res&&res.data;};
+/* "prefs" é uma entrada por pessoa: no banco ganha o id da pessoa para não colidir com a de outro membro */
+const dbId=id=>id==='prefs'?'prefs:'+S.uid:id;
+function linha(item,vis){
+  return {id:dbId(item.id),autor:S.uid,visibilidade:vis,partilhada:item.kind==='constelacao'&&S.partilhadas.has(item.id),
+    kind:item.kind,alvo:item.alvo||null,dados:item,editado_em:new Date().toISOString()};
+}
+function ondeEsta(id){if(S.priv.has(id))return 'priv';if(S.meu.itens[id])return 'comum';return null;}
+async function salvarItem(item,vis){
+  item.editado=Date.now();
+  if(!item.criado)item.criado=item.editado;
+  if(S.modo!=='db'){
+    if(vis==='comum')toast('O acervo comum só funciona com uma conta. A entrada foi para o caderno deste aparelho.');
+    S.priv.set(item.id,item);gravarLocal();render();return;
+  }
+  if(vis==='comum'&&!S.perfil.aprovado){toast('Sua conta ainda aguarda aprovação para escrever no acervo comum. A entrada foi para o seu caderno privado.');vis='priv';}
+  const antes=ondeEsta(item.id);
+  if(vis==='priv'){S.priv.set(item.id,item);if(antes==='comum')delete S.meu.itens[item.id];}
+  else{S.meu.itens[item.id]=item;if(antes==='priv')S.priv.delete(item.id);}
+  render();
+  await fila('i:'+item.id,()=>SB.from('itens').upsert(linha(item,vis)).then(sbOk));
+}
+async function apagarItem(rec){
+  const id=rec.item.id;
+  if(S.modo!=='db'){S.priv.delete(id);gravarLocal();render();return;}
+  if(rec.origem==='priv')S.priv.delete(id);
+  else if(rec.origem==='comum'){if(rec.uid===S.uid)delete S.meu.itens[id];else{const d=S.shared.get(rec.uid);if(d)delete d.itens[id];}}
+  else if(rec.origem==='base')S.base.delete(id);
+  S.partilhadas.delete(id);
+  render();
+  await fila('i:'+id,()=>SB.from('itens').delete().eq('id',rec.origem==='priv'?dbId(id):id).then(sbOk));
+}
+async function partilharConst(id,valor){
+  if(valor&&!S.perfil.aprovado){toast('Sua conta ainda aguarda aprovação para partilhar com a comunidade.');return;}
+  if(valor)S.partilhadas.add(id);else S.partilhadas.delete(id);
+  render();
+  await fila('i:'+id,()=>SB.from('itens').update({partilhada:valor}).eq('id',id).then(sbOk));
+  toast(valor?'Constelação partilhada com a comunidade.':'A constelação voltou a ser só sua.');
+}
+async function removerConstAlheia(uid,id){
+  const d=S.shared.get(uid);if(d)delete d.constelacoes[id];render();
+  await fila('i:'+id,()=>SB.from('itens').update({partilhada:false}).eq('id',id).then(sbOk));
+  toast('A constelação saiu da vista da comunidade. Ela continua no caderno de quem a fez.');
+}
+
+/* todas as entradas visíveis, com a sua origem */
+function todos(){
+  const out=[];
+  S.priv.forEach(it=>out.push({item:it,origem:'priv',uid:S.uid}));
+  const docs=new Map(S.shared);
+  if(S.modo==='db')docs.set(S.uid,S.meu);
+  docs.forEach((doc,uid)=>{const its=(doc&&doc.itens)||{};Object.values(its).forEach(it=>out.push({item:it,origem:'comum',uid}));});
+  S.base.forEach(it=>out.push({item:it,origem:'base',uid:null}));
+  return out;
+}
+function doTipo(kind){return todos().filter(r=>r.item.kind===kind);}
+function paraAlvo(kind,alvo){return todos().filter(r=>r.item.kind===kind&&(r.item.alvo===alvo||(r.item.alvos||[]).includes(alvo)));}
+function meus(kind){return [...S.priv.values()].filter(i=>i.kind===kind);}
+function prefs(){return S.priv.get('prefs')||{id:'prefs',kind:'pref'};}
+function constAtiva(){const p=prefs();const c=p.ativa&&getPriv(p.ativa);return c&&c.kind==='constelacao'?c:null;}
+
+/* ===================== CONEXÃO ===================== */
+let SB=null;
+const CACHE_KEY=()=>'okhema-copia-'+S.uid;
+async function lerTudo(){
+  const out=[];
+  for(let de=0;;de+=1000){
+    const res=await SB.from('itens').select('id,autor,visibilidade,partilhada,kind,dados').order('id').range(de,de+999);
+    sbOk(res);out.push(...res.data);if(res.data.length<1000)break;
+  }
+  return out;
+}
+function aplicarLinhas(linhas){
+  S.priv=new Map();S.meu={itens:{},constelacoes:{}};S.shared=new Map();S.base=new Map();S.partilhadas=new Set();
+  linhas.forEach(r=>{
+    const d=Object.assign({},r.dados||{});d.id=(r.dados&&r.dados.id)||r.id;
+    if(r.visibilidade==='base'){S.base.set(d.id,d);return;}
+    if(r.autor===S.uid){if(r.visibilidade==='priv')S.priv.set(d.id,d);else S.meu.itens[d.id]=d;if(r.partilhada)S.partilhadas.add(d.id);return;}
+    let doc=S.shared.get(r.autor);if(!doc){doc={itens:{},constelacoes:{}};S.shared.set(r.autor,doc);}
+    if(r.visibilidade==='comum')doc.itens[d.id]=d;else if(r.partilhada&&r.kind==='constelacao')doc.constelacoes[d.id]=d;
+  });
+}
+function aplicarPerfis(pf){
+  S.perfis=new Map(pf.map(p=>[p.id,p]));
+  S.perfil=S.perfis.get(S.uid)||{id:S.uid,nome:'',aprovado:false,moderador:false};
+  S.dono=!!S.perfil.moderador;
+}
+async function carregar(){
+  if(S.modo!=='db'||S.gravando>0)return;
+  const v0=S.versao;
+  try{
+    const [linhas,pf]=await Promise.all([lerTudo(),SB.from('perfis').select('id,nome,aprovado,moderador,criado_em').then(sbOk)]);
+    if(S.versao!==v0||S.gravando>0)return; /* algo foi gravado enquanto líamos: a próxima leitura traz tudo */
+    aplicarPerfis(pf);aplicarLinhas(linhas);
+    try{localStorage.setItem(CACHE_KEY(),JSON.stringify({linhas,perfis:pf}));}catch(e){}
+    S.conectado=true;S.aviso='';
+  }catch(e){
+    if(!S.conectado){let copia=null;try{copia=JSON.parse(localStorage.getItem(CACHE_KEY())||'null');}catch(_){}
+      if(copia){aplicarPerfis(copia.perfis);aplicarLinhas(copia.linhas);}}
+    S.aviso='Sem conexão agora: o que aparece é a última cópia lida.';
+  }
+  agendar();
+}
+let renderAgendado=false;
+function agendar(){if(renderAgendado)return;renderAgendado=true;requestAnimationFrame(()=>{renderAgendado=false;render();});}
+async function entrarSessao(session){
+  if(S.modo==='db'&&S.uid===session.user.id)return;
+  S.uid=session.user.id;S.email=session.user.email||'';S.modo='db';S.conectado=false;
+  try{localStorage.removeItem('okhema-sem-conta');}catch(e){}
+  if(['entrar','nova-senha'].includes(S.view)&&!S.recuperando)S.view='hierograma';
+  render();await carregar();
+}
+async function iniciar(){
+  const erroLink=/error_description=([^&]+)/.exec(location.hash);
+  lerHash();
+  const cfg=window.OKHEMA_CONFIG;
+  if(window.supabase&&cfg&&cfg.url&&cfg.chave){
+    try{SB=window.supabase.createClient(cfg.url,cfg.chave,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});}catch(e){SB=null;}
+  }
+  if(!SB){S.modo='local';carregarLocal();render();return;}
+  SB.auth.onAuthStateChange((ev,session)=>{
+    if(ev==='PASSWORD_RECOVERY'){S.recuperando=true;S.view='nova-senha';if(session)setTimeout(()=>entrarSessao(session),0);render();return;}
+    if(ev==='SIGNED_OUT'){S.modo='entrar';S.uid=null;S.priv=new Map();S.meu={itens:{},constelacoes:{}};S.shared=new Map();S.base=new Map();S.partilhadas=new Set();S.conectado=false;S.dono=false;S.contaModo='entrar';S.contaMsg='';render();return;}
+    if(session&&(ev==='SIGNED_IN'||ev==='INITIAL_SESSION'))setTimeout(()=>entrarSessao(session),0);
+  });
+  let session=null;try{session=(await SB.auth.getSession()).data.session;}catch(e){}
+  if(session){await entrarSessao(session);}
+  else if(S.modo!=='db'){let semConta=false;try{semConta=localStorage.getItem('okhema-sem-conta')==='1';}catch(e){}
+    if(semConta){S.modo='local';carregarLocal();}else{S.modo='entrar';}
+    render();}
+  if(erroLink){const m=decodeURIComponent(erroLink[1].replace(/\+/g,' '));toast(/expired|invalid/i.test(m)?'Este link de email expirou ou já foi usado. Peça outro.':m);}
+  setInterval(()=>{if(document.visibilityState==='visible')carregar();},60000);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')carregar();});
+  window.addEventListener('online',()=>carregar());
+}
+function nomearAutores(){
+  document.querySelectorAll('[data-uid]').forEach(s=>{const u=s.dataset.uid;
+    if(u===S.uid){s.textContent='você';return;}
+    const p=S.perfis.get(u);s.textContent=(p&&p.nome)||'alguém da comunidade';});
+}
+
+/* ===================== CONTA ===================== */
+const urlDoApp=()=>location.origin+location.pathname;
+function traduzAuth(e){
+  const m=String((e&&e.message)||'');
+  if(/Invalid login credentials/i.test(m))return 'Email ou senha não conferem.';
+  if(/Email not confirmed/i.test(m))return 'Falta confirmar o email: abra a mensagem que enviamos e toque no link.';
+  if(/already registered|already been registered/i.test(m))return 'Já existe uma conta com este email. Use “Entrar”, ou “Esqueci a senha”.';
+  if(/Password should be at least/i.test(m))return 'A senha precisa ter pelo menos 6 caracteres.';
+  if(/rate limit|security purposes/i.test(m))return 'Muitos pedidos seguidos. Espere alguns minutos e tente de novo.';
+  if(/valid email|invalid format|Unable to validate email/i.test(m))return 'Este email não parece válido.';
+  if(/Failed to fetch|NetworkError|Load failed/i.test(m))return 'Sem conexão com o servidor agora.';
+  return m||'Não foi possível agora. Tente de novo.';
+}
+async function enviarConta(f){
+  const modo=f.dataset.modo,email=(f.elements.email&&f.elements.email.value||'').trim(),senha=f.elements.senha?f.elements.senha.value:'';
+  const msg=t=>{const p=f.querySelector('.msg-conta');if(p)p.textContent=t;};
+  const btn=f.querySelector('[type=submit]');if(btn)btn.disabled=true;
+  try{
+    if(modo==='entrar'){const r=await SB.auth.signInWithPassword({email,password:senha});if(r.error)throw r.error;}
+    else if(modo==='criar'){
+      const nome=f.elements.nome.value.trim();
+      const r=await SB.auth.signUp({email,password:senha,options:{data:{nome},emailRedirectTo:urlDoApp()}});
+      if(r.error)throw r.error;
+      if(!r.data.session){S.contaMsg=`Enviamos um link de confirmação para ${email}. Abra-o neste aparelho para entrar.`;S.contaModo='entrar';render();}
+    }else if(modo==='esqueci'){
+      const r=await SB.auth.resetPasswordForEmail(email,{redirectTo:urlDoApp()});if(r.error)throw r.error;
+      S.contaMsg=`Se houver uma conta com ${email}, chegará um link para criar nova senha.`;S.contaModo='entrar';render();
+    }else if(modo==='nova-senha'){
+      const r=await SB.auth.updateUser({password:senha});if(r.error)throw r.error;
+      S.recuperando=false;location.hash='hierograma';S.view='hierograma';toast('Senha nova guardada.');render();
+    }
+  }catch(e){msg(traduzAuth(e));}
+  finally{if(btn)btn.disabled=false;}
+}
+async function sair(){try{await SB.auth.signOut();}catch(e){}S.modo='entrar';render();}
+async function salvarNome(nome){
+  nome=nome.trim();if(!nome)return;
+  S.perfil.nome=nome;render();
+  await fila('perfil',()=>SB.from('perfis').update({nome}).eq('id',S.uid).then(sbOk));
+  toast('Nome guardado.');
+}
+async function definirAprovacao(uid,valor){
+  const p=S.perfis.get(uid);if(p)p.aprovado=valor;render();
+  await fila('aprov:'+uid,()=>SB.rpc('definir_aprovacao',{membro:uid,valor}).then(sbOk));
+}
+async function trazerDoAparelho(){
+  const n=await importarLista(lerCadernoDoAparelho());
+  try{if(n)localStorage.setItem(LS_KEY+'-levado','1');}catch(e){}
+  toast(n?`${n} ${n===1?'entrada trazida':'entradas trazidas'} para a sua conta.`:'Nada novo para trazer.');
+}
+
+/* ===================== HASH ===================== */
+function lerHash(){
+  if(S.recuperando){S.view='nova-senha';return;}
+  const h=(location.hash||'').slice(1);
+  if(h.startsWith('spaira-')&&SPAIRAS[h.slice(7)]){S.view='hierograma';S.det={t:'sp',id:h.slice(7)};}
+  else if(h.startsWith('caminho-')&&CAMINHOS[+h.slice(8)]){S.view='hierograma';S.det={t:'cam',id:+h.slice(8)};}
+  else if(['hierograma','diario','votos','constelacao','acervo','caderno','conta'].includes(h)){S.view=h;if(h==='hierograma')S.det=null;}
+  else{S.view='hierograma';}
+}
+window.addEventListener('hashchange',()=>{lerHash();render();if(S.det&&window.innerWidth<=820){const d=$('#det');if(d)d.scrollIntoView({behavior:'smooth',block:'start'});}});
+
+/* ===================== RENDER ===================== */
+function renderEstado(){
+  const e=$('#estado');let t='';
+  if(S.modo==='carregando')t='Abrindo o caderno…';
+  else if(S.modo==='entrar')t='Entre na sua conta para abrir o caderno.';
+  else if(S.modo==='db'){t='Conectado como '+((S.perfil&&S.perfil.nome)||S.email||'membro');
+    if(S.dono)t+=' · você modera o acervo';else if(!S.perfil.aprovado)t+=' · aguardando aprovação para escrever no acervo comum';}
+  else t='Caderno guardado só neste aparelho · para o acervo comum, crie uma conta na aba Conta';
+  if(S.aviso)t+=' · '+S.aviso;
+  e.textContent=t;
+}
+function render(){
+  const ativo=document.activeElement,aid=ativo&&ativo.id,sel=ativo&&typeof ativo.selectionStart==='number'?[ativo.selectionStart,ativo.selectionEnd]:null;
+  document.querySelectorAll('#abas a').forEach(a=>{if(a.dataset.v===S.view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  renderEstado();
+  const fora=S.modo==='entrar'||S.view==='nova-senha';$('#abas').hidden=fora||S.modo==='carregando';
+  const m=$('#principal');
+  m.innerHTML=S.modo==='carregando'?'':fora?vEntrar():S.view==='conta'?vConta():S.view==='diario'?vDiario():S.view==='votos'?vVotos():S.view==='constelacao'?vConstelacao():S.view==='acervo'?vAcervo():S.view==='caderno'?vCaderno():vHierograma();
+  if(aid){const n=document.getElementById(aid);if(n&&n!==document.activeElement){n.focus();if(sel&&n.setSelectionRange)try{n.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
+  nomearAutores();
+}
+
+/* ---------- Hierograma ---------- */
+function contagem(id){return todos().filter(r=>r.item.alvo==='sp:'+id||(r.item.alvos||[]).includes('sp:'+id)).length;}
+function contagemCam(i){return todos().filter(r=>r.item.alvo==='cam:'+i||(r.item.alvos||[]).includes('cam:'+i)).length;}
+function svgHierograma(){
+  const ca=constAtiva(),diaSp=DIA_SPAIRA[new Date().getDay()];
+  let s='';
+  CAMINHOS.forEach((c,i)=>{
+    const[x1,y1]=SPAIRAS[c.de].pos,[x2,y2]=SPAIRAS[c.para].pos;
+    const sel=S.det&&S.det.t==='cam'&&S.det.id===i;
+    const n=contagemCam(i);
+    s+=`<g class="cam${sel?' sel':''}" data-act="cam" data-i="${i}" role="button" tabindex="0" aria-label="Caminho ${esc(c.letra)}, de ${esc(SPAIRAS[c.de].rotulo)} a ${esc(SPAIRAS[c.para].rotulo)}">
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--tinta)" stroke-width="6.5" stroke-linecap="round"/>
+      <line class="clara" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${n?'var(--ouro)':'var(--folha)'}" stroke-width="3.6" stroke-linecap="round"/>
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="transparent" stroke-width="18" stroke-linecap="round"/></g>`;
+  });
+  CAMINHOS.forEach((c,i)=>{if(!c.disco)return;
+    s+=`<g pointer-events="none"><circle cx="${c.disco[0]}" cy="${c.disco[1]}" r="8.5" fill="var(--folha)" stroke="var(--acento)" stroke-width=".8"/><text x="${c.disco[0]}" y="${c.disco[1]+4}" text-anchor="middle" font-size="11" fill="var(--suave)" font-family="GFS Didot, Georgia, serif">${esc(c.letra)}</text></g>`;});
+  Object.entries(SPAIRAS).forEach(([id,sp])=>{
+    const[cx,cy]=sp.pos,sel=S.det&&S.det.t==='sp'&&S.det.id===id,centro=sp.tipo==='centro';
+    let g=`<g class="nodo${sel?' sel':''}" data-act="sp" data-id="${id}" role="button" tabindex="0" aria-label="Spaira ${esc(nomeSp(id))}">`;
+    if(id===diaSp)g+=`<circle cx="${cx}" cy="${cy}" r="${centro?33:30}" fill="none" stroke="var(--ouro)" stroke-width="1.6" stroke-dasharray="3 3"/>`;
+    if(centro){g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="27" fill="var(--acento)" stroke="var(--tinta)" stroke-width="2.2"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="12.5" fill="var(--sobre-acento)" font-family="GFS Didot, Georgia, serif" pointer-events="none">${esc(sp.rotulo)}</text>`;}
+    else{g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="23" fill="var(--creme)" stroke="var(--tinta)" stroke-width="2.2"/><circle cx="${cx}" cy="${cy}" r="18" fill="none" stroke="var(--acento)" stroke-width="1" pointer-events="none"/><text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="23" fill="var(--tinta)" font-family="GFS Didot, Georgia, serif" pointer-events="none">${esc(sp.rotulo)}</text>`;}
+    if(ca){
+      let rot='';
+      if(id==='theoi')rot=topoNome(ca.topo);
+      else{const ds=((ca.espairas||{})[id]||[]).map(d=>d.deus).filter(Boolean);rot=ds.join(' · ');}
+      if(rot){const y=id==='theoi'?cy-36:cy+(centro?41:38);g+=`<text x="${cx}" y="${y}" text-anchor="middle" font-size="10.5" font-style="italic" fill="var(--acento)" stroke="var(--folha)" stroke-width="3" paint-order="stroke" font-family="EB Garamond, Georgia, serif" pointer-events="none">${esc(rot.length>30?rot.slice(0,29)+'…':rot)}</text>`;}
+    }
+    s+=g+'</g>';
+  });
+  return `<svg viewBox="120 60 440 642" role="group" aria-label="Hierograma do Okhema">${s}</svg>`;
+}
+function topoNome(t){if(!t)return '';if(t.tipo==='agathos')return t.nome?`Ἀγαθὸς Δαίμων · ${t.nome}`:'Ἀγαθὸς Δαίμων';if(t.tipo==='agnostos')return t.nome||'Deus desconhecido';return t.nome||'';}
+function topoSegundo(t){if(!t)return '';if(t.tipo==='agathos')return 'segundo o Ἀγαθὸς Δαίμων';if(t.tipo==='agnostos')return t.nome?`segundo ${t.nome}, o Deus desconhecido`:'segundo o Deus desconhecido';return t.nome?`segundo ${t.nome}`:'';}
+function vHierograma(){
+  const d=new Date(),diaSp=DIA_SPAIRA[d.getDay()],sp=SPAIRAS[diaSp];
+  const consts=meus('constelacao'),ca=constAtiva();
+  const opts=`<option value="">Nenhuma</option>`+consts.map(c=>`<option value="${esc(c.id)}"${ca&&ca.id===c.id?' selected':''}>${esc(c.nome||'Sem nome')}</option>`).join('');
+  return `<section class="hg">
+    <div class="hg-col">
+      <div class="diagrama">${svgHierograma()}</div>
+      <div class="painel-dia">
+        <div class="linha">Hoje é ${NOME_DIA[d.getDay()]}, dia de <b>${esc(sp.planeta)}</b> · <span class="gr">${esc(nomeSp(diaSp))}</span>
+          <button class="btn mini" data-act="sp" data-id="${diaSp}">Abrir</button></div>
+        <div class="linha"><label for="sel-const">Ver pela constelação</label>
+          <select id="sel-const" data-act="ativar-const">${opts}</select>
+          ${consts.length?'':`<button class="btn texto" data-act="ir" data-v="constelacao">Montar a sua</button>`}</div>
+      </div>
+    </div>
+    <div class="det" id="det"><div class="det-faixa"></div><div class="det-corpo">${S.det?(S.det.t==='sp'?vSpaira(S.det.id):vCaminho(S.det.id)):vIntro()}</div></div>
+  </section>`;
+}
+function vIntro(){
+  const bts=PLANETARIAS.map(id=>{const s=SPAIRAS[id];return `<button data-act="sp" data-id="${id}"><b>${esc(s.rotulo)} ${esc(s.nome_proprio)}</b><span>${esc(s.planeta)} · ${esc(s.veste)}</span></button>`;}).join('');
+  return `<div class="intro"><h2>O caderno das spairas</h2>
+    <p class="base-txt">Toque uma spaira ou um caminho no hierograma para abrir o seu caderno. Em cada spaira há epítetos, virtudes por grau, palavras-chave, insights e a sua relação com ela; em cada letra, imagens, plantas, atos devocionais, desejos, mitos e hinos.</p>
+    <p class="base-txt">A linha tracejada dourada marca a spaira do dia. Os caminhos que já têm anotações aparecem em dourado.</p>
+    <h3>As sete spairas planetárias</h3><div class="planetas">${bts}</div></div>`;
+}
+
+/* ---------- cartões ---------- */
+function marcaOrigem(r){
+  if(r.origem==='priv')return `<span class="pill priv">privado</span>`;
+  if(r.origem==='base')return `<span class="pill base">acervo de referência</span>`;
+  return `<span class="pill comum">comum</span> <span data-uid="${esc(r.uid)}">alguém da comunidade</span>`;
+}
+function podeEditar(r){return r.origem==='priv'||(r.origem==='comum'&&r.uid===S.uid)||(S.dono&&(r.origem==='base'||r.origem==='comum'));}
+function chaveRec(r){return r.origem+'|'+(r.uid||'')+'|'+r.item.id;}
+const REGISTRO=new Map();
+function botoesCard(r){
+  const k=chaveRec(r);REGISTRO.set(k,r);
+  if(S.confirmar===k)return `<span class="confirmar">Apagar esta entrada? <button class="btn mini forte" data-act="apagar-sim" data-k="${esc(k)}">Apagar</button><button class="btn mini" data-act="apagar-nao">Manter</button></span>`;
+  if(!podeEditar(r))return '';
+  const editar=(r.origem==='priv'||(r.origem==='comum'&&r.uid===S.uid))?`<button class="btn mini" data-act="editar" data-k="${esc(k)}">Editar</button>`:'';
+  return `${editar}<button class="btn mini" data-act="apagar" data-k="${esc(k)}">${r.origem==='comum'&&r.uid!==S.uid?'Remover (moderação)':'Apagar'}</button>`;
+}
+function linhaGrega(gr,pt){return `${gr?`<span class="gr">${esc(gr)}</span>`:''}${gr&&pt?' · ':''}${pt?esc(pt):''}`;}
+function card(r){
+  const it=r.item,K=KINDS[it.kind]||{};
+  let t='',corpo='';
+  if(it.kind==='epiteto'){
+    t=`${it.grego?`<span class="gr">${esc(it.grego)}</span>`:''}${it.translit?` (${esc(it.translit)})`:''}${it.construcao?' °':''}`;
+    corpo=`${it.traducao?`<p>${esc(it.traducao)}</p>`:''}${it.nota?`<p>${esc(it.nota)}</p>`:''}`;
+    return wrap(`${esc(it.deus||'')}${it.deus?' · ':''}${t}`,corpo,r,it.fonte);
+  }
+  if(it.kind==='virtude'){
+    const eixos=(it.eixos||[]).filter(e=>e.eixo||e.falta||e.excesso);
+    const tab=eixos.length?`<div class="rolagem"><table class="eixos-tab"><tr><th>Eixo</th><th>Falta</th><th>Medida</th><th>Excesso</th></tr>${eixos.map(e=>`<tr><td>${esc(e.eixo)}</td><td>${esc(e.falta)}</td><td>${esc(it.nome)}</td><td>${esc(e.excesso)}</td></tr>`).join('')}</table></div>`:'';
+    corpo=`${it.definicao?`<p>${esc(it.definicao)}</p>`:''}${tab}${it.opera?`<p><i>Como opera:</i> ${esc(it.opera)}</p>`:''}${it.ligacoes?`<p><i>Liga-se a:</i> ${esc(it.ligacoes)}</p>`:''}`;
+    const g=GRAUS.find(x=>x.id===it.grau);
+    return wrap(`${linhaGrega(it.grego,it.nome)}${it.construcao?' °':''}`,corpo,r,it.fonte,g?g.nome:'');
+  }
+  if(it.kind==='palavra')return wrap(`<span class="gr">${esc(it.termo)}</span>`,it.nota?`<p>${esc(it.nota)}</p>`:'',r);
+  if(it.kind==='insight')return wrap(fmtData(it.data)||'Insight',`<p>${esc(it.texto)}</p>`,r);
+  if(it.kind==='relacao'||it.kind==='desejo')return wrap(K.nome,`<p>${esc(it.texto)}</p>`,r);
+  if(it.kind==='hino')return wrap(esc(it.titulo||'Hino'),`<p class="gr">${esc(it.texto)}</p>`,r,it.fonte);
+  if(it.kind==='oracao')return cardOracao(r);
+  return wrap(esc(it.titulo||K.nome||'')+(it.deus?` · <i>${esc(it.deus)}</i>`:''),it.texto?`<p>${esc(it.texto)}</p>`:'',r,it.fonte);
+}
+function wrap(titulo,corpo,r,fonte,extra){
+  const alvo=r.item.alvo?`<span>${esc(nomeAlvo(r.item.alvo))}</span>`:'';
+  return `<article class="card"><div class="t">${titulo}</div>${corpo}<div class="meta">${marcaOrigem(r)}${extra?`<span>${esc(extra)}</span>`:''}${fonte?`<span>Fonte: ${esc(fonte)}</span>`:''}${S.view==='acervo'?alvo:''}${botoesCard(r)}</div></article>`;
+}
+function cardOracao(r){
+  const it=r.item;
+  const alvos=(it.alvos||[]).map(a=>`<a class="chip" href="#${a.startsWith('sp:')?'spaira-'+a.slice(3):'caminho-'+a.slice(4)}">${esc(nomeAlvo(a))}</a>`).join('');
+  const cats=(it.categorias||[]).join(' · '),modos=(it.modos||[]).map(m=>{const x=MODOS.find(y=>y[0]===m);return x?x[1]:m;}).join(' · ');
+  const corpo=`${it.deuses?`<p><i>A</i> ${esc(it.deuses)}</p>`:''}${alvos?`<div class="chips">${alvos}</div>`:''}${it.texto?`<p>${esc(it.texto)}</p>`:''}${it.insight?`<p><i>O que se mostrou:</i> ${esc(it.insight)}</p>`:''}${cats||modos?`<div class="meta">${cats?`<span>${esc(cats)}</span>`:''}${modos?`<span class="gr">${esc(modos)}</span>`:''}</div>`:''}`;
+  return wrap(`${esc(fmtData(it.data))}${it.hora?' · '+esc(HORAS[it.hora]||it.hora):''}`,corpo,r);
+}
+function secao(kind,alvo,lista,extra,deus,titulo){
+  const K=KINDS[kind];
+  const itens=lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:`<p class="vazio">Nada escrito ainda.</p>`;
+  return `<section class="secao"><div class="secao-cab"><h3>${esc(titulo||K.plural)}</h3><button class="btn mini" data-act="novo" data-kind="${kind}" data-alvo="${esc(alvo)}"${extra?` data-extra="${esc(extra)}"`:''}${deus?` data-deus="${esc(deus)}"`:''}>Adicionar</button></div>${itens}</section>`;
+}
+const ordenar=l=>l.sort((a,b)=>(b.item.editado||0)-(a.item.editado||0));
+
+/* ---------- página da spaira ---------- */
+function vSpaira(id){
+  const s=SPAIRAS[id],alvo='sp:'+id;
+  const cab=s.tipo==='vogal'
+    ?`<div class="cab"><span class="letra">${esc(s.rotulo)}</span><div><h2>${esc(s.nome_proprio)}</h2><div class="sub">${esc(s.planeta)} · ${esc(s.veste)}</div></div></div>`
+    :`<div class="cab"><span class="letra" style="font-size:34px">${esc(s.rotulo)}</span><div class="sub">Spaira central</div></div>`;
+  const base=`<div class="base-txt"><span class="marca-base">Okhema · faculdade</span><br>${esc(s.faculdade)}</div>`;
+  const ca=constAtiva();let constHtml='';
+  if(ca){
+    if(id==='theoi'){
+      constHtml=`<section class="secao"><h3>Na sua constelação</h3><p class="base-txt"><b>${esc(TOPO_TIPOS[ca.topo&&ca.topo.tipo]||'')}</b>${ca.topo&&ca.topo.nome?': <span class="gr">'+esc(ca.topo.nome)+'</span>':''}${ca.topo&&ca.topo.nota?`<br>${esc(ca.topo.nota)}`:''}</p></section>`;
+    }else{
+      const ds=((ca.espairas||{})[id]||[]).filter(d=>d.deus);
+      const seg=topoSegundo(ca.topo);
+      const lis=ds.map(d=>{
+        const eps=doTipo('epiteto').filter(r=>r.item.alvo===alvo&&norm(r.item.deus)===norm(d.deus));
+        return `<div class="card"><div class="t">${esc(d.deus)}${seg?`, <i>${esc(seg)}</i>`:''}</div>${d.nota?`<p>${esc(d.nota)}</p>`:''}${eps.length?`<div class="chips">${eps.map(r=>`<span class="chip gr">${esc(r.item.grego||r.item.translit)}</span>`).join('')}</div>`:''}</div>`;}).join('');
+      constHtml=`<section class="secao"><div class="secao-cab"><h3>Na sua constelação · ${esc(ca.nome||'')}</h3><button class="btn mini" data-act="editar-const" data-id="${esc(ca.id)}">Editar constelação</button></div>${lis||`<p class="vazio">Nenhum deus posto nesta spaira na constelação ativa.</p>`}</section>`;
+    }
+  }
+  let virt='';
+  if(s.tipo==='vogal'){
+    const tabs=GRAUS.map(g=>`<button data-act="grau" data-g="${g.id}" aria-pressed="${S.grau===g.id}">${esc(g.nome)}</button>`).join('');
+    const g=GRAUS.find(x=>x.id===S.grau),gv=s.graus&&s.graus[S.grau];
+    const baseV=gv?`<div class="triade"><div><small>Falta</small>${esc(gv.p)}</div><div class="medida"><small>Medida</small>${esc(gv.v)}</div><div><small>Excesso</small>${esc(gv.e)}</div></div>`:'';
+    const contrib=ordenar(paraAlvo('virtude',alvo).filter(r=>r.item.grau===S.grau));
+    virt=`<section class="secao"><div class="secao-cab"><h3>Virtudes · grau ${esc(g.nome)} <span class="gr" style="text-transform:none;letter-spacing:0">${esc(g.gr)}</span></h3><button class="btn mini" data-act="novo" data-kind="virtude" data-alvo="${alvo}" data-extra="${S.grau}">Adicionar virtude</button></div>
+      <div class="grau-tabs" role="group" aria-label="Grau de virtude">${tabs}</div>
+      <p class="nota-campo">${esc(g.desc)}</p>
+      ${baseV?`<span class="marca-base">Matriz do Okhema</span>${baseV}`:''}
+      ${contrib.length?`<div class="lista">${contrib.map(card).join('')}</div>`:`<p class="vazio">Nenhuma outra virtude registrada neste grau.</p>`}</section>`;
+  }
+  const selD=deusDaSp(id);
+  const outras=SECOES_SPAIRA.filter(k=>k!=='virtude').map(k=>{
+    if(k==='epiteto')return secao(k,alvo,ordenar(paraAlvo(k,alvo)),'',selD,'Todos os epítetos desta spaira');
+    if(k==='ato'){const l=ordenar(todos().filter(r=>r.item.kind==='ato'&&(r.item.alvo===alvo||(selD&&temDeus(r.item.deus,selD)))));return secao(k,alvo,l,'',selD,selD?`Atos devocionais · ${selD}`:'');}
+    return secao(k,alvo,ordenar(paraAlvo(k,alvo)));}).join('');
+  const oracoes=ordenar(paraAlvo('oracao',alvo));
+  const orHtml=`<section class="secao"><div class="secao-cab"><h3>Orações ligadas a esta spaira</h3><button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button></div>${oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>'}</section>`;
+  const caminhos=CAMINHOS.map((c,i)=>({c,i})).filter(o=>o.c.de===id||o.c.para===id).map(o=>`<a class="chip" href="#caminho-${o.i}"><span class="gr">${esc(o.c.letra)}</span> → ${esc(SPAIRAS[o.c.de===id?o.c.para:o.c.de].rotulo)}</a>`).join('');
+  return `${cab}${base}${id!=='theoi'?blocoDeus(id):''}${constHtml}${virt}${outras}${id!=='theoi'?blocoPlantas(id):''}${orHtml}<section class="secao"><h3>Caminhos desta spaira</h3><div class="chips">${caminhos}</div></section>`;
+}
+function deusesConhecidos(){
+  const m=new Map(),add=d=>{d=String(d||'').trim();if(!d)return;const k=norm(d);if(!m.has(k))m.set(k,d);};
+  meus('constelacao').forEach(c=>{Object.values(c.espairas||{}).forEach(l=>(l||[]).forEach(x=>add(x.deus)));if(c.topo&&c.topo.tipo==='deus')add(c.topo.nome);});
+  todos().forEach(r=>{if(['epiteto','planta','ato'].includes(r.item.kind))String(r.item.deus||'').split(/[,;]/).forEach(add);});
+  return [...m.values()].sort((a,b)=>a.localeCompare(b,'pt'));
+}
+function deusDaSp(id){const p=prefs();if(p.deusSp&&typeof p.deusSp[id]==='string')return p.deusSp[id];const ca=constAtiva();const l=ca?((ca.espairas||{})[id]||[]).filter(d=>d.deus):[];return l.length?l[0].deus:'';}
+function temDeus(campo,deus){const k=norm(deus);return !!k&&String(campo||'').split(/[,;]/).some(x=>norm(x)===k);}
+function hrefAlvo(a){if(!a)return '#hierograma';return a.startsWith('sp:')?'#spaira-'+a.slice(3):'#caminho-'+a.slice(4);}
+function deusesDaSpaira(id){const sel=deusDaSp(id),ca=constAtiva();const l=[];const vistos=new Set();
+  [sel,...(ca?((ca.espairas||{})[id]||[]).map(d=>d.deus):[])].forEach(d=>{if(d&&!vistos.has(norm(d))){vistos.add(norm(d));l.push(d);}});return l;}
+function blocoDeus(id){
+  const alvo='sp:'+id,sel=deusDaSp(id),ca=constAtiva();
+  const vistos=new Set(),lista=[];
+  [...(ca?((ca.espairas||{})[id]||[]).map(d=>d.deus):[]),...deusesConhecidos(),sel].forEach(d=>{if(d&&!vistos.has(norm(d))){vistos.add(norm(d));lista.push(d);}});
+  const chips=lista.map(d=>`<button class="chip" data-act="escolher-deus" data-sp="${id}" data-deus="${esc(d)}" aria-pressed="${norm(d)===norm(sel)}">${esc(d)}</button>`).join('');
+  let corpo='';
+  if(sel){
+    const eps=doTipo('epiteto').filter(r=>temDeus(r.item.deus,sel));
+    const aqui=ordenar(eps.filter(r=>r.item.alvo===alvo)),fora=eps.filter(r=>r.item.alvo!==alvo);
+    corpo=`<div class="secao-cab"><h3>Epítetos de ${esc(sel)} nesta spaira</h3><button class="btn mini" data-act="novo" data-kind="epiteto" data-alvo="${alvo}" data-deus="${esc(sel)}">Adicionar epíteto</button></div>
+      ${aqui.length?`<div class="lista">${aqui.map(card).join('')}</div>`:`<p class="vazio">Nenhum epíteto de ${esc(sel)} registrado para esta spaira.</p>`}
+      ${fora.length?`<details class="outros"><summary>Epítetos de ${esc(sel)} em outras spairas e letras (${fora.length})</summary><div class="chips">${fora.map(r=>`<a class="chip" href="${hrefAlvo(r.item.alvo)}"><span class="gr">${esc(r.item.grego||r.item.translit)}</span>&nbsp;· ${esc(nomeAlvo(r.item.alvo))}</a>`).join('')}</div></details>`:''}`;
+  }
+  return `<section class="secao"><div class="secao-cab"><h3>Deus desta spaira</h3>${sel?`<button class="btn mini" data-act="escolher-deus" data-sp="${id}" data-deus="">Limpar escolha</button>`:''}</div>
+    ${chips?`<div class="chips" role="group" aria-label="Escolher o deus desta spaira">${chips}</div>`:''}
+    <div class="outro-deus"><input id="outro-deus" type="text" placeholder="Outro deus" aria-label="Outro deus"><button class="btn mini" data-act="outro-deus" data-sp="${id}">Escolher</button></div>
+    ${sel?corpo:'<p class="nota-campo">Escolha o deus que se liga a esta spaira para ver os epítetos dele mais próximos a ela.</p>'}</section>`;
+}
+function blocoPlantas(id){
+  const alvo='sp:'+id,ds=deusesDaSpaira(id),sel=deusDaSp(id);
+  const lista=ordenar(todos().filter(r=>r.item.kind==='planta'&&(r.item.alvo===alvo||ds.some(d=>temDeus(r.item.deus,d)))));
+  return `<section class="secao"><div class="secao-cab"><h3>Plantas${ds.length?' · '+esc(ds.join(', ')):''}</h3><button class="btn mini" data-act="novo" data-kind="planta" data-alvo="${alvo}"${sel?` data-deus="${esc(sel)}"`:''}>Adicionar planta</button></div>
+    ${ds.length?'':'<p class="nota-campo">Escolha um deus para esta spaira, ou ponha deuses nela pela constelação, para ver as plantas deles.</p>'}
+    ${lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:'<p class="vazio">Nenhuma planta registrada ainda.</p>'}</section>`;
+}
+function norm(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();}
+
+/* ---------- página do caminho ---------- */
+function vCaminho(i){
+  const c=CAMINHOS[i],L=LETRAS[c.letra]||{},alvo='cam:'+i;
+  const cab=`<div class="cab"><span class="letra">${esc(c.letra)}</span><div><h2>${esc(L.nome||'')}</h2><div class="sub">Valor ${esc(L.valor)} · de <a href="#spaira-${c.de}">${esc(nomeSp(c.de))}</a> a <a href="#spaira-${c.para}">${esc(nomeSp(c.para))}</a></div></div></div>`;
+  const base=`<div class="base-txt"><span class="marca-base">Okhema · sentidos da letra</span><br>${esc(L.significados||'')}${c.descricao?`<br><i>${esc(c.descricao)}</i>`:''}</div>`;
+  const secs=SECOES_LETRA.map(k=>secao(k,alvo,ordenar(paraAlvo(k,alvo)))).join('');
+  const oracoes=ordenar(paraAlvo('oracao',alvo));
+  return `${cab}${base}${secs}<section class="secao"><div class="secao-cab"><h3>Orações ligadas a este caminho</h3><button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button></div>${oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>'}</section>`;
+}
+
+/* ---------- diário ---------- */
+function vDiario(){
+  const todas=todos().filter(r=>r.item.kind==='oracao'&&(r.origem==='priv'||r.uid===S.uid));
+  const f=S.diarioFiltro;
+  const lista=todas.filter(r=>!f||(r.item.alvos||[]).includes(f)).sort((a,b)=>String(b.item.data||'').localeCompare(String(a.item.data||''))||(b.item.editado||0)-(a.item.editado||0));
+  const opts=`<option value="">Todas as spairas e letras</option>`+Object.keys(SPAIRAS).map(id=>`<option value="sp:${id}"${f==='sp:'+id?' selected':''}>${esc(nomeSp(id))}</option>`).join('')+CAMINHOS.map((c,i)=>`<option value="cam:${i}"${f==='cam:'+i?' selected':''}>${esc(nomeCam(i))}</option>`).join('');
+  return `<section class="pagina"><div class="secao-cab"><h2>Diário de orações</h2><button class="btn forte" data-act="nova-oracao">Registrar oração</button></div>
+    <p class="base-txt">Cada oração guarda o dia e a hora, a quem se orou, as spairas e letras tocadas, o que ela continha e o modo em que se orou. Fica no seu caderno privado.</p>
+    <div class="barra"><label for="filtro-diario">Mostrar</label><select id="filtro-diario" data-act="filtro-diario">${opts}</select></div>
+    ${lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada ainda. Use "Registrar oração" depois de orar.</p>'}</section>`;
+}
+/* ---------- votos ---------- */
+function vVotos(){
+  const lista=meus('voto').sort((a,b)=>String(b.data||'').localeCompare(String(a.data||'')));
+  const cards=lista.map(it=>{const r={item:it,origem:'priv',uid:S.uid};
+    const est=Object.entries(ESTADOS_VOTO).map(([k,v])=>`<button class="btn mini${it.estado===k?' forte':''}" data-act="estado-voto" data-id="${esc(it.id)}" data-e="${k}" aria-pressed="${it.estado===k}">${esc(v)}</button>`).join('');
+    return `<article class="card"><div class="t">${esc(it.deus||'')}${it.data?` · ${esc(fmtData(it.data))}`:''}</div><p>${esc(it.promessa||'')}</p>${it.condicao?`<p><i>Condição:</i> ${esc(it.condicao)}</p>`:''}${it.nota?`<p>${esc(it.nota)}</p>`:''}<div class="meta">${est}</div><div class="meta">${marcaOrigem(r)}${botoesCard(r)}</div></article>`;}).join('');
+  const pend=lista.filter(v=>(v.estado||'prometido')==='prometido').length;
+  return `<section class="pagina"><div class="secao-cab"><h2>Votos</h2><button class="btn forte" data-act="novo" data-kind="voto">Registrar voto</button></div>
+    <p class="base-txt">A dedicação abre o ato, e é a execução que o cumpre. Registre o que foi prometido, a quem e em que condição, e marque quando for cumprido. ${pend?`<b>${pend} ${pend===1?'voto aguarda':'votos aguardam'} cumprimento.</b>`:''}</p>
+    ${cards?`<div class="lista">${cards}</div>`:'<p class="vazio">Nenhum voto registrado.</p>'}</section>`;
+}
+/* ---------- constelação ---------- */
+function resumoConst(c){
+  const linhas=PLANETARIAS.concat(CENTRAIS).map(id=>{const ds=((c.espairas||{})[id]||[]).filter(d=>d.deus);if(!ds.length)return '';return `<div><span class="gr">${esc(nomeSp(id))}</span>: ${ds.map(d=>esc(d.deus)).join(', ')}</div>`;}).join('');
+  return `<div class="deuses"><div><b>Θεοί</b>: ${esc(TOPO_TIPOS[c.topo&&c.topo.tipo]||'')}${c.topo&&c.topo.nome?' · <span class="gr">'+esc(c.topo.nome)+'</span>':''}</div>${linhas}</div>`;
+}
+function vConstelacao(){
+  const minhas=meus('constelacao'),ca=constAtiva();
+  const cards=minhas.map(c=>{const r={item:c,origem:'priv',uid:S.uid};const part=S.modo==='db'&&S.partilhadas.has(c.id);
+    return `<article class="card const-card"><div class="t">${esc(c.nome||'Sem nome')}${ca&&ca.id===c.id?' <span class="pill comum">ativa</span>':''}</div>${resumoConst(c)}
+      <div class="meta"><span class="pill priv">privada</span>${part?'<span class="pill comum">partilhada com a comunidade</span>':''}
+      ${ca&&ca.id===c.id?'':`<button class="btn mini" data-act="ativar" data-id="${esc(c.id)}">Ativar</button>`}
+      <button class="btn mini" data-act="editar-const" data-id="${esc(c.id)}">Editar</button>
+      ${S.modo==='db'?`<button class="btn mini" data-act="partilhar" data-id="${esc(c.id)}">${part?'Deixar de partilhar':'Partilhar com a comunidade'}</button>`:''}
+      ${botoesCard(r).replace(/<button class="btn mini" data-act="editar"[^>]*>Editar<\/button>/,'')}</div></article>`;}).join('');
+  const outras=[];S.shared.forEach((doc,uid)=>{if(uid===S.uid)return;Object.values((doc&&doc.constelacoes)||{}).forEach(c=>outras.push({c,uid}));});
+  const outrasHtml=outras.map(o=>`<article class="card const-card"><div class="t">${esc(o.c.nome||'Sem nome')}</div>${resumoConst(o.c)}<div class="meta"><span class="pill comum">partilhada</span><span data-uid="${esc(o.uid)}">alguém da comunidade</span>${S.dono?`<button class="btn mini" data-act="remover-const-alheia" data-uid="${esc(o.uid)}" data-id="${esc(o.c.id)}">Remover (moderação)</button>`:''}</div></article>`).join('');
+  return `<section class="pagina"><div class="secao-cab"><h2>Constelação</h2><button class="btn forte" data-act="nova-const">Nova constelação</button></div>
+    <p class="base-txt">No topo fica o deus que guia, o Ἀγαθὸς Δαίμων ou o Deus desconhecido que se busca. Em cada spaira, os deuses que se ligam a ela por meio do topo: um Apolo na Ἔλλαμψις de um devoto de Hermes é um Apolo segundo Hermes. A constelação fica sempre privada; partilhá-la é uma escolha sua.</p>
+    ${cards?`<div class="lista">${cards}</div>`:'<p class="vazio">Nenhuma constelação montada ainda.</p>'}
+    <section class="secao"><h3>Constelações partilhadas pela comunidade</h3>${S.modo!=='db'?'<p class="vazio">Aparecem quando o aplicativo está conectado à sua conta.</p>':outrasHtml?`<div class="lista">${outrasHtml}</div>`:'<p class="vazio">Ninguém partilhou uma constelação ainda.</p>'}</section></section>`;
+}
+/* ---------- acervo ---------- */
+function vAcervo(){
+  const q=norm(S.busca),tipo=S.buscaTipo,orig=S.buscaOrig;
+  const kinds=Object.keys(KINDS).filter(k=>!['constelacao'].includes(k));
+  let lista=todos().filter(r=>KINDS[r.item.kind]&&r.item.kind!=='constelacao'&&r.item.kind!=='pref');
+  if(tipo)lista=lista.filter(r=>r.item.kind===tipo);
+  if(orig)lista=lista.filter(r=>r.origem===orig);
+  if(q)lista=lista.filter(r=>norm(Object.values(r.item).map(v=>typeof v==='object'?JSON.stringify(v):v).join(' ')).includes(q));
+  ordenar(lista);
+  const optT=`<option value="">Todos os tipos</option>`+kinds.map(k=>`<option value="${k}"${tipo===k?' selected':''}>${esc(KINDS[k].plural)}</option>`).join('');
+  const optO=`<option value="">Todas as origens</option><option value="priv"${orig==='priv'?' selected':''}>Meu caderno privado</option><option value="comum"${orig==='comum'?' selected':''}>Acervo comum</option><option value="base"${orig==='base'?' selected':''}>Acervo de referência</option>`;
+  return `<section class="pagina"><h2>Acervo e busca</h2>
+    <div class="barra"><input id="busca" type="search" placeholder="Buscar em tudo: Hermes, χάρις, coragem…" value="${esc(S.busca)}" data-act="busca" aria-label="Buscar">
+      <select id="busca-tipo" data-act="busca-tipo" aria-label="Tipo">${optT}</select>
+      <select id="busca-orig" data-act="busca-orig" aria-label="Origem">${optO}</select></div>
+    <p class="nota-campo">${lista.length} ${lista.length===1?'entrada':'entradas'}</p>
+    ${lista.length?`<div class="lista">${lista.slice(0,200).map(card).join('')}</div>`:'<p class="vazio">Nada encontrado.</p>'}</section>`;
+}
+/* ---------- cópia de segurança ---------- */
+function vCaderno(){
+  const np=todos().filter(r=>r.origem==='priv'&&r.item.kind!=='pref').length,nc=Object.keys(S.meu.itens||{}).length;
+  return `<section class="pagina"><h2>Cópia de segurança</h2>
+    <p class="base-txt">O seu caderno tem ${np} ${np===1?'entrada privada':'entradas privadas'}${S.modo==='db'?` e ${nc} ${nc===1?'contribuição':'contribuições'} ao acervo comum`:''}. ${S.modo==='db'?'Ele fica guardado na sua conta, numa área que só você lê.':'Neste momento ele está guardado só neste aparelho: se os dados do navegador forem apagados, ele se perde. Exporte com frequência.'}</p>
+    <div class="barra"><button class="btn forte" data-act="exportar">Exportar caderno (JSON)</button>
+      <label class="btn" for="importar">Importar caderno</label><input id="importar" type="file" accept=".json,application/json" hidden></div>
+    <p class="nota-campo">A importação acrescenta ao seu caderno privado as entradas do arquivo que ainda não estão nele. Nada é apagado. Serve também para trazer o que você anotou na versão antiga, dentro do Claude: exporte lá e importe aqui.</p>
+    ${blocoTrazer()}
+    <div id="saida-export"></div></section>`;
+}
+
+/* ===================== FORMULÁRIOS ===================== */
+let formAtual=null;
+function abrirForm(html,onSubmit){
+  const so=$('#sobre');so.innerHTML=html;so.hidden=false;formAtual=onSubmit;
+  const f=so.querySelector('form');if(f){f.addEventListener('submit',e=>{e.preventDefault();formAtual&&formAtual(f);});const p=f.querySelector('input,textarea,select');if(p)p.focus();}
+}
+function fecharForm(){const so=$('#sobre');so.hidden=true;so.innerHTML='';formAtual=null;}
+function campoHtml(c,v){
+  const id='f-'+c.k;
+  if(c.t==='area')return `<label for="${id}">${esc(c.rot)}<textarea id="${id}" name="${c.k}"${c.gr?' class="gr"':''}>${esc(v||'')}</textarea></label>`;
+  if(c.t==='check')return `<label class="checks" for="${id}" style="display:flex"><input type="checkbox" id="${id}" name="${c.k}"${v?' checked':''}> ${esc(c.rot)}</label>`;
+  if(c.t==='date')return `<label for="${id}">${esc(c.rot)}<input type="date" id="${id}" name="${c.k}" value="${esc(v||hoje())}"></label>`;
+  if(c.t==='grau')return `<label for="${id}">${esc(c.rot)}<select id="${id}" name="${c.k}">${GRAUS.map(g=>`<option value="${g.id}"${v===g.id?' selected':''}>${esc(g.nome)} · ${esc(g.gr)}</option>`).join('')}</select></label>`;
+  if(c.t==='eixos'){const rows=(v&&v.length?v:[{}]).map(eixoLinha).join('');return `<fieldset><legend>${esc(c.rot)}</legend><p class="nota-campo">Uma virtude pode ser medida em mais de um eixo, cada um com a sua falta e o seu excesso.</p><div id="eixos">${rows}</div><button type="button" class="btn mini" data-act="mais-eixo">Acrescentar eixo</button></fieldset>`;}
+  return `<label for="${id}">${esc(c.rot)}<input type="text" id="${id}" name="${c.k}" value="${esc(v||'')}"${c.gr?' class="gr"':''}></label>`;
+}
+let eixoN=0;
+function eixoLinha(e){eixoN++;e=e||{};return `<div class="eixo-linha"><label>Eixo<input type="text" name="eixo" value="${esc(e.eixo||'')}" placeholder="o medo, o prazer…"></label><label>Falta<input type="text" name="falta" value="${esc(e.falta||'')}"></label><label>Excesso<input type="text" name="excesso" value="${esc(e.excesso||'')}"></label><button type="button" class="btn mini" data-act="menos-eixo" aria-label="Remover eixo">×</button></div>`;}
+function visHtml(v){const pode=S.modo==='db'&&S.perfil.aprovado;if(!pode)v='priv';
+  const nota=S.modo!=='db'?'O acervo comum só funciona com uma conta.':!S.perfil.aprovado?'Você poderá escrever no acervo comum quando a sua conta for aprovada.':'';
+  return `<fieldset><legend>Onde guardar</legend><div class="vis"><label><input type="radio" name="vis" value="priv"${v==='priv'?' checked':''}> Meu caderno privado</label><label><input type="radio" name="vis" value="comum"${v==='comum'?' checked':''}${pode?'':' disabled'}> Acervo comum</label></div>${nota?`<p class="nota-campo">${nota}</p>`:''}</fieldset>`;}
+function formItem(kind,alvo,extra,rec,deus){
+  const K=KINDS[kind],it=rec?rec.item:{grau:extra,deus:deus||''};
+  const vis=rec?(rec.origem==='priv'?'priv':'comum'):(S.modo==='db'&&S.perfil.aprovado?K.vis:'priv');
+  const campos=K.campos.map(c=>campoHtml(c,it[c.k])).join('');
+  abrirForm(`<form class="form" aria-label="${esc(K.nome)}"><h2>${rec?'Editar':'Novo'}: ${esc(K.nome.toLowerCase())}</h2><p class="nota-campo">${esc(nomeAlvo(alvo))}</p>${campos}${visHtml(vis)}<div class="acoes"><button type="button" class="btn" data-act="fechar">Cancelar</button><button type="submit" class="btn forte">Salvar</button></div></form>`,f=>{
+    const novo=rec?clone(rec.item):{id:novoId(),kind,alvo};
+    K.campos.forEach(c=>{
+      if(c.t==='check')novo[c.k]=f.elements[c.k].checked;
+      else if(c.t==='eixos'){novo.eixos=[...f.querySelectorAll('.eixo-linha')].map(l=>({eixo:l.querySelector('[name=eixo]').value.trim(),falta:l.querySelector('[name=falta]').value.trim(),excesso:l.querySelector('[name=excesso]').value.trim()})).filter(e=>e.eixo||e.falta||e.excesso);}
+      else novo[c.k]=(f.elements[c.k].value||'').trim();
+    });
+    const v=(f.querySelector('[name=vis]:checked')||{}).value||'priv';
+    fecharForm();salvarItem(novo,v).then(()=>toast('Salvo.'));
+  });
+}
+function formOracao(alvoIni,rec){
+  const it=rec?rec.item:{data:hoje(),alvos:alvoIni?[alvoIni]:[],categorias:[],modos:[]};
+  const ca=constAtiva();
+  const chkSp=Object.keys(SPAIRAS).map(id=>`<label><input type="checkbox" name="alvo" value="sp:${id}"${(it.alvos||[]).includes('sp:'+id)?' checked':''}> <span class="gr">${esc(nomeSp(id))}</span></label>`).join('');
+  const chkCam=CAMINHOS.map((c,i)=>`<label title="${esc(nomeCam(i))}"><input type="checkbox" name="alvo" value="cam:${i}"${(it.alvos||[]).includes('cam:'+i)?' checked':''}> ${esc(c.letra)}</label>`).join('');
+  const cats=CATEGORIAS.map(c=>`<label><input type="checkbox" name="cat" value="${esc(c)}"${(it.categorias||[]).includes(c)?' checked':''}> ${esc(c)}</label>`).join('');
+  const modos=MODOS.map(m=>`<label><input type="checkbox" name="modo" value="${m[0]}"${(it.modos||[]).includes(m[0])?' checked':''}> <span class="gr">${m[1]}</span> <small>${m[2]}</small></label>`).join('');
+  const horas=Object.entries(HORAS).map(([k,v])=>`<option value="${k}"${it.hora===k?' selected':''}>${v}</option>`).join('');
+  const sugest=ca&&ca.topo&&ca.topo.nome&&!it.deuses?ca.topo.nome:(it.deuses||'');
+  abrirForm(`<form class="form" aria-label="Oração"><h2>${rec?'Editar oração':'Registrar oração'}</h2>
+    <div class="lado"><label for="o-data">Dia<input type="date" id="o-data" name="data" value="${esc(it.data||hoje())}"></label><label for="o-hora">Hora<select id="o-hora" name="hora"><option value="">—</option>${horas}</select></label></div>
+    <label for="o-deuses">A quem se orou<input type="text" id="o-deuses" name="deuses" value="${esc(sugest)}" placeholder="Hermes, Apolo…"></label>
+    <fieldset><legend>Spairas tocadas</legend><div class="checks">${chkSp}</div></fieldset>
+    <fieldset><legend>Letras tocadas</legend><div class="checks letras">${chkCam}</div></fieldset>
+    <label for="o-texto">A oração, ou o que foi feito<textarea id="o-texto" name="texto" class="gr">${esc(it.texto||'')}</textarea></label>
+    <fieldset><legend>O que a oração continha</legend><div class="checks">${cats}</div></fieldset>
+    <fieldset><legend>Modo</legend><div class="checks">${modos}</div></fieldset>
+    <label for="o-insight">O que se mostrou<textarea id="o-insight" name="insight">${esc(it.insight||'')}</textarea></label>
+    ${visHtml(rec?(rec.origem==='priv'?'priv':'comum'):'priv')}
+    <div class="acoes"><button type="button" class="btn" data-act="fechar">Cancelar</button><button type="submit" class="btn forte">Salvar</button></div></form>`,f=>{
+      const novo=rec?clone(rec.item):{id:novoId(),kind:'oracao'};
+      novo.data=f.elements.data.value;novo.hora=f.elements.hora.value;novo.deuses=f.elements.deuses.value.trim();
+      novo.alvos=[...f.querySelectorAll('[name=alvo]:checked')].map(x=>x.value);
+      novo.categorias=[...f.querySelectorAll('[name=cat]:checked')].map(x=>x.value);
+      novo.modos=[...f.querySelectorAll('[name=modo]:checked')].map(x=>x.value);
+      novo.texto=f.elements.texto.value.trim();novo.insight=f.elements.insight.value.trim();
+      const v=(f.querySelector('[name=vis]:checked')||{}).value||'priv';
+      fecharForm();salvarItem(novo,v).then(()=>toast('Oração registrada.'));
+  });
+}
+function formVoto(rec){
+  const it=rec?rec.item:{data:hoje(),estado:'prometido'};
+  abrirForm(`<form class="form" aria-label="Voto"><h2>${rec?'Editar voto':'Registrar voto'}</h2>
+    <div class="lado"><label for="v-deus">A quem<input type="text" id="v-deus" name="deus" value="${esc(it.deus||'')}"></label><label for="v-data">Dia<input type="date" id="v-data" name="data" value="${esc(it.data||hoje())}"></label></div>
+    <label for="v-prom">O que foi prometido<textarea id="v-prom" name="promessa">${esc(it.promessa||'')}</textarea></label>
+    <label for="v-cond">Condição (se houver)<input type="text" id="v-cond" name="condicao" value="${esc(it.condicao||'')}"></label>
+    <label for="v-nota">Nota<textarea id="v-nota" name="nota">${esc(it.nota||'')}</textarea></label>
+    <div class="acoes"><button type="button" class="btn" data-act="fechar">Cancelar</button><button type="submit" class="btn forte">Salvar</button></div></form>`,f=>{
+      const novo=rec?clone(rec.item):{id:novoId(),kind:'voto',estado:'prometido'};
+      ['deus','data','promessa','condicao','nota'].forEach(k=>novo[k]=(f.elements[k].value||'').trim());
+      fecharForm();salvarItem(novo,'priv').then(()=>toast('Voto registrado.'));
+  });
+}
+function linhaDeus(d){d=d||{};return `<div class="eixo-linha" style="grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto"><label>Deus<input type="text" name="deus" value="${esc(d.deus||'')}"></label><label>Como se liga<input type="text" name="nota" value="${esc(d.nota||'')}"></label><button type="button" class="btn mini" data-act="menos-eixo" aria-label="Remover deus">×</button></div>`;}
+function formConst(c){
+  const it=c||{espairas:{},topo:{tipo:'deus'}};
+  const tipos=Object.entries(TOPO_TIPOS).map(([k,v])=>`<label><input type="radio" name="topo-tipo" value="${k}"${(it.topo&&it.topo.tipo||'deus')===k?' checked':''}> <span class="gr">${esc(v)}</span></label>`).join('');
+  const blocos=PLANETARIAS.concat(CENTRAIS).map(id=>{const ds=(it.espairas||{})[id]||[];const s=SPAIRAS[id];
+    return `<fieldset data-sp="${id}"><legend><span class="gr">${esc(nomeSp(id))}</span>${s.planeta?' · '+esc(s.planeta):''}</legend><div class="deuses-lista">${ds.map(linhaDeus).join('')}</div><button type="button" class="btn mini" data-act="mais-deus">Acrescentar deus</button></fieldset>`;}).join('');
+  abrirForm(`<form class="form" aria-label="Constelação"><h2>${c?'Editar constelação':'Nova constelação'}</h2>
+    <label for="c-nome">Nome<input type="text" id="c-nome" name="nome" value="${esc(it.nome||'')}" placeholder="Constelação de Hermes"></label>
+    <fieldset><legend>Θεοί · o topo</legend><div class="checks">${tipos}</div>
+      <label for="c-topo">Nome (pode ficar em branco para o Deus desconhecido)<input type="text" id="c-topo" name="topo-nome" value="${esc(it.topo&&it.topo.nome||'')}"></label>
+      <label for="c-topo-nota">Nota<textarea id="c-topo-nota" name="topo-nota">${esc(it.topo&&it.topo.nota||'')}</textarea></label></fieldset>
+    <p class="nota-campo">Em cada spaira, os deuses que se ligam a ela. Em "como se liga", descreva a inflexão: por exemplo, "Apolo hermaico, com Hermes no centro".</p>
+    ${blocos}
+    <div class="acoes"><button type="button" class="btn" data-act="fechar">Cancelar</button><button type="submit" class="btn forte">Salvar</button></div></form>`,f=>{
+      const novo=c?clone(c):{id:novoId(),kind:'constelacao'};
+      novo.nome=f.elements.nome.value.trim();
+      const tipoAnt=novo.topo&&novo.topo.tipo,nomeAnt=novo.topo&&novo.topo.nome;
+      novo.topo={tipo:(f.querySelector('[name="topo-tipo"]:checked')||{}).value||'deus',nome:f.elements['topo-nome'].value.trim(),nota:f.elements['topo-nota'].value.trim()};
+      novo.historico=(novo.historico||[]);
+      if(c&&(tipoAnt!==novo.topo.tipo||nomeAnt!==novo.topo.nome))novo.historico.push({data:hoje(),de:topoNome({tipo:tipoAnt,nome:nomeAnt}),para:topoNome(novo.topo)});
+      novo.espairas={};
+      f.querySelectorAll('fieldset[data-sp]').forEach(fs=>{const l=[...fs.querySelectorAll('.eixo-linha')].map(r=>({deus:r.querySelector('[name=deus]').value.trim(),nota:r.querySelector('[name=nota]').value.trim()})).filter(d=>d.deus);if(l.length)novo.espairas[fs.dataset.sp]=l;});
+      fecharForm();
+      salvarItem(novo,'priv').then(async()=>{
+        const p=prefs();if(!p.ativa){p.ativa=novo.id;await salvarItem(clone(p),'priv');}
+        toast('Constelação salva.');
+      });
+  });
+}
+
+/* ===================== AÇÕES ===================== */
+async function exportar(){
+  const dados={aplicativo:'okhema-caderno',versao:1,exportadoEm:new Date().toISOString(),privado:todos().filter(r=>r.origem==='priv').map(r=>r.item),acervoComum:S.modo==='db'?S.meu:null};
+  const txt=JSON.stringify(dados,null,2),nome=`okhema-caderno-${hoje()}.json`;
+  try{
+    const arq=new File([txt],nome,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[arq]})&&/iPhone|iPad|Android/i.test(navigator.userAgent)){await navigator.share({files:[arq],title:'Caderno do Okhema'});return;}
+    const u=URL.createObjectURL(arq),a=document.createElement('a');a.href=u;a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000);
+    toast('Caderno exportado.');return;
+  }catch(e){if(e&&e.name==='AbortError')return;}
+  const s=$('#saida-export');if(s){s.innerHTML=`<label for="txt-export" class="nota-campo">Não foi possível baixar daqui. Copie o texto abaixo e guarde num arquivo .json.</label><textarea id="txt-export" style="width:100%;min-height:200px;border:1px solid var(--tinta);background:var(--folha)" readonly>${esc(txt)}</textarea><button class="btn" data-act="copiar-export">Copiar</button>`;}
+}
+/* Com conta, cada entrada importada ganha um id novo (o arquivo pode ter vindo de outra pessoa);
+   o id antigo fica em origemId, para que importar duas vezes o mesmo arquivo não duplique nada. */
+async function importarLista(lista){
+  const ja=new Set();S.priv.forEach(i=>{ja.add(i.id);if(i.origemId)ja.add(i.origemId);});
+  const mapa={};let n=0,pref=null;
+  for(const it0 of lista){
+    if(!it0||!it0.id||!it0.kind)continue;
+    if(it0.kind==='pref'){pref=it0;continue;}
+    if(ja.has(it0.id))continue;
+    const it=clone(it0);
+    if(S.modo==='db'){it.origemId=it0.id;it.id=novoId();}
+    mapa[it0.id]=it.id;await salvarItem(it,'priv');n++;
+  }
+  if(pref&&!S.priv.get('prefs')){const p=clone(pref);p.id='prefs';if(p.ativa)p.ativa=mapa[p.ativa]||null;await salvarItem(p,'priv');}
+  return n;
+}
+async function importar(file){
+  let dados;try{dados=JSON.parse(await file.text());}catch(e){toast('Este arquivo não é uma cópia do caderno.');return;}
+  const n=await importarLista((dados&&dados.privado)||[]);
+  toast(n?`${n} ${n===1?'entrada importada':'entradas importadas'}.`:'Nenhuma entrada nova no arquivo.');
+}
+function blocoTrazer(){
+  if(S.modo!=='db')return '';
+  let levado=false;try{levado=localStorage.getItem(LS_KEY+'-levado')==='1';}catch(e){}
+  const n=lerCadernoDoAparelho().filter(i=>i&&i.kind&&i.kind!=='pref').length;
+  if(!n||levado)return '';
+  return `<p class="aviso-conta">Há ${n} ${n===1?'entrada guardada':'entradas guardadas'} só neste aparelho, de quando você usou o caderno sem conta. <button class="btn mini forte" data-act="trazer">Trazer para a minha conta</button></p>`;
+}
+
+/* ===================== ENTRAR E CONTA ===================== */
+function vEntrar(){
+  const modo=S.view==='nova-senha'?'nova-senha':(S.contaModo||'entrar');
+  const tit={entrar:'Entrar',criar:'Criar conta',esqueci:'Esqueci a senha','nova-senha':'Nova senha'}[modo];
+  const campos=(modo==='criar'?`<label for="c-nome">Seu nome na comunidade<input type="text" id="c-nome" name="nome" required autocomplete="nickname"></label>`:'')
+    +(modo!=='nova-senha'?`<label for="c-email">Email<input type="email" id="c-email" name="email" required autocomplete="email" inputmode="email"></label>`:'')
+    +(modo!=='esqueci'?`<label for="c-senha">${modo==='nova-senha'?'Senha nova':'Senha'}<input type="password" id="c-senha" name="senha" required minlength="6" autocomplete="${modo==='entrar'?'current-password':'new-password'}"></label>`:'');
+  const botao={entrar:'Entrar',criar:'Criar conta',esqueci:'Enviar link','nova-senha':'Guardar senha'}[modo];
+  const trocas=modo==='nova-senha'?'':[
+    modo!=='entrar'?`<button type="button" class="btn texto" data-act="conta-modo" data-m="entrar">Já tenho conta</button>`:'',
+    modo!=='criar'?`<button type="button" class="btn texto" data-act="conta-modo" data-m="criar">Criar conta</button>`:'',
+    modo!=='esqueci'?`<button type="button" class="btn texto" data-act="conta-modo" data-m="esqueci">Esqueci a senha</button>`:''].join('');
+  return `<section class="entrar">
+    <p class="base-txt">O caderno privado fica na sua conta, numa área que só você lê, e acompanha você em qualquer aparelho. O acervo comum é partilhado pelos membros da comunidade.</p>
+    ${S.contaMsg?`<p class="aviso-conta">${esc(S.contaMsg)}</p>`:''}
+    <form class="form form-conta" data-modo="${modo}" aria-label="${esc(tit)}"><h2>${esc(tit)}</h2>${campos}
+      <p class="msg-conta" role="alert"></p>
+      <div class="acoes"><button type="submit" class="btn forte">${esc(botao)}</button></div>
+      ${trocas?`<div class="trocas">${trocas}</div>`:''}</form>
+    ${modo==='nova-senha'?'':`<p class="nota-campo">Prefere não criar conta? <button type="button" class="btn texto" data-act="sem-conta">Usar só neste aparelho</button> O caderno fica guardado apenas aqui, sem acervo comum; dá para levá-lo para uma conta depois.</p>`}
+  </section>`;
+}
+function vConta(){
+  if(S.modo!=='db')return `<section class="pagina"><h2>Conta</h2>
+    <p class="base-txt">Você está usando o caderno sem conta: tudo fica guardado só neste aparelho. Com uma conta, o caderno privado acompanha você em qualquer aparelho e você pode ler e escrever no acervo comum.</p>
+    <div class="barra"><button class="btn forte" data-act="usar-conta">Entrar ou criar conta</button></div></section>`;
+  const p=S.perfil||{};
+  const status=p.moderador?'Você modera o acervo comum.':p.aprovado?'Sua conta pode escrever no acervo comum e partilhar constelações.':'Sua conta aguarda aprovação de quem modera para escrever no acervo comum. O caderno privado já funciona por inteiro.';
+  let membros='';
+  if(S.dono){
+    const lista=[...S.perfis.values()].sort((a,b)=>(a.aprovado-b.aprovado)||String(b.criado_em||'').localeCompare(String(a.criado_em||'')));
+    membros=`<section class="secao"><h3>Membros</h3><p class="nota-campo">Quem é aprovado pode escrever no acervo comum e partilhar constelações. Retirar a aprovação não apaga nada do que a pessoa já escreveu.</p><div class="membros">${lista.map(m=>`<div class="membro"><span class="nome">${esc(m.nome||'sem nome')}${m.id===S.uid?' (você)':''}${m.moderador?' · <i>modera</i>':''}</span><span class="quando">${m.criado_em?'desde '+fmtData(String(m.criado_em).slice(0,10)):''}</span>${m.id===S.uid||m.moderador?'':`<span class="pill ${m.aprovado?'comum':'priv'}">${m.aprovado?'aprovado':'aguardando'}</span><button class="btn mini${m.aprovado?'':' forte'}" data-act="aprovar" data-uid="${esc(m.id)}" data-v="${m.aprovado?'0':'1'}">${m.aprovado?'Retirar aprovação':'Aprovar'}</button>`}</div>`).join('')}</div></section>`;
+  }
+  return `<section class="pagina"><h2>Conta</h2>
+    <div class="conta-dados"><div><b>Email:</b> ${esc(S.email)}</div>
+      <div class="barra"><label for="meu-nome">Nome na comunidade</label><input type="text" id="meu-nome" value="${esc(p.nome||'')}" autocomplete="nickname"><button class="btn mini" data-act="salvar-nome">Guardar nome</button></div>
+      <p class="aviso-conta">${esc(status)}</p></div>
+    ${blocoTrazer()}
+    <div class="barra"><button class="btn" data-act="sair">Sair desta conta</button></div>
+    ${membros}</section>`;
+}
+document.addEventListener('click',async e=>{
+  const a=e.target.closest('[data-act]');if(!a)return;
+  const act=a.dataset.act;
+  if(['ativar-const','filtro-diario','busca','busca-tipo','busca-orig'].includes(act))return;
+  if(act==='sp'){location.hash='spaira-'+a.dataset.id;return;}
+  if(act==='cam'){location.hash='caminho-'+a.dataset.i;return;}
+  if(act==='ir'){location.hash=a.dataset.v;return;}
+  if(act==='grau'){S.grau=a.dataset.g;render();return;}
+  if(act==='novo'){const k=a.dataset.kind;if(k==='voto')formVoto();else formItem(k,a.dataset.alvo||'',a.dataset.extra,null,a.dataset.deus);return;}
+  if(act==='escolher-deus'){const p=clone(prefs());p.deusSp=Object.assign({},p.deusSp);p.deusSp[a.dataset.sp]=a.dataset.deus||'';await salvarItem(p,'priv');return;}
+  if(act==='outro-deus'){const i=$('#outro-deus');const v=i&&i.value.trim();if(!v){if(i)i.focus();return;}const p=clone(prefs());p.deusSp=Object.assign({},p.deusSp);p.deusSp[a.dataset.sp]=v;await salvarItem(p,'priv');return;}
+  if(act==='nova-oracao'){formOracao(a.dataset.alvo);return;}
+  if(act==='nova-const'){formConst(null);return;}
+  if(act==='editar-const'){const c=getPriv(a.dataset.id);if(c)formConst(c);return;}
+  if(act==='editar'){const r=REGISTRO.get(a.dataset.k);if(!r)return;const k=r.item.kind;if(k==='oracao')formOracao(null,r);else if(k==='voto')formVoto(r);else if(k==='constelacao')formConst(r.item);else formItem(k,r.item.alvo,null,r);return;}
+  if(act==='apagar'){S.confirmar=a.dataset.k;render();return;}
+  if(act==='apagar-nao'){S.confirmar=null;render();return;}
+  if(act==='apagar-sim'){const r=REGISTRO.get(a.dataset.k);S.confirmar=null;if(r){await apagarItem(r);toast('Apagado.');}else render();return;}
+  if(act==='fechar'){fecharForm();return;}
+  if(act==='mais-eixo'){$('#eixos').insertAdjacentHTML('beforeend',eixoLinha());return;}
+  if(act==='menos-eixo'){a.closest('.eixo-linha').remove();return;}
+  if(act==='mais-deus'){a.parentElement.querySelector('.deuses-lista').insertAdjacentHTML('beforeend',linhaDeus());const ins=a.parentElement.querySelectorAll('.deuses-lista input[name=deus]');ins[ins.length-1].focus();return;}
+  if(act==='ativar'){const p=clone(prefs());p.ativa=a.dataset.id;await salvarItem(p,'priv');toast('Constelação ativa.');return;}
+  if(act==='partilhar'){const c=getPriv(a.dataset.id);if(!c)return;await partilharConst(c.id,!S.partilhadas.has(c.id));return;}
+  if(act==='remover-const-alheia'&&S.dono){await removerConstAlheia(a.dataset.uid,a.dataset.id);return;}
+  if(act==='conta-modo'){S.contaModo=a.dataset.m;S.contaMsg='';render();const p=document.querySelector('.form-conta input');if(p)p.focus();return;}
+  if(act==='sem-conta'){try{localStorage.setItem('okhema-sem-conta','1');}catch(err){}S.modo='local';carregarLocal();S.view='hierograma';location.hash='hierograma';render();return;}
+  if(act==='usar-conta'){try{localStorage.removeItem('okhema-sem-conta');}catch(err){}S.modo='entrar';S.contaModo='criar';S.priv=new Map();render();return;}
+  if(act==='sair'){await sair();return;}
+  if(act==='salvar-nome'){const i=$('#meu-nome');if(i)await salvarNome(i.value);return;}
+  if(act==='aprovar'&&S.dono){await definirAprovacao(a.dataset.uid,a.dataset.v==='1');return;}
+  if(act==='trazer'){await trazerDoAparelho();return;}
+  if(act==='estado-voto'){const v=getPriv(a.dataset.id);if(!v)return;const n=clone(v);n.estado=a.dataset.e;await salvarItem(n,'priv');return;}
+  if(act==='exportar'){exportar();return;}
+  if(act==='copiar-export'){const t=$('#txt-export');try{await navigator.clipboard.writeText(t.value);toast('Copiado.');}catch(err){t.select();}return;}
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&!$('#sobre').hidden){fecharForm();return;}
+  if(e.target.id==='meu-nome'&&e.key==='Enter'){e.preventDefault();salvarNome(e.target.value);return;}
+  if(e.target.id==='outro-deus'&&e.key==='Enter'){e.preventDefault();const b=document.querySelector('[data-act="outro-deus"]');if(b)b.click();return;}
+  const g=e.target.closest&&e.target.closest('g[data-act]');
+  if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();g.dispatchEvent(new MouseEvent('click',{bubbles:true}));}
+});
+document.addEventListener('change',async e=>{
+  const t=e.target;
+  if(t.id==='sel-tema'){aplicarTema(t.value);return;}
+  if(t.id==='sel-const'){const p=clone(prefs());p.ativa=t.value||null;await salvarItem(p,'priv');return;}
+  if(t.id==='filtro-diario'){S.diarioFiltro=t.value;render();return;}
+  if(t.id==='busca-tipo'){S.buscaTipo=t.value;render();return;}
+  if(t.id==='busca-orig'){S.buscaOrig=t.value;render();return;}
+  if(t.id==='importar'&&t.files&&t.files[0]){importar(t.files[0]);t.value='';}
+});
+let buscaT=null;
+document.addEventListener('input',e=>{if(e.target.id==='busca'){S.busca=e.target.value;clearTimeout(buscaT);buscaT=setTimeout(render,180);}});
+$('#sobre').addEventListener('click',e=>{if(e.target.id==='sobre')fecharForm();});
+document.addEventListener('submit',e=>{const f=e.target;if(f.classList&&f.classList.contains('form-conta')){e.preventDefault();enviarConta(f);}});
+
+function aplicarTema(v){
+  if(v==='auto')document.documentElement.removeAttribute('data-tema');else document.documentElement.setAttribute('data-tema',v);
+  try{localStorage.setItem('okhema-tema',v);}catch(e){}
+  const s=$('#sel-tema');if(s&&s.value!==v)s.value=v;
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=getComputedStyle(document.documentElement).getPropertyValue('--fundo').trim()||'#F2E9D7';
+}
+(function(){let v='telurico';try{v=localStorage.getItem('okhema-tema')||'telurico';}catch(e){}aplicarTema(v);})();
+iniciar();
+</script>
+<script>
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
