@@ -105,7 +105,7 @@ function arBaixarSigilo(){
   const cs=getComputedStyle(document.documentElement);
   let s=arSigilo(a.assin).replace(/var\((--[a-z0-9-]+)\)/g,(m,v)=>cs.getPropertyValue(v).trim()||'#A8442A');
   s=s.replace('<svg ',`<svg xmlns="http://www.w3.org/2000/svg" style="background:${cs.getPropertyValue('--folha').trim()}" `);
-  s=s.replace('</svg>',`<text x="150" y="296" text-anchor="middle" font-size="12" fill="${cs.getPropertyValue('--tinta').trim()}" font-family="GFS Didot,Georgia,serif">${esc(a.norm)} · ${a.soma}</text></svg>`);
+  s=s.replace('</svg>',`<text x="150" y="296" text-anchor="middle" font-size="12" fill="${cs.getPropertyValue('--tinta').trim()}" font-family="Times New Roman,Tinos,Times,serif">${esc(a.norm)} · ${a.soma}</text></svg>`);
   const u=URL.createObjectURL(new Blob(['<?xml version="1.0" encoding="UTF-8"?>\n'+s],{type:'image/svg+xml'}));
   const el=document.createElement('a');el.href=u;el.download=`sigilo-${a.norm}.svg`;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(u),5000);
 }

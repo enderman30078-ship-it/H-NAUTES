@@ -6,8 +6,9 @@
 <meta name="theme-color" content="#F2E9D7">
 <meta name="description" content="Caderno das spairas e das letras do Okhema: anotações, virtudes, epítetos, constelações, orações e votos.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="icones/icone-192.png">
-<link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="48x48" href="icones/navio-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icones/navio-192.png">
+<link rel="apple-touch-icon" href="icones/navio-apple-180.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Okhema">
@@ -15,14 +16,14 @@
 <title>Caderno do Okhema</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=GFS+Didot&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
 /* Layout: o hierograma é a porta; cada spaira e cada letra abre o seu caderno ao lado (abaixo no celular). */
 :root{
   --fundo:#F2E9D7; --folha:#F8F2E4; --creme:#F4EBD8; --tinta:#2A1B10; --suave:#6E3A22;
   --acento:#A8442A; --acento-2:#C8652F; --ouro:#B8862E; --linha:#D9C7A6; --sobre-acento:#F8F2E4;
   --priv:#3E5C8A; --comum:#5C7A3A; --base:#8A6A2C;
-  --f-grego:"GFS Didot","EB Garamond",Georgia,serif;
+  --f-grego:"Times New Roman",Tinos,Times,serif;
   --f-texto:"EB Garamond",Georgia,"Times New Roman",serif;
   --f-rotulo:"EB Garamond",Georgia,serif;
 }
@@ -707,13 +708,13 @@ function svgHierograma(){
       <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="transparent" stroke-width="18" stroke-linecap="round"/></g>`;
   });
   CAMINHOS.forEach((c,i)=>{if(!c.disco)return;
-    s+=`<g pointer-events="none"><circle cx="${c.disco[0]}" cy="${c.disco[1]}" r="8.5" fill="var(--folha)" stroke="var(--acento)" stroke-width=".8"/><text x="${c.disco[0]}" y="${c.disco[1]+4}" text-anchor="middle" font-size="11" fill="var(--suave)" font-family="GFS Didot, Georgia, serif">${esc(c.letra)}</text></g>`;});
+    s+=`<g pointer-events="none"><circle cx="${c.disco[0]}" cy="${c.disco[1]}" r="8.5" fill="var(--folha)" stroke="var(--acento)" stroke-width=".8"/><text x="${c.disco[0]}" y="${c.disco[1]+4}" text-anchor="middle" font-size="11" fill="var(--suave)" style="font-family:var(--f-grego)">${esc(c.letra)}</text></g>`;});
   Object.entries(SPAIRAS).forEach(([id,sp])=>{
     const[cx,cy]=sp.pos,sel=S.det&&S.det.t==='sp'&&S.det.id===id,centro=sp.tipo==='centro';
     let g=`<g class="nodo${sel?' sel':''}" data-act="sp" data-id="${id}" role="button" tabindex="0" aria-label="Spaira ${esc(nomeSp(id))}">`;
     if(id===diaSp)g+=`<circle cx="${cx}" cy="${cy}" r="${centro?33:30}" fill="none" stroke="var(--ouro)" stroke-width="1.6" stroke-dasharray="3 3"/>`;
-    if(centro){g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="27" fill="var(--acento)" stroke="var(--tinta)" stroke-width="2.2"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="12.5" fill="var(--sobre-acento)" font-family="GFS Didot, Georgia, serif" pointer-events="none">${esc(sp.rotulo)}</text>`;}
-    else{g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="23" fill="var(--creme)" stroke="var(--tinta)" stroke-width="2.2"/><circle cx="${cx}" cy="${cy}" r="18" fill="none" stroke="var(--acento)" stroke-width="1" pointer-events="none"/><text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="23" fill="var(--tinta)" font-family="GFS Didot, Georgia, serif" pointer-events="none">${esc(sp.rotulo)}</text>`;}
+    if(centro){g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="27" fill="var(--acento)" stroke="var(--tinta)" stroke-width="2.2"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="12.5" fill="var(--sobre-acento)" style="font-family:var(--f-grego)" pointer-events="none">${esc(sp.rotulo)}</text>`;}
+    else{g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="23" fill="var(--creme)" stroke="var(--tinta)" stroke-width="2.2"/><circle cx="${cx}" cy="${cy}" r="18" fill="none" stroke="var(--acento)" stroke-width="1" pointer-events="none"/><text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="23" fill="var(--tinta)" style="font-family:var(--f-grego)" pointer-events="none">${esc(sp.rotulo)}</text>`;}
     if(ca){
       let rot='';
       if(id==='theoi')rot=topoNome(ca.topo);
