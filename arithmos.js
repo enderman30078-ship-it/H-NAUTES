@@ -6,8 +6,8 @@
 const AR_LETRAS=[['Α',1],['Β',2],['Γ',3],['Δ',4],['Ε',5],['Ϝ',6],['Ζ',7],['Η',8],['Θ',9],['Ι',10],['Κ',20],['Λ',30],['Μ',40],['Ν',50],['Ξ',60],['Ο',70],['Π',80],['Ϙ',90],['Ρ',100],['Σ',200],['Τ',300],['Υ',400],['Φ',500],['Χ',600],['Ψ',700],['Ω',800],['Ϡ',900],['Ά',1000]];
 const AR_POS={},AR_VAL={};
 AR_LETRAS.forEach(([l,v],i)=>{AR_POS[l]=i+1;AR_VAL[l]=v;});
-/* variantes gráficas → forma canônica. ϛ (stigma) conta como o 6, o lugar do dígamma. */
-const AR_VARIANTES={'ϝ':'Ϝ','Ϛ':'Ϝ','ϛ':'Ϝ','ϙ':'Ϙ','Ϟ':'Ϙ','ϟ':'Ϙ','ϡ':'Ϡ','Ͳ':'Ϡ','ͳ':'Ϡ','ς':'Σ','Ϲ':'Σ','ϲ':'Σ','ϐ':'Β','ϑ':'Θ','ϕ':'Φ','ϖ':'Π','ϰ':'Κ','ϱ':'Ρ'};
+/* variantes gráficas → forma canônica. ϛ (stigma) conta como sigma, 200. */
+const AR_VARIANTES={'ϝ':'Ϝ','Ϛ':'Σ','ϛ':'Σ','ϙ':'Ϙ','Ϟ':'Ϙ','ϟ':'Ϙ','ϡ':'Ϡ','Ͳ':'Ϡ','ͳ':'Ϡ','ς':'Σ','Ϲ':'Σ','ϲ':'Σ','ϐ':'Β','ϑ':'Θ','ϕ':'Φ','ϖ':'Π','ϰ':'Κ','ϱ':'Ρ'};
 const AR_SISTEMAS=['linear','triangular','quadrado','pentagonal','hexagonal','heptagonal','octogonal','eneagonal','decagonal','hendecagonal','dodecagonal','tridecagonal'];
 
 /* Hasta Alpha (Ά, 1000): o sinal ͵ antes do alfa (͵Α, ͵α) ou o alfa maiúsculo com acento e sem
