@@ -1,19 +1,23 @@
 /* ===================== ἈΡΙΘΜΌΣ =====================
    Isopsefia clássica (milesiana, com as três letras arcaicas), assinatura poligonal
    em doze sistemas (s=2 … s=13) reduzida mod 12, e o sigilo radial de doze pontas.
-   As 27 letras seguem a ordem numeral: a posição de cada uma (1…27) é o n dos números
+   As 28 letras seguem a ordem numeral (com a Hasta Alpha depois do Sampi): a posição de cada uma (1…28) é o n dos números
    poligonais; o valor milesiano é a soma da isopsefia. */
-const AR_LETRAS=[['Α',1],['Β',2],['Γ',3],['Δ',4],['Ε',5],['Ϝ',6],['Ζ',7],['Η',8],['Θ',9],['Ι',10],['Κ',20],['Λ',30],['Μ',40],['Ν',50],['Ξ',60],['Ο',70],['Π',80],['Ϙ',90],['Ρ',100],['Σ',200],['Τ',300],['Υ',400],['Φ',500],['Χ',600],['Ψ',700],['Ω',800],['ϡ',900]];
+const AR_LETRAS=[['Α',1],['Β',2],['Γ',3],['Δ',4],['Ε',5],['Ϝ',6],['Ζ',7],['Η',8],['Θ',9],['Ι',10],['Κ',20],['Λ',30],['Μ',40],['Ν',50],['Ξ',60],['Ο',70],['Π',80],['Ϙ',90],['Ρ',100],['Σ',200],['Τ',300],['Υ',400],['Φ',500],['Χ',600],['Ψ',700],['Ω',800],['Ϡ',900],['Ά',1000]];
 const AR_POS={},AR_VAL={};
 AR_LETRAS.forEach(([l,v],i)=>{AR_POS[l]=i+1;AR_VAL[l]=v;});
 /* variantes gráficas → forma canônica. ϛ (stigma) conta como o 6, o lugar do dígamma. */
-const AR_VARIANTES={'ϝ':'Ϝ','Ϛ':'Ϝ','ϛ':'Ϝ','ϙ':'Ϙ','Ϟ':'Ϙ','ϟ':'Ϙ','Ϡ':'ϡ','Ͳ':'ϡ','ͳ':'ϡ','ς':'Σ','Ϲ':'Σ','ϲ':'Σ','ϐ':'Β','ϑ':'Θ','ϕ':'Φ','ϖ':'Π','ϰ':'Κ','ϱ':'Ρ'};
+const AR_VARIANTES={'ϝ':'Ϝ','Ϛ':'Ϝ','ϛ':'Ϝ','ϙ':'Ϙ','Ϟ':'Ϙ','ϟ':'Ϙ','ϡ':'Ϡ','Ͳ':'Ϡ','ͳ':'Ϡ','ς':'Σ','Ϲ':'Σ','ϲ':'Σ','ϐ':'Β','ϑ':'Θ','ϕ':'Φ','ϖ':'Π','ϰ':'Κ','ϱ':'Ρ'};
 const AR_SISTEMAS=['linear','triangular','quadrado','pentagonal','hexagonal','heptagonal','octogonal','eneagonal','decagonal','hendecagonal','dodecagonal','tridecagonal'];
 
+/* Hasta Alpha (Ά, 1000): o sinal ͵ antes do alfa (͵Α, ͵α) ou o alfa maiúsculo com acento e sem
+   espírito (Ά). O ά minúsculo acentuado continua sendo alfa (1). */
 function arNorm(txt){
   let out='';
-  for(const c0 of String(txt||'').normalize('NFD').replace(/[̀-ͯ]/g,'')){
-    const c=AR_VARIANTES[c0]||c0;
+  const t=String(txt||'').normalize('NFC').replace(/͵\s*[αΑ]/g,'').replace(/Ά/g,'');
+  for(const c1 of t.normalize('NFD').replace(/[̀-ͯ]/g,'')){
+    if(c1===''){out+='Ά';continue;}
+    const c=AR_VARIANTES[c1]||c1;
     if(AR_POS[c]){out+=c;continue;}
     const up=c.toUpperCase();
     if(AR_POS[up])out+=up;
@@ -159,8 +163,9 @@ function vArithmos(){
   const guardadas=ordenar(doTipo('arithmos'));
   const tabela=acervo.slice().sort((x,y)=>x.soma-y.soma).map(e=>`<tr><td><a class="gr" href="${arHref(e.palavra)}">${esc(e.palavra)}</a></td><td>${e.soma}</td><td>${e.raiz}</td><td>${esc((e.sentidos||[])[0]||'')}</td></tr>`).join('');
   return `<section class="pagina"><h2>Ἀριθμός</h2>
-    <p class="base-txt">A isopsefia clássica soma o valor milesiano de cada letra, contando as arcaicas: ϝ 6, ϙ 90, ϡ 900. A assinatura poligonal toma a posição de cada uma das 27 letras na ordem numeral como número poligonal em doze sistemas, do linear ao tridecagonal, e reduz cada soma a mod 12; o sigilo é essa assinatura desenhada em doze raios. Escreva uma palavra grega, ou um número para ver as palavras que o somam.</p>
+    <p class="base-txt">A isopsefia clássica soma o valor milesiano de cada letra, contando as arcaicas, Ϝ 6, Ϙ 90, Ϡ 900, e a Hasta Alpha, Ά 1000 (escreva ͵Α, ou Ά maiúsculo sem espírito). A assinatura poligonal toma a posição de cada uma das 28 letras na ordem numeral como número poligonal em doze sistemas, do linear ao tridecagonal, e reduz cada soma a mod 12; o sigilo é essa assinatura desenhada em doze raios. Escreva uma palavra grega, ou um número para ver as palavras que o somam.</p>
     <form class="barra" id="form-ar" role="search"><input type="search" id="ar-palavra" class="gr" value="${esc(q)}" placeholder="Ἑρμῆς, χάρις, 353…" aria-label="Palavra grega ou número" autocomplete="off" spellcheck="false"><button type="submit" class="btn forte">Analisar</button></form>
+    <div class="barra" aria-label="Letras que faltam no teclado">${['Ϝ','Ϙ','Ϡ','Ά'].map(l=>`<button type="button" class="btn mini" data-act="ar-tecla" data-l="${l}" title="Inserir ${l} (${AR_VAL[l]})"><span class="gr">${l}</span> <small>${AR_VAL[l]}</small></button>`).join('')}</div>
     ${res}
     <section class="secao"><div class="secao-cab"><h3>Suas análises guardadas</h3></div>${guardadas.length?`<div class="lista">${guardadas.map(card).join('')}</div>`:'<p class="vazio">Nenhuma ainda. Analise uma palavra e toque em “Guardar no caderno”.</p>'}</section>
     <details class="ar-acervo"><summary>O acervo de palavras · ${acervo.length} palavras (${esc(resumo)})</summary>

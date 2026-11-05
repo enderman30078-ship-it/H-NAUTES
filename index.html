@@ -319,7 +319,7 @@ const SPAIRAS = {
 const CAMINHOS = [
   {de:"theoi",   para:"omega",   letra:"Α", disco:[304,200], descricao:""},
   {de:"theoi",   para:"alpha",   letra:"Γ", disco:[376,200], descricao:""},
-  {de:"theoi",   para:"ennoia",  letra:"Ά", disco:[340,195], descricao:"Ἄλφα com tónos — o caminho do ápice ao silêncio: dos Θεοί à Ἔννοια."},
+  {de:"theoi",   para:"ennoia",  letra:"Ά", disco:[340,195], descricao:"Hasta Alpha, o mil (͵Α) — o caminho do ápice ao silêncio: dos Θεοί à Ἔννοια."},
   {de:"omega",   para:"alpha",   letra:"Δ", disco:[378,255], pill:[[340,255,54,"Ἀλήθεια"]], descricao:""},
   {de:"omega",   para:"ennoia",  letra:"Μ", disco:[304,277], descricao:""},
   {de:"alpha",   para:"ennoia",  letra:"Θ", disco:[376,277], descricao:""},
@@ -334,7 +334,7 @@ const CAMINHOS = [
   {de:"agalma",  para:"ypsilon", letra:"Ϝ", disco:[398,381], descricao:"O dígamma — antes presente só no arithmos, agora manifesto como caminho: a força de ligação que porta o ἀγαθόν."},
   {de:"agalma",  para:"iota",    letra:"Ϙ", disco:[340,420], descricao:"Ϙόππα — o pilar central entre o Ἄγαλμα e a Ἔλλαμψις: a luz que atravessa a lente do culto."},
   {de:"epsilon", para:"iota",    letra:"Λ", disco:[262,420], descricao:""},
-  {de:"omicron", para:"agalma",  letra:"ϡ", disco:[300,443], descricao:"Σαμπῖ — a diagonal ascendente do Ζῆλος ao Ἄγαλμα: o ardor que se oferta ao foco consagrado."},
+  {de:"omicron", para:"agalma",  letra:"Ϡ", disco:[300,443], descricao:"Σαμπῖ — a diagonal ascendente do Ζῆλος ao Ἄγαλμα: o ardor que se oferta ao foco consagrado."},
   {de:"ypsilon", para:"iota",    letra:"Ι", disco:[417,420], descricao:""},
   {de:"epsilon", para:"omicron", letra:"Σ", disco:[226,443], descricao:""},
   {de:"ypsilon", para:"eta",     letra:"Ρ", disco:[454,443], descricao:""},
@@ -347,7 +347,7 @@ const CAMINHOS = [
   {de:"omicron", para:"eta",     letra:"Χ", disco:[340,505], descricao:""}
 ];
 const LETRAS = {
-  "Ά":{min:"ά",nome:"Alfa tônico",valor:1,significados:"Transcendência, deificação, contemplação das essências, misticismo, amor incondicional, devoção aos Deuses."},
+  "Ά":{min:"ά",nome:"Hasta Alpha",valor:1000,significados:"Transcendência, deificação, contemplação das essências, misticismo, amor incondicional, devoção aos Deuses."},
   "Α":{min:"α",nome:"Alfa",valor:1,significados:"Origem, refúgio, nascimento, renascimento, pureza, potencial, criação, integração, encarnação."},
   "Β":{min:"β",nome:"Beta",valor:2,significados:"Movimento, jornada, progresso, emissão, desprendimento, dualidade, alternância, sabedoria, mistério, introspecção, autodescoberta, instrução, proporcionalidade, resiliência, vitória."},
   "Γ":{min:"γ",nome:"Gama",valor:3,significados:"Crescimento, circulação, renovação, fertilidade, constância, beleza, amor, esperança, conexão, criatividade, manifestação, liderança transformadora, pioneirismo, generosidade, distribuição, densidade."},
@@ -373,7 +373,7 @@ const LETRAS = {
   "Φ":{min:"φ",nome:"Fi",valor:500,significados:"Amor divino, beleza, fluxo, potencial, harmonia, realização, conexão com o divino, compreensão profunda."},
   "Χ":{min:"χ",nome:"Qui",valor:600,significados:"Fogo transformador, revolução, sacrifício, não-conformismo, rebeldia, desapego das convenções, transgressão, caos construtivo, magia."},
   "Ψ":{min:"ψ",nome:"Psi",valor:700,significados:"Mistério, profundidade da alma, conexão com o divino, previsão, coerência, juízo, transe."},
-  "ϡ":{min:"ϡ",nome:"Sampi (Σαμπῖ)",valor:900,significados:"A última das letras-número, o 900; o extremo, o que fecha a série; a diagonal do ardor ao foco — a preencher na prática.°"},
+  "Ϡ":{min:"ϡ",nome:"Sampi (Σαμπῖ)",valor:900,significados:"A última das letras-número, o 900; o extremo, o que fecha a série; a diagonal do ardor ao foco — a preencher na prática.°"},
   "Ω":{min:"ω",nome:"Ômega",valor:800,significados:"Conclusão, realização, coroação, ciclo eterno, tempo, totalidade, lições extraídas das dificuldades, a conquista final."}
 };
 
@@ -1198,6 +1198,7 @@ document.addEventListener('click',async e=>{
   if(act==='aprovar'&&S.dono){await definirAprovacao(a.dataset.uid,a.dataset.v==='1');return;}
   if(act==='trazer'){await trazerDoAparelho();return;}
   if(act==='ar-baixar'){arBaixarSigilo();return;}
+  if(act==='ar-tecla'){const i=$('#ar-palavra');if(!i)return;const p=i.selectionStart??i.value.length,q=i.selectionEnd??p;i.value=i.value.slice(0,p)+a.dataset.l+i.value.slice(q);i.focus();i.setSelectionRange(p+a.dataset.l.length,p+a.dataset.l.length);return;}
   if(act==='ar-guardar'){formItem('arithmos','',null,null,'',{palavra:S.arPalavra||''});return;}
   if(act==='estado-voto'){const v=getPriv(a.dataset.id);if(!v)return;const n=clone(v);n.estado=a.dataset.e;await salvarItem(n,'priv');return;}
   if(act==='exportar'){exportar();return;}
