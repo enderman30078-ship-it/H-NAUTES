@@ -180,6 +180,12 @@ body{padding-top:env(safe-area-inset-top,0px)}
 .conta-dados{display:grid;gap:6px;font-size:16px}
 .conta-dados input{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;min-width:0;flex:1 1 200px}
 nav.abas[hidden]{display:none}
+.abre{all:unset;cursor:pointer;display:inline-flex;align-items:baseline;gap:7px;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}
+.abre::before{content:'';width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-top:6px solid currentColor;transform:translateY(-1px);transition:transform .15s}
+.fechada .abre::before{transform:rotate(-90deg) translateX(1px)}
+.abre:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.abre .qtd{font-size:11px;letter-spacing:0;border:1px solid var(--linha);padding:0 6px;color:var(--suave)}
+.secao.fechada{padding-bottom:2px}
 /* ---------- Ἀριθμός ---------- */
 .num-ar{font-family:var(--f-texto);font-size:13px;color:var(--ouro);text-decoration:none;border:1px solid var(--ouro);padding:0 6px;margin-left:6px;vertical-align:2px;white-space:nowrap}
 .ar-grade{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:start}
@@ -406,6 +412,9 @@ const KINDS={
   relacao:{nome:'Minha relação',plural:'Minha relação',vis:'priv',campos:[{k:'texto',t:'area',rot:'Como me relaciono com esta spaira'}]},
   imagem:{nome:'Imagem',plural:'Imagens',vis:'comum',campos:[CAMPO_TITULO,{k:'texto',t:'area',rot:'Descrição da imagem'},CAMPO_FONTE]},
   planta:{nome:'Planta',plural:'Plantas',vis:'comum',campos:[{k:'titulo',rot:'Planta'},{k:'deus',rot:'Deus (ou deuses, separados por vírgula)'},{k:'texto',t:'area',rot:'Uso e sentido'},CAMPO_FONTE]},
+  telos:{nome:'Telos vigente reconhecido',plural:'Telos Vigente Reconhecido',vis:'priv',campos:[{k:'data',t:'date',rot:'Reconhecido em'},{k:'texto',t:'area',rot:'O telos que se reconhece agora nesta spaira'}]},
+  daimon:{nome:'Daimon',plural:'Daimones',vis:'priv',campos:[{k:'titulo',rot:'Nome'},{k:'grego',rot:'Nome em grego (opcional)',gr:true},{k:'texto',t:'area',rot:'Sobre o daimon'},CAMPO_FONTE]},
+  heroi:{nome:'Herói',plural:'Heróis',vis:'comum',campos:[{k:'titulo',rot:'Nome'},{k:'grego',rot:'Nome em grego (opcional)',gr:true},{k:'texto',t:'area',rot:'Sobre o herói'},CAMPO_FONTE]},
   ato:{nome:'Ato devocional',plural:'Atos devocionais',vis:'comum',campos:[CAMPO_TITULO,{k:'deus',rot:'Deus (ou deuses, separados por vírgula)'},{k:'texto',t:'area',rot:'Como se faz'},CAMPO_FONTE]},
   desejo:{nome:'Desejo',plural:'Desejos',vis:'priv',campos:[{k:'texto',t:'area',rot:'O desejo'}]},
   mito:{nome:'História ou mito',plural:'Histórias e mitos',vis:'comum',campos:[CAMPO_TITULO,CAMPO_TEXTO,CAMPO_FONTE]},
@@ -415,7 +424,7 @@ const KINDS={
   voto:{nome:'Voto',plural:'Votos',vis:'priv'},
   constelacao:{nome:'Constelação',plural:'Constelações',vis:'priv'}
 };
-const SECOES_SPAIRA=['epiteto','virtude','ato','palavra','insight','relacao','arithmos'];
+const SECOES_SPAIRA=['virtude','palavra','epiteto','telos','ato','arithmos','planta','daimon','heroi','insight','relacao'];
 const SECOES_LETRA=['imagem','palavra','planta','ato','desejo','mito','hino','epiteto','insight','arithmos'];
 
 
@@ -788,6 +797,8 @@ function card(r){
   if(it.kind==='palavra')return wrap(`<span class="gr">${esc(it.termo)}</span>${arNumeroLink(it.termo)}`,it.nota?`<p>${esc(it.nota)}</p>`:'',r);
   if(it.kind==='arithmos'){const a=arAnalise(it.palavra);return wrap(`<span class="gr">${esc(it.palavra||'')}</span>${a?` · ${a.soma} · raiz ${a.raiz}`:''}`,`<div class="ar-card">${a?`<a href="${arHref(it.palavra)}" aria-label="Abrir no Ἀριθμός">${arSigilo(a.assin,{tam:64,mini:true})}</a>`:''}<div>${it.nota?`<p>${esc(it.nota)}</p>`:''}${it.alvo&&S.view!=='hierograma'?`<p><a href="${hrefAlvo(it.alvo)}">${esc(nomeAlvo(it.alvo))}</a></p>`:''}</div></div>`,r);}
   if(it.kind==='insight')return wrap(fmtData(it.data)||'Insight',`<p>${esc(it.texto)}</p>`,r);
+  if(it.kind==='telos')return wrap(it.data?'Reconhecido em '+esc(fmtData(it.data)):K.nome,`<p>${esc(it.texto)}</p>`,r);
+  if(it.kind==='daimon'||it.kind==='heroi')return wrap(`${esc(it.titulo||K.nome)}${it.grego?` · <span class="gr">${esc(it.grego)}</span>${arNumeroLink(it.grego)}`:''}`,it.texto?`<p>${esc(it.texto)}</p>`:'',r,it.fonte);
   if(it.kind==='relacao'||it.kind==='desejo')return wrap(K.nome,`<p>${esc(it.texto)}</p>`,r);
   if(it.kind==='hino')return wrap(esc(it.titulo||'Hino'),`<p class="gr">${esc(it.texto)}</p>`,r,it.fonte);
   if(it.kind==='oracao')return cardOracao(r);
@@ -804,10 +815,18 @@ function cardOracao(r){
   const corpo=`${it.deuses?`<p><i>A</i> ${esc(it.deuses)}</p>`:''}${alvos?`<div class="chips">${alvos}</div>`:''}${it.texto?`<p>${esc(it.texto)}</p>`:''}${it.insight?`<p><i>O que se mostrou:</i> ${esc(it.insight)}</p>`:''}${cats||modos?`<div class="meta">${cats?`<span>${esc(cats)}</span>`:''}${modos?`<span class="gr">${esc(modos)}</span>`:''}</div>`:''}`;
   return wrap(`${esc(fmtData(it.data))}${it.hora?' · '+esc(HORAS[it.hora]||it.hora):''}`,corpo,r);
 }
+/* secções que abrem e fecham; o estado fica lembrado neste aparelho */
+const SEC_KEY='okhema-secoes-fechadas';
+S.fechadas=(()=>{try{return new Set(JSON.parse(localStorage.getItem(SEC_KEY)||'[]'));}catch(e){return new Set();}})();
+function alternarSecao(ch){if(S.fechadas.has(ch))S.fechadas.delete(ch);else S.fechadas.add(ch);try{localStorage.setItem(SEC_KEY,JSON.stringify([...S.fechadas]));}catch(e){}render();}
+function caixa(ch,tituloHtml,acoes,corpo,qtd){
+  const f=S.fechadas.has(ch);
+  return `<section class="secao${f?' fechada':''}"><div class="secao-cab"><h3><button type="button" class="abre" data-act="sec-alternar" data-sec="${esc(ch)}" aria-expanded="${!f}">${tituloHtml}${f&&qtd?` <span class="qtd">${qtd}</span>`:''}</button></h3>${acoes||''}</div>${f?'':corpo}</section>`;
+}
 function secao(kind,alvo,lista,extra,deus,titulo){
   const K=KINDS[kind];
   const itens=lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:`<p class="vazio">Nada escrito ainda.</p>`;
-  return `<section class="secao"><div class="secao-cab"><h3>${esc(titulo||K.plural)}</h3><button class="btn mini" data-act="novo" data-kind="${kind}" data-alvo="${esc(alvo)}"${extra?` data-extra="${esc(extra)}"`:''}${deus?` data-deus="${esc(deus)}"`:''}>Adicionar</button></div>${itens}</section>`;
+  return caixa(kind,esc(titulo||K.plural),`<button class="btn mini" data-act="novo" data-kind="${kind}" data-alvo="${esc(alvo)}"${extra?` data-extra="${esc(extra)}"`:''}${deus?` data-deus="${esc(deus)}"`:''}>Adicionar</button>`,itens,lista.length);
 }
 const ordenar=l=>l.sort((a,b)=>(b.item.editado||0)-(a.item.editado||0));
 
@@ -821,14 +840,14 @@ function vSpaira(id){
   const ca=constAtiva();let constHtml='';
   if(ca){
     if(id==='theoi'){
-      constHtml=`<section class="secao"><h3>Na sua constelação</h3><p class="base-txt"><b>${esc(TOPO_TIPOS[ca.topo&&ca.topo.tipo]||'')}</b>${ca.topo&&ca.topo.nome?': <span class="gr">'+esc(ca.topo.nome)+'</span>':''}${ca.topo&&ca.topo.nota?`<br>${esc(ca.topo.nota)}`:''}</p></section>`;
+      constHtml=caixa('constelacao-sp','Na sua constelação','',`<p class="base-txt"><b>${esc(TOPO_TIPOS[ca.topo&&ca.topo.tipo]||'')}</b>${ca.topo&&ca.topo.nome?': <span class="gr">'+esc(ca.topo.nome)+'</span>':''}${ca.topo&&ca.topo.nota?`<br>${esc(ca.topo.nota)}`:''}</p>`);
     }else{
       const ds=((ca.espairas||{})[id]||[]).filter(d=>d.deus);
       const seg=topoSegundo(ca.topo);
       const lis=ds.map(d=>{
         const eps=doTipo('epiteto').filter(r=>r.item.alvo===alvo&&norm(r.item.deus)===norm(d.deus));
         return `<div class="card"><div class="t">${esc(d.deus)}${seg?`, <i>${esc(seg)}</i>`:''}</div>${d.nota?`<p>${esc(d.nota)}</p>`:''}${eps.length?`<div class="chips">${eps.map(r=>`<span class="chip gr">${esc(r.item.grego||r.item.translit)}</span>`).join('')}</div>`:''}</div>`;}).join('');
-      constHtml=`<section class="secao"><div class="secao-cab"><h3>Na sua constelação · ${esc(ca.nome||'')}</h3><button class="btn mini" data-act="editar-const" data-id="${esc(ca.id)}">Editar constelação</button></div>${lis||`<p class="vazio">Nenhum deus posto nesta spaira na constelação ativa.</p>`}</section>`;
+      constHtml=caixa('constelacao-sp',`Na sua constelação · ${esc(ca.nome||'')}`,`<button class="btn mini" data-act="editar-const" data-id="${esc(ca.id)}">Editar constelação</button>`,lis||`<p class="vazio">Nenhum deus posto nesta spaira na constelação ativa.</p>`,ds.length);
     }
   }
   let virt='';
@@ -846,12 +865,13 @@ function vSpaira(id){
   const selD=deusDaSp(id);
   const outras=SECOES_SPAIRA.filter(k=>k!=='virtude').map(k=>{
     if(k==='epiteto')return secao(k,alvo,ordenar(paraAlvo(k,alvo)),'',selD,'Todos os epítetos desta spaira');
+    if(k==='planta')return id!=='theoi'?blocoPlantas(id):'';
     if(k==='ato'){const l=ordenar(todos().filter(r=>r.item.kind==='ato'&&(r.item.alvo===alvo||(selD&&temDeus(r.item.deus,selD)))));return secao(k,alvo,l,'',selD,selD?`Atos devocionais · ${selD}`:'');}
     return secao(k,alvo,ordenar(paraAlvo(k,alvo)));}).join('');
   const oracoes=ordenar(paraAlvo('oracao',alvo));
-  const orHtml=`<section class="secao"><div class="secao-cab"><h3>Orações ligadas a esta spaira</h3><button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button></div>${oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>'}</section>`;
+  const orHtml=caixa('oracao',`Orações ligadas a esta spaira`,`<button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button>`,oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>',oracoes.length);
   const caminhos=CAMINHOS.map((c,i)=>({c,i})).filter(o=>o.c.de===id||o.c.para===id).map(o=>`<a class="chip" href="#caminho-${o.i}"><span class="gr">${esc(o.c.letra)}</span> → ${esc(SPAIRAS[o.c.de===id?o.c.para:o.c.de].rotulo)}</a>`).join('');
-  return `${cab}${base}${id!=='theoi'?blocoDeus(id):''}${constHtml}${virt}${outras}${id!=='theoi'?blocoPlantas(id):''}${orHtml}<section class="secao"><h3>Caminhos desta spaira</h3><div class="chips">${caminhos}</div></section>`;
+  return `${cab}${base}${id!=='theoi'?blocoDeus(id):''}${constHtml}${virt}${outras}${orHtml}${caixa('caminhos','Caminhos desta spaira','',`<div class="chips">${caminhos}</div>`)}`;
 }
 function deusesConhecidos(){
   const m=new Map(),add=d=>{d=String(d||'').trim();if(!d)return;const k=norm(d);if(!m.has(k))m.set(k,d);};
@@ -877,17 +897,17 @@ function blocoDeus(id){
       ${aqui.length?`<div class="lista">${aqui.map(card).join('')}</div>`:`<p class="vazio">Nenhum epíteto de ${esc(sel)} registrado para esta spaira.</p>`}
       ${fora.length?`<details class="outros"><summary>Epítetos de ${esc(sel)} em outras spairas e letras (${fora.length})</summary><div class="chips">${fora.map(r=>`<a class="chip" href="${hrefAlvo(r.item.alvo)}"><span class="gr">${esc(r.item.grego||r.item.translit)}</span>&nbsp;· ${esc(nomeAlvo(r.item.alvo))}</a>`).join('')}</div></details>`:''}`;
   }
-  return `<section class="secao"><div class="secao-cab"><h3>Deus desta spaira</h3>${sel?`<button class="btn mini" data-act="escolher-deus" data-sp="${id}" data-deus="">Limpar escolha</button>`:''}</div>
+  return caixa('deus-sp',`Deus desta spaira${sel?' · '+esc(sel):''}`,sel?`<button class="btn mini" data-act="escolher-deus" data-sp="${id}" data-deus="">Limpar escolha</button>`:'',`
     ${chips?`<div class="chips" role="group" aria-label="Escolher o deus desta spaira">${chips}</div>`:''}
     <div class="outro-deus"><input id="outro-deus" type="text" placeholder="Outro deus" aria-label="Outro deus"><button class="btn mini" data-act="outro-deus" data-sp="${id}">Escolher</button></div>
-    ${sel?corpo:'<p class="nota-campo">Escolha o deus que se liga a esta spaira para ver os epítetos dele mais próximos a ela.</p>'}</section>`;
+    ${sel?corpo:'<p class="nota-campo">Escolha o deus que se liga a esta spaira para ver os epítetos dele mais próximos a ela.</p>'}`);
 }
 function blocoPlantas(id){
   const alvo='sp:'+id,ds=deusesDaSpaira(id),sel=deusDaSp(id);
   const lista=ordenar(todos().filter(r=>r.item.kind==='planta'&&(r.item.alvo===alvo||ds.some(d=>temDeus(r.item.deus,d)))));
-  return `<section class="secao"><div class="secao-cab"><h3>Plantas${ds.length?' · '+esc(ds.join(', ')):''}</h3><button class="btn mini" data-act="novo" data-kind="planta" data-alvo="${alvo}"${sel?` data-deus="${esc(sel)}"`:''}>Adicionar planta</button></div>
+  return caixa('planta',`Plantas${ds.length?' · '+esc(ds.join(', ')):''}`,`<button class="btn mini" data-act="novo" data-kind="planta" data-alvo="${alvo}"${sel?` data-deus="${esc(sel)}"`:''}>Adicionar planta</button>`,`
     ${ds.length?'':'<p class="nota-campo">Escolha um deus para esta spaira, ou ponha deuses nela pela constelação, para ver as plantas deles.</p>'}
-    ${lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:'<p class="vazio">Nenhuma planta registrada ainda.</p>'}</section>`;
+    ${lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:'<p class="vazio">Nenhuma planta registrada ainda.</p>'}`,lista.length);
 }
 function norm(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();}
 
@@ -898,7 +918,7 @@ function vCaminho(i){
   const base=`<div class="base-txt"><span class="marca-base">Okhema · sentidos da letra</span><br>${esc(L.significados||'')}${c.descricao?`<br><i>${esc(c.descricao)}</i>`:''}</div>`;
   const secs=SECOES_LETRA.map(k=>secao(k,alvo,ordenar(paraAlvo(k,alvo)))).join('');
   const oracoes=ordenar(paraAlvo('oracao',alvo));
-  return `${cab}${base}${secs}<section class="secao"><div class="secao-cab"><h3>Orações ligadas a este caminho</h3><button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button></div>${oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>'}</section>`;
+  return `${cab}${base}${secs}${caixa('oracao','Orações ligadas a este caminho',`<button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button>`,oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>',oracoes.length)}`;
 }
 
 /* ---------- diário ---------- */
@@ -1198,6 +1218,7 @@ document.addEventListener('click',async e=>{
   if(act==='salvar-nome'){const i=$('#meu-nome');if(i)await salvarNome(i.value);return;}
   if(act==='aprovar'&&S.dono){await definirAprovacao(a.dataset.uid,a.dataset.v==='1');return;}
   if(act==='trazer'){await trazerDoAparelho();return;}
+  if(act==='sec-alternar'){alternarSecao(a.dataset.sec);return;}
   if(act==='ar-baixar'){arBaixarSigilo();return;}
   if(act==='ar-tecla'){const i=$('#ar-palavra');if(!i)return;const p=i.selectionStart??i.value.length,q=i.selectionEnd??p;i.value=i.value.slice(0,p)+a.dataset.l+i.value.slice(q);i.focus();i.setSelectionRange(p+a.dataset.l.length,p+a.dataset.l.length);return;}
   if(act==='ar-guardar'){formItem('arithmos','',null,null,'',{palavra:S.arPalavra||''});return;}
