@@ -180,6 +180,25 @@ body{padding-top:env(safe-area-inset-top,0px)}
 .conta-dados{display:grid;gap:6px;font-size:16px}
 .conta-dados input{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;min-width:0;flex:1 1 200px}
 nav.abas[hidden]{display:none}
+/* ---------- Céu ---------- */
+.ceu-g{font-family:"Segoe UI Symbol","Noto Sans Symbols","Noto Sans Symbols 2","Apple Symbols","DejaVu Sans",sans-serif;font-variant-emoji:text}
+.ceu-grade{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:760px){.ceu-grade{grid-template-columns:minmax(0,1fr)}}
+.ceu-roda{width:100%;max-width:380px;height:auto;justify-self:center}
+.ceu-roda a{cursor:pointer}
+.ceu-lado{display:grid;gap:12px;min-width:0}
+.ceu-tab{border-collapse:collapse;width:100%;font-size:15.5px}
+.ceu-tab td,.ceu-tab th{border-bottom:1px solid var(--linha);padding:4px 8px;text-align:left;vertical-align:baseline;white-space:nowrap}
+.ceu-tab th{font-weight:400;color:var(--suave);font-size:13px}
+.ceu-tab .num{font-variant-numeric:tabular-nums}
+.ceu-tab .suave{color:var(--suave);font-size:14px}
+@media (max-width:520px){.ceu-tab .suave{display:block;font-size:13px}.ceu-tab td,.ceu-tab th{padding:4px 5px}}
+.ceu-tab a{color:var(--acento);text-decoration:none;font-size:18px}
+.retro{color:var(--acento);font-weight:600}
+.ceu-lua{border-left:3px solid var(--ouro);padding:6px 10px;background:var(--folha);font-size:15.5px}
+.ceu-quando{margin:4px 0 2px;color:var(--suave);font-size:15px}
+.ceu-agora{color:inherit;text-decoration-color:var(--linha);text-underline-offset:3px;white-space:nowrap}
+input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;color:var(--tinta);font:inherit;font-size:15px}
 .abre{all:unset;cursor:pointer;display:inline-flex;align-items:baseline;gap:7px;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}
 .abre::before{content:'';width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-top:6px solid currentColor;transform:translateY(-1px);transition:transform .15s}
 .fechada .abre::before{transform:rotate(-90deg) translateX(1px)}
@@ -232,6 +251,7 @@ nav.abas[hidden]{display:none}
       <a href="#constelacao" data-v="constelacao">Constelação</a>
       <a href="#acervo" data-v="acervo">Acervo e busca</a>
       <a href="#arithmos" data-v="arithmos" class="gr">Ἀριθμός</a>
+      <a href="#ceu" data-v="ceu">Céu</a>
       <a href="#caderno" data-v="caderno">Cópia de segurança</a>
       <a href="#conta" data-v="conta">Conta</a>
     </nav>
@@ -245,6 +265,8 @@ nav.abas[hidden]{display:none}
 <script src="supabase.js"></script>
 <script src="config.js"></script>
 <script src="arithmos.js"></script>
+<script src="astronomy.js"></script>
+<script src="ceu.js"></script>
 <script>
 const GRAUS = [
   {id:"natural",      nome:"Naturais",       gr:"φυσικαί",        desc:"Disposições do corpo e do temperamento; partilhadas até pelos animais. Podem conflitar entre si, pois não derivam ainda da razão una."},
@@ -674,7 +696,7 @@ function lerHash(){
   if(h.startsWith('spaira-')&&SPAIRAS[h.slice(7)]){S.view='hierograma';S.det={t:'sp',id:h.slice(7)};}
   else if(h.startsWith('caminho-')&&CAMINHOS[+h.slice(8)]){S.view='hierograma';S.det={t:'cam',id:+h.slice(8)};}
   else if(h==='arithmos'||h.startsWith('arithmos=')){S.view='arithmos';let w='';try{w=decodeURIComponent(h.slice(9));}catch(e){w=h.slice(9);}S.arPalavra=w;}
-  else if(['hierograma','diario','votos','constelacao','acervo','caderno','conta'].includes(h)){S.view=h;if(h==='hierograma')S.det=null;}
+  else if(['hierograma','diario','votos','constelacao','acervo','caderno','conta','ceu'].includes(h)){S.view=h;if(h==='hierograma')S.det=null;}
   else{S.view='hierograma';}
 }
 window.addEventListener('hashchange',()=>{lerHash();render();if(S.view==='arithmos')window.scrollTo(0,0);if(S.det&&window.innerWidth<=820){const d=$('#det');if(d)d.scrollIntoView({behavior:'smooth',block:'start'});}});
@@ -696,7 +718,7 @@ function render(){
   renderEstado();
   const fora=S.modo==='entrar'||S.view==='nova-senha';$('#abas').hidden=fora||S.modo==='carregando';
   const m=$('#principal');
-  m.innerHTML=S.modo==='carregando'?'':fora?vEntrar():S.view==='conta'?vConta():S.view==='arithmos'?vArithmos():S.view==='diario'?vDiario():S.view==='votos'?vVotos():S.view==='constelacao'?vConstelacao():S.view==='acervo'?vAcervo():S.view==='caderno'?vCaderno():vHierograma();
+  m.innerHTML=S.modo==='carregando'?'':fora?vEntrar():S.view==='conta'?vConta():S.view==='arithmos'?vArithmos():S.view==='ceu'?vCeu():S.view==='diario'?vDiario():S.view==='votos'?vVotos():S.view==='constelacao'?vConstelacao():S.view==='acervo'?vAcervo():S.view==='caderno'?vCaderno():vHierograma();
   if(aid){const n=document.getElementById(aid);if(n&&n!==document.activeElement){n.focus();if(sel&&n.setSelectionRange)try{n.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
   nomearAutores();
 }
@@ -834,7 +856,7 @@ const ordenar=l=>l.sort((a,b)=>(b.item.editado||0)-(a.item.editado||0));
 function vSpaira(id){
   const s=SPAIRAS[id],alvo='sp:'+id;
   const cab=s.tipo==='vogal'
-    ?`<div class="cab"><span class="letra">${esc(s.rotulo)}</span><div><h2>${esc(s.nome_proprio)}</h2><div class="sub">${esc(s.planeta)} · ${esc(s.veste)}</div></div></div>`
+    ?`<div class="cab"><span class="letra">${esc(s.rotulo)}</span><div><h2>${esc(s.nome_proprio)}</h2><div class="sub">${esc(s.planeta)} · ${esc(s.veste)}${ceuNaSpaira(s)}</div></div></div>`
     :`<div class="cab"><span class="letra" style="font-size:34px">${esc(s.rotulo)}</span><div class="sub">Spaira central</div></div>`;
   const base=`<div class="base-txt"><span class="marca-base">Okhema · faculdade</span><br>${esc(s.faculdade)}</div>`;
   const ca=constAtiva();let constHtml='';
@@ -1219,6 +1241,10 @@ document.addEventListener('click',async e=>{
   if(act==='aprovar'&&S.dono){await definirAprovacao(a.dataset.uid,a.dataset.v==='1');return;}
   if(act==='trazer'){await trazerDoAparelho();return;}
   if(act==='sec-alternar'){alternarSecao(a.dataset.sec);return;}
+  if(act==='ceu-ver'){const v=$('#ceu-data')&&$('#ceu-data').value;if(v){S.ceuData=+new Date(v);render();}return;}
+  if(act==='ceu-agora'){S.ceuData=null;render();return;}
+  if(act==='ceu-local'){ceuPedirLocal();return;}
+  if(act==='ceu-esquecer'){try{localStorage.removeItem(CEU_LOC_KEY);}catch(err){}render();return;}
   if(act==='ar-baixar'){arBaixarSigilo();return;}
   if(act==='ar-tecla'){const i=$('#ar-palavra');if(!i)return;const p=i.selectionStart??i.value.length,q=i.selectionEnd??p;i.value=i.value.slice(0,p)+a.dataset.l+i.value.slice(q);i.focus();i.setSelectionRange(p+a.dataset.l.length,p+a.dataset.l.length);return;}
   if(act==='ar-guardar'){formItem('arithmos','',null,null,'',{palavra:S.arPalavra||''});return;}
