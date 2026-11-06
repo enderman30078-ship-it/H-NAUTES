@@ -60,6 +60,20 @@ function ceuNomeFase(f){
 function ceuLocal(){try{const v=JSON.parse(localStorage.getItem(CEU_LOC_KEY)||'null');return v&&isFinite(v.lat)&&isFinite(v.lon)?v:null;}catch(e){return null;}}
 
 /* ---------- a roda ---------- */
+/* o Okhema em miniatura no centro da roda: os caminhos e as spairas, sem as letras */
+function ceuOkhema(cx,cy,raio){
+  const ps=Object.values(SPAIRAS).map(s=>s.pos),mx=(Math.min(...ps.map(p=>p[0]))+Math.max(...ps.map(p=>p[0])))/2,my=(Math.min(...ps.map(p=>p[1]))+Math.max(...ps.map(p=>p[1])))/2;
+  const k=raio/Math.max(...ps.map(([x,y])=>Math.hypot(x-mx,y-my)+27));
+  const P=([x,y])=>[(cx+(x-mx)*k).toFixed(2),(cy+(y-my)*k).toFixed(2)];
+  let g='<g class="ceu-okhema" pointer-events="none">';
+  CAMINHOS.forEach(c=>{const [x1,y1]=P(SPAIRAS[c.de].pos),[x2,y2]=P(SPAIRAS[c.para].pos);
+    g+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--tinta)" stroke-width="${Math.max(6.5*k,1.9).toFixed(2)}" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--folha)" stroke-width="${Math.max(3.6*k,.9).toFixed(2)}" stroke-linecap="round"/>`;});
+  Object.values(SPAIRAS).forEach(s=>{const [x,y]=P(s.pos),centro=s.tipo==='centro';
+    g+=centro?`<circle cx="${x}" cy="${y}" r="${(27*k).toFixed(2)}" fill="var(--acento)" stroke="var(--tinta)" stroke-width="${(2.2*k).toFixed(2)}"/>`
+      :`<circle cx="${x}" cy="${y}" r="${(23*k).toFixed(2)}" fill="var(--creme)" stroke="var(--tinta)" stroke-width="${(2.2*k).toFixed(2)}"/><circle cx="${x}" cy="${y}" r="${(18*k).toFixed(2)}" fill="none" stroke="var(--acento)" stroke-width="${(1*k).toFixed(2)}"/>`;});
+  return g+'</g>';
+}
+
 function ceuRoda(d,ang){
   const c=180,R0=172,R1=146,RP=122;
   const ref=ang?ang.asc:0; /* com ascendente, ele fica à esquerda; sem, 0° de Áries */
@@ -86,7 +100,7 @@ function ceuRoda(d,ang){
     g+=`<line x1="${f(a1)}" y1="${f(b1)}" x2="${f(a2)}" y2="${f(b2)}" stroke="var(--tinta)" stroke-width="1.6"/>`;
     g+=`<a href="${sp?'#spaira-'+sp.id:'#ceu'}"><circle cx="${f(x)}" cy="${f(y)}" r="12.5" fill="var(--creme)" stroke="${p.retro?'var(--acento)':'var(--tinta)'}" stroke-width="1.2"${p.retro?' stroke-dasharray="2.5 2"':''}/><text x="${f(x)}" y="${f(y+5.5)}" text-anchor="middle" font-size="16" fill="var(--tinta)" style="font-family:var(--f-grego)"><title>${p.nome} · ${ceuSigno(p.lon)[0]} ${ceuGrau(p.lon)}${p.retro?' · retrógrado':''}</title>${esc(ceuVogal(p))}</text></a>`;
   });
-  g+=`<circle cx="${c}" cy="${c}" r="3" fill="var(--ouro)"/>`;
+  g+=ceuOkhema(c,c,56);
   return `<svg class="ceu-roda" viewBox="-16 -16 392 392" role="img" aria-label="Roda do zodíaco com os sete planetas">${g}</svg>`;
 }
 
