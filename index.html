@@ -187,6 +187,18 @@ nav.abas[hidden]{display:none}
 .ceu-roda{width:100%;max-width:380px;height:auto;justify-self:center}
 .ceu-roda a{cursor:pointer}
 .ceu-lado{display:grid;gap:12px;min-width:0}
+.ceu-col{display:grid;gap:8px;justify-items:center;min-width:0}
+.ceu-sp,.ceu-pl{cursor:pointer;outline:none}
+.ceu-sp:focus-visible circle:not(.halo),.ceu-pl:focus-visible circle:not(.halo){stroke:var(--acento);stroke-width:2}
+.ceu-roda .halo{opacity:.45;filter:blur(3px);animation:brilho 1.8s ease-in-out infinite}
+@keyframes brilho{0%,100%{opacity:.25}50%{opacity:.7}}
+@media (prefers-reduced-motion:reduce){.ceu-roda .halo{animation:none;opacity:.5}}
+.ceu-escolha{display:flex;gap:12px;align-items:flex-start;border-left:3px solid var(--ouro);background:var(--folha);padding:8px 12px;font-size:15.5px;width:100%;max-width:380px;box-sizing:border-box}
+.ceu-escolha .vogal{font-family:var(--f-grego);font-size:34px;line-height:1;color:var(--acento)}
+.ceu-escolha .suave{color:var(--suave)}
+.ceu-escolha a{color:var(--acento)}
+.ceu-dica{max-width:380px;text-align:center;margin:0}
+.ceu-tab tr.on td{background:color-mix(in srgb,var(--ouro) 22%,transparent)}
 .ceu-tab{border-collapse:collapse;width:100%;font-size:15.5px}
 .ceu-tab td,.ceu-tab th{border-bottom:1px solid var(--linha);padding:4px 8px;text-align:left;vertical-align:baseline;white-space:nowrap}
 .ceu-tab th{font-weight:400;color:var(--suave);font-size:13px}
@@ -1244,6 +1256,7 @@ document.addEventListener('click',async e=>{
   if(act==='sec-alternar'){alternarSecao(a.dataset.sec);return;}
   if(act==='ceu-ver'){const v=$('#ceu-data')&&$('#ceu-data').value;if(v){S.ceuData=+new Date(v);render();}return;}
   if(act==='ceu-agora'){S.ceuData=null;render();return;}
+  if(act==='ceu-sel'){S.ceuSel=a.dataset.sp&&a.dataset.sp!==S.ceuSel?a.dataset.sp:null;const el=document.getElementById('ceu-conteudo');if(el)el.innerHTML=ceuConteudo();else render();const q=document.querySelector(`[data-act="ceu-sel"][data-sp="${S.ceuSel||''}"]`);if(q&&e.detail===0)q.focus();return;}
   if(act==='ceu-local'){ceuPedirLocal();return;}
   if(act==='ceu-esquecer'){try{localStorage.removeItem(CEU_LOC_KEY);}catch(err){}render();return;}
   if(act==='ar-baixar'){arBaixarSigilo();return;}

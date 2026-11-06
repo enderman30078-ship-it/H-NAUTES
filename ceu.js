@@ -60,17 +60,23 @@ function ceuNomeFase(f){
 function ceuLocal(){try{const v=JSON.parse(localStorage.getItem(CEU_LOC_KEY)||'null');return v&&isFinite(v.lat)&&isFinite(v.lon)?v:null;}catch(e){return null;}}
 
 /* ---------- a roda ---------- */
-/* o Okhema em miniatura no centro da roda: os caminhos e as spairas, sem as letras */
-function ceuOkhema(cx,cy,raio){
+/* o Okhema em miniatura no centro da roda: os caminhos e as spairas, sem as letras.
+   As sete spairas planetárias são tocáveis: a escolhida brilha, e brilha com ela o seu planeta na roda. */
+function ceuOkhemaPos(cx,cy,raio){
   const ps=Object.values(SPAIRAS).map(s=>s.pos),mx=(Math.min(...ps.map(p=>p[0]))+Math.max(...ps.map(p=>p[0])))/2,my=(Math.min(...ps.map(p=>p[1]))+Math.max(...ps.map(p=>p[1])))/2;
   const k=raio/Math.max(...ps.map(([x,y])=>Math.hypot(x-mx,y-my)+27));
-  const P=([x,y])=>[(cx+(x-mx)*k).toFixed(2),(cy+(y-my)*k).toFixed(2)];
-  let g='<g class="ceu-okhema" pointer-events="none">';
+  return {k,P:([x,y])=>[cx+(x-mx)*k,cy+(y-my)*k]};
+}
+function ceuOkhema(cx,cy,raio,sel){
+  const {k,P}=ceuOkhemaPos(cx,cy,raio),f=n=>n.toFixed(2);
+  let g='<g class="ceu-okhema">';
   CAMINHOS.forEach(c=>{const [x1,y1]=P(SPAIRAS[c.de].pos),[x2,y2]=P(SPAIRAS[c.para].pos);
-    g+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--tinta)" stroke-width="${Math.max(6.5*k,1.9).toFixed(2)}" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--folha)" stroke-width="${Math.max(3.6*k,.9).toFixed(2)}" stroke-linecap="round"/>`;});
-  Object.values(SPAIRAS).forEach(s=>{const [x,y]=P(s.pos),centro=s.tipo==='centro';
-    g+=centro?`<circle cx="${x}" cy="${y}" r="${(27*k).toFixed(2)}" fill="var(--acento)" stroke="var(--tinta)" stroke-width="${(2.2*k).toFixed(2)}"/>`
-      :`<circle cx="${x}" cy="${y}" r="${(23*k).toFixed(2)}" fill="var(--creme)" stroke="var(--tinta)" stroke-width="${(2.2*k).toFixed(2)}"/><circle cx="${x}" cy="${y}" r="${(18*k).toFixed(2)}" fill="none" stroke="var(--acento)" stroke-width="${(1*k).toFixed(2)}"/>`;});
+    g+=`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="var(--tinta)" stroke-width="${f(Math.max(6.5*k,1.9))}" stroke-linecap="round"/><line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="var(--folha)" stroke-width="${f(Math.max(3.6*k,.9))}" stroke-linecap="round"/>`;});
+  Object.entries(SPAIRAS).forEach(([id,s])=>{const [x,y]=P(s.pos);
+    if(s.tipo==='centro'){g+=`<circle cx="${f(x)}" cy="${f(y)}" r="${f(27*k)}" fill="var(--acento)" stroke="var(--tinta)" stroke-width="${f(2.2*k)}"/>`;return;}
+    const on=sel===id,disco=`<circle cx="${f(x)}" cy="${f(y)}" r="${f(23*k)}" fill="${on?'var(--ouro)':'var(--creme)'}" stroke="var(--tinta)" stroke-width="${f(2.2*k)}"/><circle cx="${f(x)}" cy="${f(y)}" r="${f(18*k)}" fill="none" stroke="var(--acento)" stroke-width="${f(1*k)}"/>`;
+    if(s.tipo!=='vogal'){g+=disco;return;}
+    g+=`<g class="ceu-sp${on?' on':''}" data-act="ceu-sel" data-sp="${id}" role="button" tabindex="0" aria-pressed="${on}" aria-label="Spaira ${esc(s.rotulo)}, ${esc(s.planeta)}">${on?`<circle class="halo" cx="${f(x)}" cy="${f(y)}" r="${f(23*k+4)}" fill="var(--ouro)"/>`:''}${disco}<circle cx="${f(x)}" cy="${f(y)}" r="9" fill="transparent"/></g>`;});
   return g+'</g>';
 }
 
@@ -94,17 +100,31 @@ function ceuRoda(d,ang){
   /* planetas: os próximos entre si descem um degrau para não se sobreporem */
   const ord=d.pl.slice().sort((a,b)=>a.lon-b.lon),niveis=[];
   ord.forEach(p=>{let n=0;while(n<3&&niveis.some(q=>q.n===n&&Math.abs(((p.lon-q.lon+540)%360)-180)<12))n++;niveis.push({n,lon:p.lon,p});});
+  const sel=S.ceuSel,mini=ceuOkhemaPos(c,c,56);let ligacao='',halos='';
   niveis.forEach(({n,p})=>{
     const r=RP-n*24,[x,y]=P(p.lon,r),[a1,b1]=P(p.lon,R1),[a2,b2]=P(p.lon,R1-6);
-    const sp=ceuSpaira(p.nome);
-    g+=`<line x1="${f(a1)}" y1="${f(b1)}" x2="${f(a2)}" y2="${f(b2)}" stroke="var(--tinta)" stroke-width="1.6"/>`;
-    g+=`<a href="${sp?'#spaira-'+sp.id:'#ceu'}"><circle cx="${f(x)}" cy="${f(y)}" r="12.5" fill="var(--creme)" stroke="${p.retro?'var(--acento)':'var(--tinta)'}" stroke-width="1.2"${p.retro?' stroke-dasharray="2.5 2"':''}/><text x="${f(x)}" y="${f(y+5.5)}" text-anchor="middle" font-size="16" fill="var(--tinta)" style="font-family:var(--f-grego)"><title>${p.nome} · ${ceuSigno(p.lon)[0]} ${ceuGrau(p.lon)}${p.retro?' · retrógrado':''}</title>${esc(ceuVogal(p))}</text></a>`;
+    const sp=ceuSpaira(p.nome),on=!!(sp&&sp.id===sel);
+    g+=`<line x1="${f(a1)}" y1="${f(b1)}" x2="${f(a2)}" y2="${f(b2)}" stroke="${on?'var(--ouro)':'var(--tinta)'}" stroke-width="${on?2.6:1.6}"/>`;
+    if(on){const [mx,my]=mini.P(sp.s.pos);
+      ligacao=`<line class="ligacao" x1="${f(mx)}" y1="${f(my)}" x2="${f(x)}" y2="${f(y)}" stroke="var(--ouro)" stroke-width="1.6" stroke-dasharray="3 3"/>`;
+      halos=`<circle class="halo" cx="${f(x)}" cy="${f(y)}" r="17" fill="var(--ouro)"/>`;}
+    g+=`<g class="ceu-pl${on?' on':''}" data-act="ceu-sel" data-sp="${sp?sp.id:''}" role="button" tabindex="0" aria-pressed="${on}"><circle cx="${f(x)}" cy="${f(y)}" r="12.5" fill="${on?'var(--ouro)':'var(--creme)'}" stroke="${p.retro?'var(--acento)':'var(--tinta)'}" stroke-width="1.2"${p.retro?' stroke-dasharray="2.5 2"':''}/><text x="${f(x)}" y="${f(y+5.5)}" text-anchor="middle" font-size="16" fill="var(--tinta)" style="font-family:var(--f-grego)"><title>${p.nome} · ${ceuSigno(p.lon)[0]} ${ceuGrau(p.lon)}${p.retro?' · retrógrado':''}</title>${esc(ceuVogal(p))}</text></g>`;
   });
-  g+=ceuOkhema(c,c,56);
+  /* o brilho e a linha ficam por baixo dos discos, mas por cima dos anéis */
+  const marca=g.indexOf('<g class="ceu-pl');
+  g=g.slice(0,marca)+ligacao+halos+g.slice(marca);
+  g+=ceuOkhema(c,c,56,sel);
   return `<svg class="ceu-roda" viewBox="-16 -16 392 392" role="img" aria-label="Roda do zodíaco com os sete planetas">${g}</svg>`;
 }
 
 /* ---------- a página ---------- */
+function ceuLegenda(d){
+  const id=S.ceuSel,s=id&&SPAIRAS[id];
+  if(!s)return '<p class="nota-campo ceu-dica">Toque numa das sete spairas do Okhema, no centro, ou num planeta da roda: os dois se acendem juntos.</p>';
+  const p=d.pl.find(x=>x.nome===s.planeta);if(!p)return '';
+  const sg=ceuSigno(p.lon);
+  return `<div class="ceu-escolha"><span class="vogal">${esc(s.rotulo)}</span><div><b>${esc(s.nome_proprio||'')}</b> · ${esc(s.planeta)} <span class="gr suave">${esc(p.gr)}</span><br>agora em ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span> ${ceuGrau(p.lon)}${p.retro?' · retrógrado':''}<br><a href="#spaira-${id}">Abrir a spaira</a> · <button class="btn texto" data-act="ceu-sel" data-sp="">Apagar</button></div></div>`;
+}
 const fmtHora=dt=>dt.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
 const fmtDia=dt=>dt?dt.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'})+' · '+dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'—';
 function ceuConteudo(){
@@ -112,10 +132,10 @@ function ceuConteudo(){
   const date=S.ceuData?new Date(S.ceuData):new Date(),d=ceuPosicoes(date),loc=ceuLocal();
   const ang=loc?ceuAscMc(date,loc.lat,loc.lon):null;
   const linhas=d.pl.map(p=>{const sg=ceuSigno(p.lon),sp=ceuSpaira(p.nome);
-    return `<tr><td><a href="${sp?'#spaira-'+sp.id:'#ceu'}"><span class="vogal">${esc(ceuVogal(p))}</span> ${esc(p.nome)} <span class="gr suave">${esc(p.gr)}</span></a></td><td><span class="ceu-g">${sg[2]}${TXT}</span> ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span></td><td class="num">${ceuGrau(p.lon)}${p.retro?' <b class="retro" title="retrógrado">℞</b>':''}</td></tr>`;}).join('');
+    return `<tr${sp&&sp.id===S.ceuSel?' class="on"':''}><td><a href="${sp?'#spaira-'+sp.id:'#ceu'}"><span class="vogal">${esc(ceuVogal(p))}</span> ${esc(p.nome)} <span class="gr suave">${esc(p.gr)}</span></a></td><td><span class="ceu-g">${sg[2]}${TXT}</span> ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span></td><td class="num">${ceuGrau(p.lon)}${p.retro?' <b class="retro" title="retrógrado">℞</b>':''}</td></tr>`;}).join('');
   const angL=ang?['asc','mc'].map(k=>{const sg=ceuSigno(ang[k]);return `<tr><td>${k==='asc'?'Ascendente':'Meio do Céu'}</td><td><span class="ceu-g">${sg[2]}${TXT}</span> ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span></td><td class="num">${ceuGrau(ang[k])}</td></tr>`;}).join(''):'';
   return `<p class="ceu-quando">${S.ceuData?'Céu de':'Agora,'} ${esc(fmtHora(date))}${S.ceuData?'':' · atualiza a cada minuto'}</p>
-    <div class="ceu-grade">${ceuRoda(d,ang)}
+    <div class="ceu-grade"><div class="ceu-col">${ceuRoda(d,ang)}${ceuLegenda(d)}</div>
       <div class="ceu-lado"><div class="rolagem"><table class="ceu-tab"><tr><th>Planeta</th><th>Signo</th><th>Grau</th></tr>${linhas}${angL}</table></div>
         <div class="ceu-lua"><b>${esc(ceuNomeFase(d.fase))}</b> · ${Math.round(d.ilum*100)}% iluminada<br>Próxima lua nova: ${esc(fmtDia(d.nova))}<br>Próxima lua cheia: ${esc(fmtDia(d.cheia))}</div>
       </div></div>`;
@@ -124,7 +144,7 @@ function vCeu(){
   const loc=ceuLocal();
   const valor=S.ceuData?new Date(S.ceuData-new Date(S.ceuData).getTimezoneOffset()*60000).toISOString().slice(0,16):'';
   return `<section class="pagina"><h2>Céu</h2>
-    <p class="base-txt">Os sete planetas nos doze signos, calculados neste aparelho, sem internet. Zodíaco tropical, posições vistas da Terra. Cada planeta aparece pela vogal da sua spaira; ℞ marca o retrógrado, e tocar num planeta abre a sua spaira.</p>
+    <p class="base-txt">Os sete planetas nos doze signos, calculados neste aparelho, sem internet. Zodíaco tropical, posições vistas da Terra. Cada planeta aparece pela vogal da sua spaira, e ℞ marca o retrógrado. Tocar numa spaira do Okhema, no centro, ou num planeta acende os dois.</p>
     <div class="barra"><label for="ceu-data" class="nota-campo">Outro momento</label><input type="datetime-local" id="ceu-data" value="${valor}"><button class="btn mini" data-act="ceu-ver">Ver</button>${S.ceuData?'<button class="btn mini forte" data-act="ceu-agora">Voltar para agora</button>':''}</div>
     <div id="ceu-conteudo">${ceuConteudo()}</div>
     <section class="secao"><h3>Ascendente e Meio do Céu</h3>
