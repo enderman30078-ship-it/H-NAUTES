@@ -179,6 +179,9 @@ body{padding-top:env(safe-area-inset-top,0px)}
 .conta-dados{display:grid;gap:6px;font-size:16px}
 .conta-dados input{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;min-width:0;flex:1 1 200px}
 nav.abas[hidden]{display:none}
+#glosa{position:fixed;left:0;top:0;z-index:50;pointer-events:none;max-width:320px;background:var(--tinta);color:var(--fundo);padding:5px 10px;font-size:15px;line-height:1.35;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#glosa[hidden]{display:none}
+#glosa .gr{font-size:16px;margin-right:4px;opacity:.85}
 /* ---------- Céu ---------- */
 .ceu-g{font-family:"Segoe UI Symbol","Noto Sans Symbols","Noto Sans Symbols 2","Apple Symbols","DejaVu Sans",sans-serif;font-variant-emoji:text}
 .ceu-grade{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:18px;align-items:start}
@@ -279,6 +282,7 @@ input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha)
 <script src="arithmos.js"></script>
 <script src="astronomy.js"></script>
 <script src="ceu.js"></script>
+<script src="glossario.js"></script>
 <script>
 const GRAUS = [
   {id:"natural",      nome:"Naturais",       gr:"φυσικαί",        desc:"Disposições do corpo e do temperamento; partilhadas até pelos animais. Podem conflitar entre si, pois não derivam ainda da razão una."},

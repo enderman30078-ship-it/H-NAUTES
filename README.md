@@ -31,6 +31,7 @@ A conta `enderman30078@gmail.com` entra automaticamente como moderadora. Na aba 
 | `config.js` | endereço do Supabase e chave **pública** (publishable) |
 | `supabase.js` | biblioteca do Supabase (supabase-js 2.117.3, cópia local) |
 | `arithmos.js` | o Ἀριθμός: isopsefia, assinatura poligonal, sigilo e acervo de palavras |
+| `glossario.js` | tradução dos termos gregos ao passar o mouse (no computador) |
 | `ceu.js`, `astronomy.js` | o Céu: posições dos planetas calculadas no aparelho (astronomy-engine 2.1.19, licença MIT) |
 | `manifest.webmanifest`, `icones/` | instalação como aplicativo |
 | `sw.js` | abre o aplicativo mesmo sem internet |
