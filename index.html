@@ -193,7 +193,8 @@ nav.abas[hidden]{display:none}
 .ceu-tab .num{font-variant-numeric:tabular-nums}
 .ceu-tab .suave{color:var(--suave);font-size:14px}
 @media (max-width:520px){.ceu-tab .suave{display:block;font-size:13px}.ceu-tab td,.ceu-tab th{padding:4px 5px}}
-.ceu-tab a{color:var(--acento);text-decoration:none;font-size:18px}
+.ceu-tab a{color:inherit;text-decoration:none}
+.ceu-tab .vogal{font-family:var(--f-grego);color:var(--acento);font-size:19px;display:inline-block;min-width:1.1em}
 .retro{color:var(--acento);font-weight:600}
 .ceu-lua{border-left:3px solid var(--ouro);padding:6px 10px;background:var(--folha);font-size:15.5px}
 .ceu-quando{margin:4px 0 2px;color:var(--suave);font-size:15px}
@@ -246,12 +247,12 @@ input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha)
       <label class="tema" for="sel-tema">Caráter<select id="sel-tema"><option value="telurico">⊕ Telúrico</option><option value="celeste">☉ Celeste</option><option value="ctonico">☾ Ctônico</option><option value="auto">Automático (do aparelho)</option></select></label></div>
     <nav class="abas" id="abas" aria-label="Seções">
       <a href="#hierograma" data-v="hierograma">Hierograma</a>
+      <a href="#ceu" data-v="ceu">Céu</a>
       <a href="#diario" data-v="diario">Diário de orações</a>
       <a href="#votos" data-v="votos">Votos</a>
       <a href="#constelacao" data-v="constelacao">Constelação</a>
       <a href="#acervo" data-v="acervo">Acervo e busca</a>
       <a href="#arithmos" data-v="arithmos" class="gr">Ἀριθμός</a>
-      <a href="#ceu" data-v="ceu">Céu</a>
       <a href="#caderno" data-v="caderno">Cópia de segurança</a>
       <a href="#conta" data-v="conta">Conta</a>
     </nav>

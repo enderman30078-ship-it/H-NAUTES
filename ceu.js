@@ -34,6 +34,7 @@ function ceuAscMc(date,lat,lon){
   return {asc,mc};
 }
 const ceuGrau=l=>{const d=l%30,g=Math.floor(d),m=Math.floor((d-g)*60);return `${g}°${String(m).padStart(2,'0')}′`;};
+const ceuVogal=p=>{const sp=ceuSpaira(p.nome);return sp?sp.s.rotulo:p.g;};
 const ceuSigno=l=>CEU_SIGNOS[Math.floor(((l%360)+360)%360/30)];
 function ceuSpaira(nome){const e=Object.entries(SPAIRAS).find(([id,s])=>s.tipo==='vogal'&&s.planeta===nome);return e?{id:e[0],s:e[1]}:null;}
 
@@ -83,7 +84,7 @@ function ceuRoda(d,ang){
     const r=RP-n*24,[x,y]=P(p.lon,r),[a1,b1]=P(p.lon,R1),[a2,b2]=P(p.lon,R1-6);
     const sp=ceuSpaira(p.nome);
     g+=`<line x1="${f(a1)}" y1="${f(b1)}" x2="${f(a2)}" y2="${f(b2)}" stroke="var(--tinta)" stroke-width="1.6"/>`;
-    g+=`<a href="${sp?'#spaira-'+sp.id:'#ceu'}"><circle cx="${f(x)}" cy="${f(y)}" r="12.5" fill="var(--creme)" stroke="${p.retro?'var(--acento)':'var(--tinta)'}" stroke-width="1.2"${p.retro?' stroke-dasharray="2.5 2"':''}/><text x="${f(x)}" y="${f(y+5.5)}" text-anchor="middle" font-size="16" fill="var(--tinta)" class="ceu-g"><title>${p.nome} · ${ceuSigno(p.lon)[0]} ${ceuGrau(p.lon)}${p.retro?' · retrógrado':''}</title>${p.g}${TXT}</text></a>`;
+    g+=`<a href="${sp?'#spaira-'+sp.id:'#ceu'}"><circle cx="${f(x)}" cy="${f(y)}" r="12.5" fill="var(--creme)" stroke="${p.retro?'var(--acento)':'var(--tinta)'}" stroke-width="1.2"${p.retro?' stroke-dasharray="2.5 2"':''}/><text x="${f(x)}" y="${f(y+5.5)}" text-anchor="middle" font-size="16" fill="var(--tinta)" style="font-family:var(--f-grego)"><title>${p.nome} · ${ceuSigno(p.lon)[0]} ${ceuGrau(p.lon)}${p.retro?' · retrógrado':''}</title>${esc(ceuVogal(p))}</text></a>`;
   });
   g+=`<circle cx="${c}" cy="${c}" r="3" fill="var(--ouro)"/>`;
   return `<svg class="ceu-roda" viewBox="-16 -16 392 392" role="img" aria-label="Roda do zodíaco com os sete planetas">${g}</svg>`;
@@ -97,11 +98,11 @@ function ceuConteudo(){
   const date=S.ceuData?new Date(S.ceuData):new Date(),d=ceuPosicoes(date),loc=ceuLocal();
   const ang=loc?ceuAscMc(date,loc.lat,loc.lon):null;
   const linhas=d.pl.map(p=>{const sg=ceuSigno(p.lon),sp=ceuSpaira(p.nome);
-    return `<tr><td><span class="ceu-g">${p.g}${TXT}</span> ${esc(p.nome)} <span class="gr suave">${esc(p.gr)}</span></td><td><span class="ceu-g">${sg[2]}${TXT}</span> ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span></td><td class="num">${ceuGrau(p.lon)}${p.retro?' <b class="retro" title="retrógrado">℞</b>':''}</td><td>${sp?`<a href="#spaira-${sp.id}" class="gr">${esc(sp.s.rotulo)}</a>`:''}</td></tr>`;}).join('');
-  const angL=ang?['asc','mc'].map(k=>{const sg=ceuSigno(ang[k]);return `<tr><td>${k==='asc'?'Ascendente':'Meio do Céu'}</td><td><span class="ceu-g">${sg[2]}${TXT}</span> ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span></td><td class="num">${ceuGrau(ang[k])}</td><td></td></tr>`;}).join(''):'';
+    return `<tr><td><a href="${sp?'#spaira-'+sp.id:'#ceu'}"><span class="vogal">${esc(ceuVogal(p))}</span> ${esc(p.nome)} <span class="gr suave">${esc(p.gr)}</span></a></td><td><span class="ceu-g">${sg[2]}${TXT}</span> ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span></td><td class="num">${ceuGrau(p.lon)}${p.retro?' <b class="retro" title="retrógrado">℞</b>':''}</td></tr>`;}).join('');
+  const angL=ang?['asc','mc'].map(k=>{const sg=ceuSigno(ang[k]);return `<tr><td>${k==='asc'?'Ascendente':'Meio do Céu'}</td><td><span class="ceu-g">${sg[2]}${TXT}</span> ${esc(sg[0])} <span class="gr suave">${esc(sg[1])}</span></td><td class="num">${ceuGrau(ang[k])}</td></tr>`;}).join(''):'';
   return `<p class="ceu-quando">${S.ceuData?'Céu de':'Agora,'} ${esc(fmtHora(date))}${S.ceuData?'':' · atualiza a cada minuto'}</p>
     <div class="ceu-grade">${ceuRoda(d,ang)}
-      <div class="ceu-lado"><div class="rolagem"><table class="ceu-tab"><tr><th>Planeta</th><th>Signo</th><th>Grau</th><th>Spaira</th></tr>${linhas}${angL}</table></div>
+      <div class="ceu-lado"><div class="rolagem"><table class="ceu-tab"><tr><th>Planeta</th><th>Signo</th><th>Grau</th></tr>${linhas}${angL}</table></div>
         <div class="ceu-lua"><b>${esc(ceuNomeFase(d.fase))}</b> · ${Math.round(d.ilum*100)}% iluminada<br>Próxima lua nova: ${esc(fmtDia(d.nova))}<br>Próxima lua cheia: ${esc(fmtDia(d.cheia))}</div>
       </div></div>`;
 }
@@ -109,7 +110,7 @@ function vCeu(){
   const loc=ceuLocal();
   const valor=S.ceuData?new Date(S.ceuData-new Date(S.ceuData).getTimezoneOffset()*60000).toISOString().slice(0,16):'';
   return `<section class="pagina"><h2>Céu</h2>
-    <p class="base-txt">Os sete planetas nos doze signos, calculados neste aparelho, sem internet. Zodíaco tropical, posições vistas da Terra. ℞ marca o planeta retrógrado; tocar num planeta da roda abre a sua spaira.</p>
+    <p class="base-txt">Os sete planetas nos doze signos, calculados neste aparelho, sem internet. Zodíaco tropical, posições vistas da Terra. Cada planeta aparece pela vogal da sua spaira; ℞ marca o retrógrado, e tocar num planeta abre a sua spaira.</p>
     <div class="barra"><label for="ceu-data" class="nota-campo">Outro momento</label><input type="datetime-local" id="ceu-data" value="${valor}"><button class="btn mini" data-act="ceu-ver">Ver</button>${S.ceuData?'<button class="btn mini forte" data-act="ceu-agora">Voltar para agora</button>':''}</div>
     <div id="ceu-conteudo">${ceuConteudo()}</div>
     <section class="secao"><h3>Ascendente e Meio do Céu</h3>
