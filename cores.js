@@ -18,7 +18,7 @@ const varCss=n=>getComputedStyle(document.documentElement).getPropertyValue(n);
 function corPadrao(tipo,id,campo){
   if(tipo==='sp'){const centro=SPAIRAS[id]&&SPAIRAS[id].tipo==='centro';
     return hexDe(varCss(campo==='fundo'?(centro?'--acento':'--creme'):(centro?'--sobre-acento':'--tinta')));}
-  return hexDe(campo==='fundo'?(contagemCam(+id)?varCss('--caminho'):varCss('--folha')):varCss('--suave'));
+  return hexDe(campo==='fundo'?(contagemCam(+id)?varCss('--ouro'):varCss('--folha')):varCss('--suave'));
 }
 function novasPrefs(){const p=clone(prefs());p.id='prefs';p.kind='pref';const c=coresPrefs();p.cores={usar:c.usar,sp:clone(c.sp),cam:clone(c.cam)};return p;}
 function redesenharHierograma(){const d=document.querySelector('.diagrama');if(d)d.innerHTML=svgHierograma();}
