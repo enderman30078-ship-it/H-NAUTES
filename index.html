@@ -750,8 +750,8 @@ function svgHierograma(){
     const sel=S.det&&S.det.t==='cam'&&S.det.id===i;
     const n=contagemCam(i);
     s+=`<g class="cam${sel?' sel':''}" data-act="cam" data-i="${i}" role="button" tabindex="0" aria-label="Caminho ${esc(c.letra)}, de ${esc(SPAIRAS[c.de].rotulo)} a ${esc(SPAIRAS[c.para].rotulo)}">
-      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--tinta)" stroke-width="6.5" stroke-linecap="round"/>
-      <line class="clara" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${n?'var(--ouro)':'var(--folha)'}" stroke-width="3.6" stroke-linecap="round"/>
+      <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--tinta)" stroke-width="8.2" stroke-linecap="round"/>
+      <line class="clara" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${n?'var(--ouro)':'var(--folha)'}" stroke-width="4.6" stroke-linecap="round"/>
       <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="transparent" stroke-width="18" stroke-linecap="round"/></g>`;
   });
   CAMINHOS.forEach((c,i)=>{if(!c.disco)return;

@@ -71,7 +71,7 @@ function ceuOkhema(cx,cy,raio,sel){
   const {k,P}=ceuOkhemaPos(cx,cy,raio),f=n=>n.toFixed(2);
   let g='<g class="ceu-okhema">';
   CAMINHOS.forEach(c=>{const [x1,y1]=P(SPAIRAS[c.de].pos),[x2,y2]=P(SPAIRAS[c.para].pos);
-    g+=`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="var(--tinta)" stroke-width="${f(Math.max(6.5*k,1.9))}" stroke-linecap="round"/><line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="var(--folha)" stroke-width="${f(Math.max(3.6*k,.9))}" stroke-linecap="round"/>`;});
+    g+=`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="var(--tinta)" stroke-width="${f(Math.max(8.2*k,2.2))}" stroke-linecap="round"/><line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="var(--folha)" stroke-width="${f(Math.max(4.6*k,1))}" stroke-linecap="round"/>`;});
   Object.entries(SPAIRAS).forEach(([id,s])=>{const [x,y]=P(s.pos);
     if(s.tipo==='centro'){g+=`<circle cx="${f(x)}" cy="${f(y)}" r="${f(27*k)}" fill="var(--acento)" stroke="var(--tinta)" stroke-width="${f(2.2*k)}"/>`;return;}
     const on=sel===id,disco=`<circle cx="${f(x)}" cy="${f(y)}" r="${f(23*k)}" fill="${on?'var(--ouro)':'var(--creme)'}" stroke="var(--tinta)" stroke-width="${f(2.2*k)}"/><circle cx="${f(x)}" cy="${f(y)}" r="${f(18*k)}" fill="none" stroke="var(--acento)" stroke-width="${f(1*k)}"/>`;
