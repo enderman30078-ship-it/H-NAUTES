@@ -87,7 +87,8 @@ h3{font-family:var(--f-rotulo);font-weight:500;font-size:13px;letter-spacing:.16
 .nodo:focus-visible .aro{stroke:var(--acento);stroke-width:4}
 .nodo.sel .aro{stroke:var(--acento);stroke-width:4}
 .cam{cursor:pointer}
-.cam:hover .clara,.cam.sel .clara{stroke:var(--acento-2)}
+:root{--caminho:#FFC600}
+.cam:hover .clara,.cam.sel .clara{stroke:var(--caminho)}
 .painel-dia{border:1.5px solid var(--tinta);background:var(--folha);padding:10px 12px;display:grid;gap:8px;font-size:15.5px}
 .painel-dia .linha{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .painel-dia select{border:1px solid var(--tinta);background:var(--fundo);padding:2px 6px;max-width:100%}
@@ -751,7 +752,7 @@ function svgHierograma(){
     const n=contagemCam(i);
     s+=`<g class="cam${sel?' sel':''}" data-act="cam" data-i="${i}" role="button" tabindex="0" aria-label="Caminho ${esc(c.letra)}, de ${esc(SPAIRAS[c.de].rotulo)} a ${esc(SPAIRAS[c.para].rotulo)}">
       <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--tinta)" stroke-width="9.8" stroke-linecap="round"/>
-      <line class="clara" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${n?'var(--ouro)':'var(--folha)'}" stroke-width="5.6" stroke-linecap="round"/>
+      <line class="clara" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${n?'var(--caminho)':'var(--folha)'}" stroke-width="5.6" stroke-linecap="round"/>
       <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="transparent" stroke-width="18" stroke-linecap="round"/></g>`;
   });
   CAMINHOS.forEach((c,i)=>{if(!c.disco)return;
