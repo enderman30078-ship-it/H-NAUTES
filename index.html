@@ -180,6 +180,16 @@ body{padding-top:env(safe-area-inset-top,0px)}
 .conta-dados{display:grid;gap:6px;font-size:16px}
 .conta-dados input{border:1px solid var(--tinta);background:var(--folha);padding:4px 8px;min-width:0;flex:1 1 200px}
 nav.abas[hidden]{display:none}
+.cor-linha{display:grid;gap:6px;padding:8px 0;border-bottom:1px dotted var(--linha)}
+.cor-rot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cor-rot>span:first-child{min-width:9em}
+.cor-in{width:52px;height:34px;padding:0;border:1.5px solid var(--tinta);background:none;cursor:pointer}
+.cor-in::-webkit-color-swatch-wrapper{padding:2px}.cor-in::-webkit-color-swatch{border:none}
+.cor-estado{font-size:13px;color:var(--suave)}
+.cor-paleta{display:flex;flex-wrap:wrap;gap:5px}
+.cor-am{width:26px;height:26px;border:1px solid var(--linha);cursor:pointer;padding:0}
+.cor-am.on{outline:2.5px solid var(--tinta);outline-offset:2px}
+.cor-am:focus-visible{outline:2.5px solid var(--acento);outline-offset:2px}
 #glosa{position:fixed;left:0;top:0;z-index:50;pointer-events:none;max-width:320px;background:var(--tinta);color:var(--fundo);padding:5px 10px;font-size:15px;line-height:1.35;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 #glosa[hidden]{display:none}
 #glosa .gr{font-size:16px;margin-right:4px;opacity:.85}
@@ -284,6 +294,7 @@ input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha)
 <script src="astronomy.js"></script>
 <script src="ceu.js"></script>
 <script src="glossario.js"></script>
+<script src="cores.js"></script>
 <script>
 const GRAUS = [
   {id:"natural",      nome:"Naturais",       gr:"φυσικαί",        desc:"Disposições do corpo e do temperamento; partilhadas até pelos animais. Podem conflitar entre si, pois não derivam ainda da razão una."},
@@ -749,20 +760,21 @@ function svgHierograma(){
   CAMINHOS.forEach((c,i)=>{
     const[x1,y1]=SPAIRAS[c.de].pos,[x2,y2]=SPAIRAS[c.para].pos;
     const sel=S.det&&S.det.t==='cam'&&S.det.id===i;
-    const n=contagemCam(i);
+    const n=contagemCam(i),cf=corDe('cam',i,'fundo');
     s+=`<g class="cam${sel?' sel':''}" data-act="cam" data-i="${i}" role="button" tabindex="0" aria-label="Caminho ${esc(c.letra)}, de ${esc(SPAIRAS[c.de].rotulo)} a ${esc(SPAIRAS[c.para].rotulo)}">
       <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--tinta)" stroke-width="9.8" stroke-linecap="round"/>
-      <line class="clara" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${n?'var(--caminho)':'var(--folha)'}" stroke-width="5.6" stroke-linecap="round"/>
+      <line class="clara" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${n?'var(--caminho)':'var(--folha)'}"${cf?` style="stroke:${cf}"`:''} stroke-width="5.6" stroke-linecap="round"/>
       <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="transparent" stroke-width="18" stroke-linecap="round"/></g>`;
   });
   CAMINHOS.forEach((c,i)=>{if(!c.disco)return;
-    s+=`<g pointer-events="none"><circle cx="${c.disco[0]}" cy="${c.disco[1]}" r="8.5" fill="var(--folha)" stroke="var(--acento)" stroke-width=".8"/><text x="${c.disco[0]}" y="${c.disco[1]+4}" text-anchor="middle" font-size="11" fill="var(--suave)" style="font-family:var(--f-grego)">${esc(c.letra)}</text></g>`;});
+    s+=`<g pointer-events="none"><circle cx="${c.disco[0]}" cy="${c.disco[1]}" r="8.5" fill="var(--folha)" stroke="var(--acento)" stroke-width=".8"/><text x="${c.disco[0]}" y="${c.disco[1]+4}" text-anchor="middle" font-size="11" fill="${corDe('cam',i,'letra')||'var(--suave)'}" style="font-family:var(--f-grego)">${esc(c.letra)}</text></g>`;});
   Object.entries(SPAIRAS).forEach(([id,sp])=>{
     const[cx,cy]=sp.pos,sel=S.det&&S.det.t==='sp'&&S.det.id===id,centro=sp.tipo==='centro';
     let g=`<g class="nodo${sel?' sel':''}" data-act="sp" data-id="${id}" role="button" tabindex="0" aria-label="Spaira ${esc(nomeSp(id))}">`;
     if(id===diaSp)g+=`<circle cx="${cx}" cy="${cy}" r="${centro?33:30}" fill="none" stroke="var(--ouro)" stroke-width="1.6" stroke-dasharray="3 3"/>`;
-    if(centro){g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="27" fill="var(--acento)" stroke="var(--tinta)" stroke-width="2.2"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="12.5" fill="var(--sobre-acento)" style="font-family:var(--f-grego)" pointer-events="none">${esc(sp.rotulo)}</text>`;}
-    else{g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="23" fill="var(--creme)" stroke="var(--tinta)" stroke-width="2.2"/><circle cx="${cx}" cy="${cy}" r="18" fill="none" stroke="var(--acento)" stroke-width="1" pointer-events="none"/><text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="23" fill="var(--tinta)" style="font-family:var(--f-grego)" pointer-events="none">${esc(sp.rotulo)}</text>`;}
+    const sf=corDe('sp',id,'fundo'),sl=corDe('sp',id,'letra');
+    if(centro){g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="27" fill="${sf||'var(--acento)'}" stroke="var(--tinta)" stroke-width="2.2"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="12.5" fill="${sl||'var(--sobre-acento)'}" style="font-family:var(--f-grego)" pointer-events="none">${esc(sp.rotulo)}</text>`;}
+    else{g+=`<circle class="aro" cx="${cx}" cy="${cy}" r="23" fill="${sf||'var(--creme)'}" stroke="var(--tinta)" stroke-width="2.2"/><circle cx="${cx}" cy="${cy}" r="18" fill="none" stroke="var(--acento)" stroke-width="1" pointer-events="none"/><text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="23" fill="${sl||'var(--tinta)'}" style="font-family:var(--f-grego)" pointer-events="none">${esc(sp.rotulo)}</text>`;}
     if(ca){
       let rot='';
       if(id==='theoi')rot=topoNome(ca.topo);
@@ -788,6 +800,7 @@ function vHierograma(){
         <div class="linha"><label for="sel-const">Ver pela constelação</label>
           <select id="sel-const" data-act="ativar-const">${opts}</select>
           ${consts.length?'':`<button class="btn texto" data-act="ir" data-v="constelacao">Montar a sua</button>`}</div>
+        ${barraCores()}
       </div>
     </div>
     <div class="det" id="det"><div class="det-faixa"></div><div class="det-corpo">${S.det?(S.det.t==='sp'?vSpaira(S.det.id):vCaminho(S.det.id)):vIntro()}</div></div>
@@ -910,7 +923,7 @@ function vSpaira(id){
   const oracoes=ordenar(paraAlvo('oracao',alvo));
   const orHtml=caixa('oracao',`Orações ligadas a esta spaira`,`<button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button>`,oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>',oracoes.length);
   const caminhos=CAMINHOS.map((c,i)=>({c,i})).filter(o=>o.c.de===id||o.c.para===id).map(o=>`<a class="chip" href="#caminho-${o.i}"><span class="gr">${esc(o.c.letra)}</span> → ${esc(SPAIRAS[o.c.de===id?o.c.para:o.c.de].rotulo)}</a>`).join('');
-  return `${cab}${base}${id!=='theoi'?blocoDeus(id):''}${constHtml}${virt}${outras}${orHtml}${caixa('caminhos','Caminhos desta spaira','',`<div class="chips">${caminhos}</div>`)}`;
+  return `${cab}${base}${editorCores('sp',id)}${id!=='theoi'?blocoDeus(id):''}${constHtml}${virt}${outras}${orHtml}${caixa('caminhos','Caminhos desta spaira','',`<div class="chips">${caminhos}</div>`)}`;
 }
 function deusesConhecidos(){
   const m=new Map(),add=d=>{d=String(d||'').trim();if(!d)return;const k=norm(d);if(!m.has(k))m.set(k,d);};
@@ -957,7 +970,7 @@ function vCaminho(i){
   const base=`<div class="base-txt"><span class="marca-base">Okhema · sentidos da letra</span><br>${esc(L.significados||'')}${c.descricao?`<br><i>${esc(c.descricao)}</i>`:''}</div>`;
   const secs=SECOES_LETRA.map(k=>secao(k,alvo,ordenar(paraAlvo(k,alvo)))).join('');
   const oracoes=ordenar(paraAlvo('oracao',alvo));
-  return `${cab}${base}${secs}${caixa('oracao','Orações ligadas a este caminho',`<button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button>`,oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>',oracoes.length)}`;
+  return `${cab}${base}${editorCores('cam',i)}${secs}${caixa('oracao','Orações ligadas a este caminho',`<button class="btn mini" data-act="nova-oracao" data-alvo="${alvo}">Registrar oração</button>`,oracoes.length?`<div class="lista">${oracoes.slice(0,12).map(card).join('')}</div>`:'<p class="vazio">Nenhuma oração registrada aqui ainda.</p>',oracoes.length)}`;
 }
 
 /* ---------- diário ---------- */
@@ -1258,6 +1271,10 @@ document.addEventListener('click',async e=>{
   if(act==='aprovar'&&S.dono){await definirAprovacao(a.dataset.uid,a.dataset.v==='1');return;}
   if(act==='trazer'){await trazerDoAparelho();return;}
   if(act==='sec-alternar'){alternarSecao(a.dataset.sec);return;}
+  if(act==='cor-am'){definirCor(a.dataset.tipo,a.dataset.id,a.dataset.campo,a.dataset.cor,true);return;}
+  if(act==='cor-limpar'){definirCor(a.dataset.tipo,a.dataset.id,a.dataset.campo,null,true);return;}
+  if(act==='cores-usar'){usarCores(a.dataset.v==='1');return;}
+  if(act==='cores-apagar'){if(confirmarCores())apagarCores();return;}
   if(act==='ceu-ver'){const v=$('#ceu-data')&&$('#ceu-data').value;if(v){S.ceuData=+new Date(v);render();}return;}
   if(act==='ceu-agora'){S.ceuData=null;render();return;}
   if(act==='ceu-sel'){S.ceuSel=a.dataset.sp&&a.dataset.sp!==S.ceuSel?a.dataset.sp:null;const el=document.getElementById('ceu-conteudo');if(el)el.innerHTML=ceuConteudo();else render();const q=document.querySelector(`[data-act="ceu-sel"][data-sp="${S.ceuSel||''}"]`);if(q&&e.detail===0)q.focus();return;}
