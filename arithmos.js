@@ -53,11 +53,11 @@ function arAcervoFixo(){
     else if(s.rotulo&&s.rotulo.length>1)l.push({palavra:s.rotulo,sentido:sub,origem:'okhema',href:'#spaira-'+id});
     if(s.nome_proprio)l.push({palavra:s.nome_proprio,sentido:sub,origem:'okhema',href:'#spaira-'+id});
     const papel={v:'medida',p:'falta',e:'excesso'};
-    Object.entries(s.graus||{}).forEach(([g,tri])=>{const G=GRAUS.find(x=>x.id===g);
-      ['v','p','e'].forEach(k=>{const txt=tri&&tri[k];if(!txt)return;
+    Object.entries(s.graus||{}).forEach(([g,tris])=>{const G=GRAUS.find(x=>x.id===g);
+      (Array.isArray(tris)?tris:[tris]).forEach(tri=>['v','p','e'].forEach(k=>{const txt=tri&&tri[k];if(!txt)return;
         const [cab,...resto]=String(txt).split(' — ');
         if(/[A-Za-zÀ-ÿ]/.test(cab)||!arNorm(cab))return;
-        l.push({palavra:cab.replace(AR_ARTIGOS,'').replace(/°/g,'').trim(),sentido:`${papel[k]} · ${G?G.nome:g} · ${s.rotulo}${resto.length?' — '+resto.join(' — ').replace(/°/g,''):''}`,origem:'okhema',href:'#spaira-'+id});});});
+        l.push({palavra:cab.replace(AR_ARTIGOS,'').replace(/°/g,'').trim(),sentido:`${papel[k]} · ${G?G.nome:g} · ${s.rotulo}${resto.length?' — '+resto.join(' — ').replace(/°/g,''):''}`,origem:'okhema',href:'#spaira-'+id});}));});
   });
   GRAUS.forEach(g=>l.push({palavra:g.gr,sentido:`grau de virtude · ${g.nome}`,origem:'okhema'}));
   AR_FIXO=l.map(e=>Object.assign(e,arAnalise(e.palavra)||{})).filter(e=>e.norm);
