@@ -115,6 +115,20 @@ h3{font-family:var(--f-rotulo);font-weight:500;font-size:13px;letter-spacing:.16
 .grau-tabs button{border:1px solid var(--tinta);background:var(--fundo);padding:2px 9px;font-size:14px}
 .grau-tabs button[aria-pressed="true"]{background:var(--acento);color:var(--sobre-acento);border-color:var(--acento)}
 .virtudes .virt-titulo{margin:26px 0 8px}
+.portico-moldura{background:#f3e4c6;border:1px solid #7a5a3a;outline:3px double #7a5a3a;outline-offset:-8px;padding:22px 18px 16px;margin:18px 0 22px;overflow-x:auto}
+.portico{--h:268px;display:flex;align-items:flex-end;justify-content:center;gap:2px;width:max-content;margin:0 auto}
+@media (max-width:700px){.portico{--h:210px}}
+.portico button{background:none;border:0;padding:0;margin:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;color:#4a3320;font:inherit}
+.portico img{display:block;mix-blend-mode:multiply;transition:filter .2s,transform .2s}
+.pt-col img{height:var(--h);width:auto}
+.pt-est img{height:calc(var(--h)*.9);width:auto}
+.portico button:hover img,.portico button:focus-visible img{filter:drop-shadow(0 0 6px rgba(190,90,40,.55));transform:translateY(-2px)}
+.pt-placa{display:flex;flex-direction:column;align-items:center;border:1px solid #7a5a3a;outline:1px solid #7a5a3a;outline-offset:2px;background:#f3e4c6;padding:3px 6px;margin-top:6px;min-width:78px;white-space:nowrap;text-align:center;line-height:1.15}
+.pt-placa .gr{font-size:15px;color:#3b2615}
+.pt-placa small{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6b4a2e}
+.virt-ancora{scroll-margin-top:12px}
+@keyframes virtBrilho{0%{box-shadow:0 0 0 3px var(--acento-2)}100%{box-shadow:0 0 0 3px transparent}}
+.virt-brilho{animation:virtBrilho 1.8s ease-out}
 .secao-cab .gr{text-transform:none;letter-spacing:0;font-size:1.15em}
 .virt-corpo h4{margin:16px 0 6px;font-size:15px;letter-spacing:.04em;text-transform:uppercase;opacity:.8}
 .virt-geral{font-size:17px}
@@ -1294,6 +1308,7 @@ document.addEventListener('click',async e=>{
   if(act==='cor-limpar'){definirCor(a.dataset.tipo,a.dataset.id,a.dataset.campo,null,true);return;}
   if(act==='cores-usar'){usarCores(a.dataset.v==='1');return;}
   if(act==='cores-apagar'){if(confirmarCores())apagarCores();return;}
+  if(act==='virt-ir'){virtIr(a.dataset.alvo,a.dataset.card);return;}
   if(act==='ceu-ver'){const v=$('#ceu-data')&&$('#ceu-data').value;if(v){S.ceuData=+new Date(v);render();}return;}
   if(act==='ceu-agora'){S.ceuData=null;render();return;}
   if(act==='ceu-sel'){S.ceuSel=a.dataset.sp&&a.dataset.sp!==S.ceuSel?a.dataset.sp:null;const el=document.getElementById('ceu-conteudo');if(el)el.innerHTML=ceuConteudo();else render();const q=document.querySelector(`[data-act="ceu-sel"][data-sp="${S.ceuSel||''}"]`);if(q&&e.detail===0)q.focus();return;}

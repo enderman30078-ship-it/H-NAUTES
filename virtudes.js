@@ -106,19 +106,36 @@ const VIRT_PRINCIPIOS = [
   "Quem tem cada grau, segundo Porfírio: o político é homem bom; o catártico, homem demoníaco ou bom daimon; o teorético, deus; o paradigmático, pai dos deuses (Sent. 32.90–94)."
 ];
 
+const VIRT_PORTICO=['natural','φρόνησις','etica','ἀνδρεία','politica','σωφροσύνη','catartica','δικαιοσύνη','teoretica'];
+const VIRT_IMG={'φρόνησις':'phronesis','ἀνδρεία':'andreia','σωφροσύνη':'sophrosyne','δικαιοσύνη':'dikaiosyne'};
+function portico(){
+  return `<div class="portico-moldura"><div class="portico" role="group" aria-label="Os cinco graus e as quatro cardeais">${VIRT_PORTICO.map(k=>{
+    const g=GRAUS.find(x=>x.id===k);
+    if(g)return `<button type="button" class="pt-col" data-act="virt-ir" data-alvo="virt-${g.id}" title="${esc(g.nome)}"><img src="imagens/virtudes/col-${g.id}.webp" alt="Coluna: ${esc(g.nome)}"><span class="pt-placa"><span class="gr">${esc(g.gr)}</span><small>${esc(g.nome)}</small></span></button>`;
+    return `<button type="button" class="pt-est" data-act="virt-ir" data-alvo="virt-cardeais" data-card="${esc(k)}" title="${esc(k)}"><img src="imagens/virtudes/${VIRT_IMG[k]}.webp" alt="Estátua: ${esc(k)}"><span class="pt-placa"><span class="gr">${esc(k)}</span></span></button>`;
+  }).join('')}</div></div>`;
+}
+function virtIr(alvo,card){
+  if(S.fechadas.has(alvo)){S.fechadas.delete(alvo);try{localStorage.setItem(SEC_KEY,JSON.stringify([...S.fechadas]));}catch(e){}render();}
+  const el=document.getElementById(alvo);if(!el)return;
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  const brilho=card?el.querySelector(`.virt-card[data-card="${card}"]`):el;
+  if(brilho){brilho.classList.remove('virt-brilho');void brilho.offsetWidth;brilho.classList.add('virt-brilho');}
+}
 function vVirtudes(){
   const linhas=a=>a.map(([k,v])=>`<div class="virt-linha"><small>${esc(k)}</small><div>${esc(v)}</div></div>`).join('');
   const quadro=g=>{const c=VIRT_GRAUS[g.id].cardeais;return `<div class="virt-cardeais">${VIRT_CARDEAIS.map(k=>{const [d,f]=c[k.gr];return `<div class="virt-card"><div class="virt-card-nome"><span class="gr">${esc(k.gr)}</span> <small>${esc(k.nome)}</small></div><p>${esc(d)}</p><p class="virt-fonte">${esc(f)}</p></div>`;}).join('')}</div>`;};
   const graus=GRAUS.map((g,i)=>{const G=VIRT_GRAUS[g.id];if(!G)return '';
-    return caixa('virt-'+g.id,`${i+1}. ${esc(g.nome)} <span class="gr">${esc(g.gr)}</span>`,'',
+    return `<div id="virt-${g.id}" class="virt-ancora">`+caixa('virt-'+g.id,`${i+1}. ${esc(g.nome)} <span class="gr">${esc(g.gr)}</span>`,'',
       `<div class="virt-corpo"><p class="virt-geral">${esc(g.desc)}</p>
        <h4>Aprofundamento</h4>${linhas(G.aprof)}
-       <h4>As quatro cardeais neste grau</h4>${quadro(g)}</div>`);}).join('');
+       <h4>As quatro cardeais neste grau</h4>${quadro(g)}</div>`)+'</div>';}).join('');
   const alem=VIRT_ALEM.map(a=>caixa('virt-'+a.nome.slice(0,6).toLowerCase(),`${esc(a.nome)} <span class="gr">${esc(a.gr)}</span>`,'',
       `<div class="virt-corpo"><p>${esc(a.txt)}</p><p>${esc(a.cardeais)}</p></div>`)).join('');
   return `<section class="pagina virtudes"><h2>Virtudes</h2>
     <p class="base-txt">A escada dos graus de virtude, do corpo ao Nous. Em cada grau aparecem as mesmas quatro cardeais, redefinidas segundo a sede, a origem e a relação com a paixão. Referências marcadas \"a conferir\" estão citadas de memória; ° marca construção do Okhema.</p>
-    ${caixa('virt-cardeais','As quatro cardeais','',`<div class="virt-cardeais">${VIRT_CARDEAIS.map(k=>`<div class="virt-card"><div class="virt-card-nome"><span class="gr">${esc(k.gr)}</span> <small>${esc(k.nome)}</small></div><p>${esc(k.sede)}</p></div>`).join('')}</div><p class="virt-fonte">República IV 427e–444a.</p>`)}
+    ${portico()}
+    <div id="virt-cardeais" class="virt-ancora">${caixa('virt-cardeais','As quatro cardeais','',`<div class="virt-cardeais">${VIRT_CARDEAIS.map(k=>`<div class="virt-card" data-card="${esc(k.gr)}"><div class="virt-card-nome"><span class="gr">${esc(k.gr)}</span> <small>${esc(k.nome)}</small></div><p>${esc(k.sede)}</p></div>`).join('')}</div><p class="virt-fonte">República IV 427e–444a.</p>`)}</div>
     ${caixa('virt-principios','Princípios da escada','',`<ul class="virt-lista">${VIRT_PRINCIPIOS.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>`)}
     <h3 class="virt-titulo">Os cinco graus</h3>${graus}
     <h3 class="virt-titulo">Além dos cinco</h3>${alem}
