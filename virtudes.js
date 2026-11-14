@@ -111,7 +111,7 @@ const VIRT_IMG={'φρόνησις':'phronesis','ἀνδρεία':'andreia','σω
 function portico(){
   return `<div class="portico-moldura"><div class="portico" role="group" aria-label="Os cinco graus e as quatro cardeais">${VIRT_PORTICO.map(k=>{
     const g=GRAUS.find(x=>x.id===k);
-    if(g)return `<button type="button" class="pt-col" data-act="virt-ir" data-alvo="virt-${g.id}" title="${esc(g.nome)}"><img src="imagens/virtudes/col-${g.id}.webp" alt="Coluna: ${esc(g.nome)}"><span class="pt-placa"><span class="gr">${esc(g.gr)}</span><small>${esc(g.nome)}</small></span></button>`;
+    if(g)return `<button type="button" class="pt-col" data-act="virt-ir" data-alvo="virt-${g.id}" title="${esc(g.nome)}"><img src="imagens/virtudes/col-${g.id}.webp" alt="Coluna: ${esc(g.nome)} (${esc(g.gr)})"></button>`;
     return `<button type="button" class="pt-est" data-act="virt-ir" data-alvo="virt-cardeais" data-card="${esc(k)}" title="${esc(k)}"><img src="imagens/virtudes/${VIRT_IMG[k]}.webp" alt="Estátua: ${esc(k)}"><span class="pt-placa"><span class="gr">${esc(k)}</span></span></button>`;
   }).join('')}</div></div>`;
 }
