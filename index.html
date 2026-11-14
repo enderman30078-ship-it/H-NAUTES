@@ -372,7 +372,6 @@ const SPAIRAS = {
   ypsilon: {rotulo:"Υ", tipo:"vogal", letra:"Υ", pos:[495,381],
             planeta:"Júpiter", veste:"Veste da Força Vital", nome_proprio:"Εὐβουλία",
             faculdade:"Εὐβουλία — a Ação Racional; a Organização que se estende pelo Kosmos: o Kosmos deve seguir de acordo com um Telos próprio à divindade ou ao paradigma. O propósito maior consciente de si, tanto de um grupo quanto de um indivíduo.",
-            insights:["Separada de Ἔρως, a Εὐβουλία estabeleceria uma deontologia kantiana seca: o Dever pelo Dever, por si mesmo."],
             influencia:"Poder de ação no mundo, deliberado e decidido",
             vicios:"Dogmatismo, arrogância, excesso de confiança",
             virtudes:"Justiça, magnanimidade, liderança ética, bom conselho",
@@ -910,9 +909,8 @@ function caixa(ch,tituloHtml,acoes,corpo,qtd){
 }
 function secao(kind,alvo,lista,extra,deus,titulo){
   const K=KINDS[kind];
-  const fixos=(kind==='insight'&&alvo.startsWith('sp:')&&(SPAIRAS[alvo.slice(3)]||{}).insights)||[];
-  const itens=fixos.map(t=>`<div class="base-txt"><span class="marca-base">Okhema · insight</span><br>${esc(t)}</div>`).join('')+(lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:fixos.length?'':`<p class="vazio">Nada escrito ainda.</p>`);
-  return caixa(kind,esc(titulo||K.plural),`<button class="btn mini" data-act="novo" data-kind="${kind}" data-alvo="${esc(alvo)}"${extra?` data-extra="${esc(extra)}"`:''}${deus?` data-deus="${esc(deus)}"`:''}>Adicionar</button>`,itens,lista.length+fixos.length);
+  const itens=lista.length?`<div class="lista">${lista.map(card).join('')}</div>`:`<p class="vazio">Nada escrito ainda.</p>`;
+  return caixa(kind,esc(titulo||K.plural),`<button class="btn mini" data-act="novo" data-kind="${kind}" data-alvo="${esc(alvo)}"${extra?` data-extra="${esc(extra)}"`:''}${deus?` data-deus="${esc(deus)}"`:''}>Adicionar</button>`,itens,lista.length);
 }
 const ordenar=l=>l.sort((a,b)=>(b.item.editado||0)-(a.item.editado||0));
 
