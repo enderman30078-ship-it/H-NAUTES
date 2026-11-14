@@ -1,7 +1,7 @@
 /* Guarda a casca do aplicativo para abrir mesmo sem internet.
    Os dados do caderno não passam por aqui: vêm sempre do banco. */
-const VERSAO = 'okhema-v30';
-const CASCA = ['./', 'index.html', 'supabase.js', 'config.js', 'arithmos.js', 'astronomy.js', 'ceu.js', 'glossario.js', 'cores.js', 'virtudes.js', 'imagens/virtudes/col-natural.webp', 'imagens/virtudes/col-etica.webp', 'imagens/virtudes/col-politica.webp', 'imagens/virtudes/col-catartica.webp', 'imagens/virtudes/col-teoretica.webp', 'imagens/virtudes/phronesis.webp', 'imagens/virtudes/andreia.webp', 'imagens/virtudes/sophrosyne.webp', 'imagens/virtudes/dikaiosyne.webp', 'imagens/virtudes/selo-phronesis.webp', 'imagens/virtudes/selo-dikaiosyne.webp', 'imagens/virtudes/selo-andreia.webp', 'imagens/virtudes/selo-sophrosyne.webp', 'manifest.webmanifest',
+const VERSAO = 'okhema-v31';
+const CASCA = ['./', 'index.html', 'supabase.js', 'config.js', 'arithmos.js', 'astronomy.js', 'ceu.js', 'glossario.js', 'cores.js', 'virtudes.js', 'imagens/virtudes/col-natural.webp', 'imagens/virtudes/col-etica.webp', 'imagens/virtudes/col-politica.webp', 'imagens/virtudes/col-catartica.webp', 'imagens/virtudes/col-teoretica.webp', 'imagens/virtudes/phronesis.webp', 'imagens/virtudes/andreia.webp', 'imagens/virtudes/sophrosyne.webp', 'imagens/virtudes/dikaiosyne.webp', 'manifest.webmanifest',
   'icones/navio-48.png', 'icones/navio-192.png', 'icones/navio-512.png', 'icones/navio-apple-180.png'];
 
 self.addEventListener('install', e => {

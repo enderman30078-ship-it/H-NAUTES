@@ -115,7 +115,6 @@ h3{font-family:var(--f-rotulo);font-weight:500;font-size:13px;letter-spacing:.16
 .grau-tabs button{border:1px solid var(--tinta);background:var(--fundo);padding:2px 9px;font-size:14px}
 .grau-tabs button[aria-pressed="true"]{background:var(--acento);color:var(--sobre-acento);border-color:var(--acento)}
 .virtudes .virt-titulo{margin:26px 0 8px}
-.selo image{transition:opacity .2s}.selo:hover image{opacity:.8}
 .portico-moldura{background:#f3e4c6;border:1px solid #7a5a3a;outline:3px double #7a5a3a;outline-offset:-8px;padding:22px 18px 16px;margin:18px 0 22px;overflow-x:auto}
 .portico{--h:238px;display:flex;align-items:flex-end;justify-content:center;gap:2px;width:max-content;margin:0 auto}
 @media (max-width:700px){.portico{--h:200px}}
@@ -816,9 +815,7 @@ function svgHierograma(){
     }
     s+=g+'</g>';
   });
-  const selos=[['phronesis','φρόνησις',124,64,100],['dikaiosyne','δικαιοσύνη',460,64,100],['andreia','ἀνδρεία',124,600,98],['sophrosyne','σωφροσύνη',460,600,98]]
-    .map(([f,g,x,y,h])=>`<a href="#virtudes" class="selo" aria-label="${g}"><title>${g}</title><image href="imagens/virtudes/selo-${f}.webp" x="${x}" y="${y}" width="96" height="${h}"/></a>`).join('');
-  return `<svg viewBox="120 60 440 642" role="group" aria-label="Hierograma do Okhema">${selos}${s}</svg>`;
+  return `<svg viewBox="120 60 440 642" role="group" aria-label="Hierograma do Okhema">${s}</svg>`;
 }
 function topoNome(t){if(!t)return '';if(t.tipo==='agathos')return t.nome?`Ἀγαθὸς Δαίμων · ${t.nome}`:'Ἀγαθὸς Δαίμων';if(t.tipo==='agnostos')return t.nome||'Deus desconhecido';return t.nome||'';}
 function topoSegundo(t){if(!t)return '';if(t.tipo==='agathos')return 'segundo o Ἀγαθὸς Δαίμων';if(t.tipo==='agnostos')return t.nome?`segundo ${t.nome}, o Deus desconhecido`:'segundo o Deus desconhecido';return t.nome?`segundo ${t.nome}`:'';}
