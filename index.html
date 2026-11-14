@@ -114,6 +114,19 @@ h3{font-family:var(--f-rotulo);font-weight:500;font-size:13px;letter-spacing:.16
 .grau-tabs{display:flex;gap:3px;flex-wrap:wrap}
 .grau-tabs button{border:1px solid var(--tinta);background:var(--fundo);padding:2px 9px;font-size:14px}
 .grau-tabs button[aria-pressed="true"]{background:var(--acento);color:var(--sobre-acento);border-color:var(--acento)}
+.virtudes .virt-titulo{margin:26px 0 8px}
+.virt-corpo h4{margin:16px 0 6px;font-size:15px;letter-spacing:.04em;text-transform:uppercase;opacity:.8}
+.virt-geral{font-size:17px}
+.virt-linha{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;padding:6px 0;border-top:1px solid var(--linha)}
+.virt-linha small{opacity:.75;padding-top:2px}
+@media (max-width:560px){.virt-linha{grid-template-columns:minmax(0,1fr);gap:2px}}
+.virt-cardeais{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.virt-cardeais{grid-template-columns:minmax(0,1fr)}}
+.virt-card{border:1px solid var(--linha);background:var(--fundo);padding:9px 11px;min-width:0;overflow-wrap:anywhere}
+.virt-card p{margin:6px 0 0}
+.virt-card-nome .gr{font-size:18px}
+.virt-fonte{font-size:13px;opacity:.7;font-style:italic}
+.virt-lista{margin:0;padding-left:20px}.virt-lista li{margin:4px 0}
 .triade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 @media (max-width:560px){.triade{grid-template-columns:minmax(0,1fr)}}
 .triade div{border:1px solid var(--linha);padding:7px 9px;background:var(--fundo);font-size:15px;min-width:0;overflow-wrap:anywhere}
@@ -275,6 +288,7 @@ input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha)
     <nav class="abas" id="abas" aria-label="Seções">
       <a href="#hierograma" data-v="hierograma">Hierograma</a>
       <a href="#ceu" data-v="ceu">Céu</a>
+      <a href="#virtudes" data-v="virtudes">Virtudes</a>
       <a href="#diario" data-v="diario">Diário de orações</a>
       <a href="#votos" data-v="votos">Votos</a>
       <a href="#constelacao" data-v="constelacao">Constelação</a>
@@ -297,6 +311,7 @@ input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha)
 <script src="ceu.js"></script>
 <script src="glossario.js"></script>
 <script src="cores.js"></script>
+<script src="virtudes.js"></script>
 <script>
 const GRAUS = [
   {id:"natural",      nome:"Naturais",       gr:"φυσικαί",        desc:"Disposições do corpo e do temperamento; partilhadas até pelos animais. Podem conflitar entre si, pois não derivam ainda da razão una."},
@@ -726,7 +741,7 @@ function lerHash(){
   if(h.startsWith('spaira-')&&SPAIRAS[h.slice(7)]){S.view='hierograma';S.det={t:'sp',id:h.slice(7)};}
   else if(h.startsWith('caminho-')&&CAMINHOS[+h.slice(8)]){S.view='hierograma';S.det={t:'cam',id:+h.slice(8)};}
   else if(h==='arithmos'||h.startsWith('arithmos=')){S.view='arithmos';let w='';try{w=decodeURIComponent(h.slice(9));}catch(e){w=h.slice(9);}S.arPalavra=w;}
-  else if(['hierograma','diario','votos','constelacao','acervo','caderno','conta','ceu'].includes(h)){S.view=h;if(h==='hierograma')S.det=null;}
+  else if(['hierograma','diario','votos','constelacao','acervo','caderno','conta','ceu','virtudes'].includes(h)){S.view=h;if(h==='hierograma')S.det=null;}
   else{S.view='hierograma';}
 }
 window.addEventListener('hashchange',()=>{lerHash();render();if(S.view==='arithmos')window.scrollTo(0,0);if(S.det&&window.innerWidth<=820){const d=$('#det');if(d)d.scrollIntoView({behavior:'smooth',block:'start'});}});
@@ -748,7 +763,7 @@ function render(){
   renderEstado();
   const fora=S.modo==='entrar'||S.view==='nova-senha';$('#abas').hidden=fora||S.modo==='carregando';
   const m=$('#principal');
-  m.innerHTML=S.modo==='carregando'?'':fora?vEntrar():S.view==='conta'?vConta():S.view==='arithmos'?vArithmos():S.view==='ceu'?vCeu():S.view==='diario'?vDiario():S.view==='votos'?vVotos():S.view==='constelacao'?vConstelacao():S.view==='acervo'?vAcervo():S.view==='caderno'?vCaderno():vHierograma();
+  m.innerHTML=S.modo==='carregando'?'':fora?vEntrar():S.view==='conta'?vConta():S.view==='arithmos'?vArithmos():S.view==='ceu'?vCeu():S.view==='virtudes'?vVirtudes():S.view==='diario'?vDiario():S.view==='votos'?vVotos():S.view==='constelacao'?vConstelacao():S.view==='acervo'?vAcervo():S.view==='caderno'?vCaderno():vHierograma();
   if(aid){const n=document.getElementById(aid);if(n&&n!==document.activeElement){n.focus();if(sel&&n.setSelectionRange)try{n.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
   nomearAutores();
 }
