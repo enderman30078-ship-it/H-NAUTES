@@ -1262,6 +1262,9 @@ function vConta(){
   if(S.dono){
     const lista=[...S.perfis.values()].sort((a,b)=>(a.aprovado-b.aprovado)||String(b.criado_em||'').localeCompare(String(a.criado_em||'')));
     membros=`<section class="secao"><h3>Membros</h3><p class="nota-campo">Quem é aprovado pode escrever no acervo comum e partilhar constelações. Retirar a aprovação não apaga nada do que a pessoa já escreveu.</p><div class="membros">${lista.map(m=>`<div class="membro"><span class="nome">${esc(m.nome||'sem nome')}${m.id===S.uid?' (você)':''}${m.moderador?' · <i>modera</i>':''}</span><span class="quando">${m.criado_em?'desde '+fmtData(String(m.criado_em).slice(0,10)):''}</span>${m.id===S.uid||m.moderador?'':`<span class="pill ${m.aprovado?'comum':'priv'}">${m.aprovado?'aprovado':'aguardando'}</span><button class="btn mini${m.aprovado?'':' forte'}" data-act="aprovar" data-uid="${esc(m.id)}" data-v="${m.aprovado?'0':'1'}">${m.aprovado?'Retirar aprovação':'Aprovar'}</button>`}</div>`).join('')}</div></section>`;
+  }else{
+    const mods=[...S.perfis.values()].filter(m=>m.moderador).map(m=>esc(m.nome||'sem nome'));
+    if(mods.length)membros=`<section class="secao"><h3>Quem modera</h3><p>${mods.join(', ')}</p></section>`;
   }
   return `<section class="pagina"><h2>Conta</h2>
     <div class="conta-dados"><div><b>Email:</b> ${esc(S.email)}</div>
