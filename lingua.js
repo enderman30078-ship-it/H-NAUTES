@@ -97,6 +97,7 @@ function lgAplicar(raiz){
         const sp=document.createElement('span');
         if(LG_MODO==='traduzida'){const r=lgTraduzir(m);sp.textContent=r.txt;sp.className='lg lg-trad'+(r.ok?'':' lg-sem');}
         else{sp.textContent=lgTranslitTrecho(m);sp.className='lg lg-tl';}
+        sp.textContent=sp.textContent.charAt(0).toUpperCase()+sp.textContent.slice(1);
         sp.title=m;sp.lang='grc-Latn';
         f.appendChild(sp);i=pos+m.length;return m;
       });
