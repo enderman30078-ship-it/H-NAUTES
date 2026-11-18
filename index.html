@@ -49,6 +49,9 @@
   --acento:#C88AD8; --acento-2:#D9A6E4; --ouro:#C9A45C; --linha:#4A3C55; --sobre-acento:#1E1724;
   --priv:#8FA9D6; --comum:#9BBF73; --base:#D2B26A; color-scheme:dark;}
 .tema{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:14.5px;color:var(--suave)}
+.tema.lingua{margin-left:0}
+.lg-tl{font-style:italic}
+.lg-sem{font-style:italic}
 .tema select{border:1px solid var(--tinta);background:var(--folha);color:var(--tinta);padding:2px 6px}
 *{box-sizing:border-box}
 html,body{background:var(--fundo);color:var(--tinta)}
@@ -299,7 +302,7 @@ input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha)
 <div class="casca">
   <header class="topo">
     <div class="marca"><h1>ΟΧΗΜΑ</h1><span>caderno das spairas e das letras</span>
-      <label class="tema" for="sel-tema">Caráter<select id="sel-tema"><option value="telurico">⊕ Telúrico</option><option value="celeste">☉ Celeste</option><option value="ctonico">☾ Ctônico</option><option value="auto">Automático (do aparelho)</option></select></label></div>
+      <label class="tema" for="sel-tema">Caráter<select id="sel-tema"><option value="telurico">⊕ Telúrico</option><option value="celeste">☉ Celeste</option><option value="ctonico">☾ Ctônico</option><option value="auto">Automático (do aparelho)</option></select></label><label class="tema lingua" for="sel-lingua">Língua<select id="sel-lingua"><option value="grego">Grego</option><option value="traduzida">Traduzida</option><option value="transliterada">Transliterada</option></select></label></div>
     <nav class="abas" id="abas" aria-label="Seções">
       <a href="#hierograma" data-v="hierograma">Hierograma</a>
       <a href="#ceu" data-v="ceu">Céu</a>
@@ -327,6 +330,7 @@ input[type=datetime-local]{border:1px solid var(--tinta);background:var(--folha)
 <script src="glossario.js"></script>
 <script src="cores.js"></script>
 <script src="virtudes.js"></script>
+<script src="lingua.js"></script>
 <script>
 const GRAUS = [
   {id:"natural",      nome:"Naturais",       gr:"φυσικαί",        desc:"Disposições do corpo e do temperamento; partilhadas até pelos animais. Podem conflitar entre si, pois não derivam ainda da razão una."},
@@ -1334,6 +1338,7 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('change',async e=>{
   const t=e.target;
   if(t.id==='sel-tema'){aplicarTema(t.value);return;}
+  if(t.id==='sel-lingua'){definirLingua(t.value);return;}
   if(t.id==='sel-const'){const p=clone(prefs());p.ativa=t.value||null;await salvarItem(p,'priv');return;}
   if(t.id==='filtro-diario'){S.diarioFiltro=t.value;render();return;}
   if(t.id==='busca-tipo'){S.buscaTipo=t.value;render();return;}
@@ -1352,6 +1357,7 @@ function aplicarTema(v){
   const m=document.querySelector('meta[name=theme-color]');if(m)m.content=getComputedStyle(document.documentElement).getPropertyValue('--fundo').trim()||'#F2E9D7';
 }
 (function(){let v='telurico';try{v=localStorage.getItem('okhema-tema')||'telurico';}catch(e){}aplicarTema(v);})();
+definirLingua(LG_MODO);
 iniciar();
 </script>
 <script>
