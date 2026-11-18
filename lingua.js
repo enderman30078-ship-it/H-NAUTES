@@ -47,8 +47,9 @@ function lgTranslit(palavra){
   return out;
 }
 
+const lgMai=t=>t?t.charAt(0).toUpperCase()+t.slice(1):t;
 const lgLetra=p=>p.normalize('NFD').replace(/[\u0300-\u036f]/g,'').length<2;
-function lgTranslitTrecho(t){return t.split(/(\s+)/).map(p=>!p.trim()||lgLetra(p)?p:lgTranslit(p)).join('');}
+function lgTranslitTrecho(t){return t.split(/(\s+)/).map(p=>!p.trim()||lgLetra(p)?p:lgMai(lgTranslit(p))).join('');}
 /* ---------- tradução: glossário fixo primeiro, depois o mapa do glossário ---------- */
 function lgSentido(txt){
   const k=glChave(txt);if(!k)return null;
@@ -60,11 +61,11 @@ function lgSentido(txt){
   return v||null;
 }
 function lgTraduzir(trecho){
-  const t=lgSentido(trecho);if(t)return {txt:t,ok:true};
+  const t=lgSentido(trecho);if(t)return {txt:lgMai(t),ok:true};
   /* palavra por palavra; o que não tiver tradução fica transliterado */
   const partes=trecho.split(/(\s+)/);
   let algum=false;
-  const r=partes.map(p=>{if(!p.trim()||lgLetra(p))return p;const s=lgSentido(p);if(s){algum=true;return s;}return lgTranslit(p);}).join('');
+  const r=partes.map(p=>{if(!p.trim()||lgLetra(p))return p;const s=lgSentido(p);if(s){algum=true;return lgMai(s);}return lgMai(lgTranslit(p));}).join('');
   return {txt:r,ok:algum};
 }
 
@@ -97,7 +98,6 @@ function lgAplicar(raiz){
         const sp=document.createElement('span');
         if(LG_MODO==='traduzida'){const r=lgTraduzir(m);sp.textContent=r.txt;sp.className='lg lg-trad'+(r.ok?'':' lg-sem');}
         else{sp.textContent=lgTranslitTrecho(m);sp.className='lg lg-tl';}
-        sp.textContent=sp.textContent.charAt(0).toUpperCase()+sp.textContent.slice(1);
         sp.title=m;sp.lang='grc-Latn';
         f.appendChild(sp);i=pos+m.length;return m;
       });
